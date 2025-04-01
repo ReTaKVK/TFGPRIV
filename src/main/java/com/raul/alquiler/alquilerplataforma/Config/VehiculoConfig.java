@@ -7,3 +7,5 @@ public class VehiculoConfig {
     // Aquí puedes agregar más configuraciones si es necesario
 
 }
+
+
