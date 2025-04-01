@@ -1,34 +1,36 @@
 version: '3.8'
 
 services:
-  db:
-    image: mysql:8.0
-    container_name: mysql_container
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: alquiler_db
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-  app:
+  springboot-app:
+    image: alquilerplataforma:latest
+    container_name: springboot-container
     build:
       context: .
-      dockerfile: dockerfile
-    container_name: springboot_app
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/alquiler_db?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Mapea el puerto 8080 del contenedor al puerto 8080 del host
+    volumes:
+      - ./src/main:/app/src/main  # Mapea tu código fuente (cualquier cambio en el código se reflejará sin necesidad de reconstruir)
+      - ./target:/app/target  # Mapea la carpeta target para guardar las compilaciones
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Puedes configurar perfiles de Spring para desarrollo
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/alquiler_db  # Conexión con la base de datos
+      - SPRING_DATASOURCE_USERNAME=root  # Usuario de la base de datos
+      - SPRING_DATASOURCE_PASSWORD=rootpassword  # Contraseña de la base de datos
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update  # Configuración para que Hibernate actualice la base de datos automáticamente
+    depends_on:
+      - mysql-db  # Asegura que MySQL esté listo antes de arrancar el proyecto
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Establece la contraseña de root de MySQL
+      MYSQL_DATABASE: alquiler_db  # El nombre de tu base de datos
+    ports:
+      - "3306:3306"  # Mapea el puerto de MySQL
+    volumes:
+      - mysql-data:/var/lib/mysql  # Este volumen persiste la base de datos
 
 volumes:
-  mysql_data:
+  mysql-data:  # Volumen persistente de la base de datos para que no se borre al reiniciar
