@@ -1,28 +1,25 @@
-/*
 package com.raul.alquiler.alquilerplataforma.Services;
 
-import com.raul.alquiler.alquilerplataforma.Entidades.VehiculoEntidad;
+import com.raul.alquiler.alquilerplataforma.Dtos.VehiculoDTO;
+import com.raul.alquiler.alquilerplataforma.Entidades.Vehiculo;
+import com.raul.alquiler.alquilerplataforma.Mappers.VehiculoMapper;
 import com.raul.alquiler.alquilerplataforma.Repository.VehiculoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class VehiculoService {
+    private final VehiculoRepository repo;
+    private final VehiculoMapper mapper;
 
-    @Autowired
-    private VehiculoRepository vehiculoRepository;
+    public VehiculoService(VehiculoRepository repo, VehiculoMapper mapper) {
+        this.repo = repo;
+        this.mapper = mapper;
+    }
 
-    */
-/**
-     * Método que obtiene todos los vehículos desde la base de datos.
-     *
-     * @return Lista de vehículos disponibles.
-     *//*
-
-    public List<VehiculoEntidad> obtenerTodosLosVehiculos() {
-        return vehiculoRepository.findAll();
+    public List<VehiculoDTO> disponibles() {
+        return repo.findByDisponibleTrue().stream().map(mapper::toDTO).toList();
     }
 }
-*/
+

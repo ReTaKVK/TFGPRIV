@@ -1,30 +1,27 @@
-/*
+
 package com.raul.alquiler.alquilerplataforma.Controller;
 
-import com.raul.alquiler.alquilerplataforma.Entidades.VehiculoEntidad;
+import com.raul.alquiler.alquilerplataforma.Dtos.VehiculoDTO;
+import com.raul.alquiler.alquilerplataforma.Entidades.Vehiculo;
 import com.raul.alquiler.alquilerplataforma.Services.VehiculoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/vehiculos")
+@CrossOrigin(origins = "*")
 public class VehiculoController {
+    private final VehiculoService service;
 
-    @Autowired
-    private VehiculoService vehiculoServices;
+    public VehiculoController(VehiculoService service) {
+        this.service = service;
+    }
 
-    */
-/**
-     * Endpoint para obtener todos los vehículos disponibles.
-     *
-     * @return Lista de vehículos.
-     *//*
-
-    @GetMapping("/api/vehiculos")
-    public List<VehiculoEntidad> obtenerVehiculos() {
-        return vehiculoServices.obtenerTodosLosVehiculos();
+    @GetMapping("/disponibles")
+    public List<VehiculoDTO> disponibles() {
+        return service.disponibles();
     }
 }
-*/
+
+
