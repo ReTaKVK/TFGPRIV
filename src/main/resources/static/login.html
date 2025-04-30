@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - AutoRent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dark-mode.css" disabled id="dark-mode-styles">
+    <link rel="stylesheet" href="css/colorblind.css" disabled id="colorblind-styles">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <i class="bi bi-car-front-fill text-primary me-2"></i>
+            <span class="fw-bold">AutoRent</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vehicles.html">Vehículos</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="accessibilityDropdown" data-bs-toggle="dropdown">
+                        <i class="bi bi-palette"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" id="theme-toggle"><i class="bi bi-moon me-2"></i>Modo Oscuro</button></li>
+                        <li><button class="dropdown-item" id="colorblind-toggle"><i class="bi bi-eye me-2"></i>Modo Daltónico</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Login Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card border-0 shadow-lg overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-5 d-none d-md-block">
+                            <div class="login-image h-100" style="background-image: url('img/login-car.jpg');"></div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body p-4 p-lg-5">
+                                <div class="text-center mb-4">
+                                    <h2 class="fw-bold mb-1">Bienvenido a AutoRent</h2>
+                                    <p class="text-muted">Inicia sesión para continuar</p>
+                                </div>
+
+                                <!-- Login Form -->
+                                <div id="login-form">
+                                    <form id="login-form-element">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                                <input type="email" class="form-control" id="login-email" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Contraseña</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                                <input type="password" class="form-control" id="login-password" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="remember-me">
+                                            <label class="form-check-label" for="remember-me">Recordarme</label>
+                                        </div>
+                                        <div class="d-grid mb-3">
+                                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="mb-0">¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Register Form (Hidden by default) -->
+                                <div id="register-form" style="display: none;">
+                                    <form id="register-form-element">
+                                        <div class="mb-3">
+                                            <label for="register-name" class="form-label">Nombre completo</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                                <input type="text" class="form-control" id="register-name" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="register-email" class="form-label">Email</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                                <input type="email" class="form-control" id="register-email" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="register-password" class="form-label">Contraseña</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                                <input type="password" class="form-control" id="register-password" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="register-confirm-password" class="form-label">Confirmar contraseña</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                                <input type="password" class="form-control" id="register-confirm-password" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="terms" required>
+                                            <label class="form-check-label" for="terms">Acepto los <a href="#">términos y condiciones</a></label>
+                                        </div>
+                                        <div class="d-grid mb-3">
+                                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="mb-0">¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="d-inline-flex align-items-center mb-2 text-white text-decoration-none" href="index.html">
+                    <i class="bi bi-car-front-fill me-2"></i>
+                    <span class="fs-5 fw-bold">AutoRent</span>
+                </a>
+                <p class="small mb-0">© 2023 AutoRent. Todos los derechos reservados.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="social-links">
+                    <a href="#" class="me-2 social-icon text-white"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="me-2 social-icon text-white"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="me-2 social-icon text-white"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="social-icon text-white"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

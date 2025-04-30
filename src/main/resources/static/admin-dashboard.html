@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - AutoRent</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dark-mode.css" disabled id="dark-mode-styles">
+  <link rel="stylesheet" href="css/colorblind.css" disabled id="colorblind-styles">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <i class="bi bi-car-front-fill text-primary me-2"></i>
+      <span class="fw-bold">AutoRent</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Sitio web</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <div class="dropdown me-3">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="accessibilityDropdown" data-bs-toggle="dropdown">
+            <i class="bi bi-palette"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" id="theme-toggle"><i class="bi bi-moon me-2"></i>Modo Oscuro</button></li>
+            <li><button class="dropdown-item" id="colorblind-toggle"><i class="bi bi-eye me-2"></i>Modo Daltónico</button></li>
+          </ul>
+        </div>
+        <div id="admin-profile" class="dropdown">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="adminDropdown" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i><span id="admin-name">Administrador</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item" id="logout-button"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Admin Dashboard -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="admin-dashboard.html">
+              <i class="bi bi-speedometer2 me-2"></i>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="rentals-tab">
+              <i class="bi bi-calendar-check me-2"></i>
+              Alquileres
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="vehicles-tab">
+              <i class="bi bi-car-front me-2"></i>
+              Vehículos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="users-tab">
+              <i class="bi bi-people me-2"></i>
+              Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="reports-tab">
+              <i class="bi bi-graph-up me-2"></i>
+              Informes
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="settings-tab">
+              <i class="bi bi-gear me-2"></i>
+              Configuración
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+      <!-- Dashboard Overview Section -->
+      <div id="dashboard-section">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Imprimir</button>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+              <i class="bi bi-calendar me-1"></i>
+              Esta semana
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="stat-icon bg-primary text-white me-3">
+                    <i class="bi bi-calendar-check"></i>
+                  </div>
+                  <h5 class="card-title mb-0">Alquileres activos</h5>
+                </div>
+                <h2 class="fw-bold mb-0" id="active-rentals-count">0</h2>
+                <p class="text-muted small">Alquileres en curso</p>
+                <div class="progress mt-2" style="height: 5px;">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 75%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="stat-icon bg-success text-white me-3">
+                    <i class="bi bi-car-front"></i>
+                  </div>
+                  <h5 class="card-title mb-0">Vehículos disponibles</h5>
+                </div>
+                <h2 class="fw-bold mb-0" id="available-vehicles-count">0</h2>
+                <p class="text-muted small">De un total de <span id="total-vehicles-count">0</span></p>
+                <div class="progress mt-2" style="height: 5px;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 65%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="stat-icon bg-info text-white me-3">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <h5 class="card-title mb-0">Usuarios registrados</h5>
+                </div>
+                <h2 class="fw-bold mb-0" id="users-count">0</h2>
+                <p class="text-muted small"><span id="new-users-count">0</span> nuevos esta semana</p>
+                <div class="progress mt-2" style="height: 5px;">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="stat-icon bg-warning text-white me-3">
+                    <i class="bi bi-cash-stack"></i>
+                  </div>
+                  <h5 class="card-title mb-0">Ingresos</h5>
+                </div>
+                <h2 class="fw-bold mb-0" id="total-revenue">0€</h2>
+                <p class="text-muted small">Este mes</p>
+                <div class="progress mt-2" style="height: 5px;">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Rentals -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-header bg-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fw-bold">Alquileres recientes</h5>
+              <button class="btn btn-sm btn-outline-primary" id="view-all-rentals">Ver todos</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Usuario</th>
+                  <th>Vehículo</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha fin</th>
+                  <th>Estado</th>
+                  <th>Precio</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="recent-rentals-table">
+                <!-- Recent rentals will be loaded here dynamically -->
+                <tr>
+                  <td colspan="8" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-8">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">Ingresos mensuales</h5>
+              </div>
+              <div class="card-body">
+                <canvas id="revenue-chart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">Categorías de vehículos</h5>
+              </div>
+              <div class="card-body">
+                <canvas id="vehicles-chart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rentals Section (Hidden by default) -->
+      <div id="rentals-section" class="d-none">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Gestión de Alquileres</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Imprimir</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rentals Filters -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Filtrar alquileres</h5>
+            <form id="admin-rental-filter-form" class="row g-3">
+              <div class="col-md-3">
+                <label for="admin-status-filter" class="form-label">Estado</label>
+                <select class="form-select" id="admin-status-filter">
+                  <option value="all">Todos</option>
+                  <option value="active">Activos</option>
+                  <option value="completed">Completados</option>
+                  <option value="cancelled">Cancelados</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="admin-user-filter" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="admin-user-filter" placeholder="Nombre o email">
+              </div>
+              <div class="col-md-3">
+                <label for="admin-date-from" class="form-label">Desde</label>
+                <input type="date" class="form-control" id="admin-date-from">
+              </div>
+              <div class="col-md-3">
+                <label for="admin-date-to" class="form-label">Hasta</label>
+                <input type="date" class="form-control" id="admin-date-to">
+              </div>
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-outline-secondary me-2" id="admin-clear-filters">Limpiar filtros</button>
+                <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Rentals Table -->
+        <div class="card border-0 shadow-sm">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Usuario</th>
+                  <th>Vehículo</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha fin</th>
+                  <th>Estado</th>
+                  <th>Precio total</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="admin-rentals-table">
+                <!-- Rentals will be loaded here dynamically -->
+                <tr>
+                  <td colspan="8" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Paginación de alquileres" class="mt-4">
+          <ul class="pagination justify-content-center" id="admin-rentals-pagination">
+            <!-- Pagination will be generated dynamically -->
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Vehicles Section (Hidden by default) -->
+      <div id="vehicles-section" class="d-none">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Gestión de Vehículos</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
+              <i class="bi bi-plus-lg me-1"></i>Añadir vehículo
+            </button>
+          </div>
+        </div>
+
+        <!-- Vehicles Filters -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Filtrar vehículos</h5>
+            <form id="admin-vehicle-filter-form" class="row g-3">
+              <div class="col-md-3">
+                <label for="admin-vehicle-category" class="form-label">Categoría</label>
+                <select class="form-select" id="admin-vehicle-category">
+                  <option value="">Todas las categorías</option>
+                  <option value="sedan">Sedán</option>
+                  <option value="suv">SUV</option>
+                  <option value="deportivo">Deportivo</option>
+                  <option value="lujo">Lujo</option>
+                  <option value="familiar">Familiar</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="admin-vehicle-brand" class="form-label">Marca</label>
+                <select class="form-select" id="admin-vehicle-brand">
+                  <option value="">Todas las marcas</option>
+                  <option value="audi">Audi</option>
+                  <option value="bmw">BMW</option>
+                  <option value="mercedes">Mercedes-Benz</option>
+                  <option value="porsche">Porsche</option>
+                  <option value="tesla">Tesla</option>
+                  <option value="volkswagen">Volkswagen</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="admin-vehicle-status" class="form-label">Estado</label>
+                <select class="form-select" id="admin-vehicle-status">
+                  <option value="">Todos</option>
+                  <option value="available">Disponible</option>
+                  <option value="rented">Alquilado</option>
+                  <option value="maintenance">En mantenimiento</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="admin-vehicle-search" class="form-label">Buscar</label>
+                <input type="text" class="form-control" id="admin-vehicle-search" placeholder="Modelo, matrícula...">
+              </div>
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-outline-secondary me-2" id="admin-clear-vehicle-filters">Limpiar filtros</button>
+                <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Vehicles Table -->
+        <div class="card border-0 shadow-sm">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Imagen</th>
+                  <th>Marca/Modelo</th>
+                  <th>Categoría</th>
+                  <th>Matrícula</th>
+                  <th>Estado</th>
+                  <th>Precio/día</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="admin-vehicles-table">
+                <!-- Vehicles will be loaded here dynamically -->
+                <tr>
+                  <td colspan="8" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Paginación de vehículos" class="mt-4">
+          <ul class="pagination justify-content-center" id="admin-vehicles-pagination">
+            <!-- Pagination will be generated dynamically -->
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Users Section (Hidden by default) -->
+      <div id="users-section" class="d-none">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Gestión de Usuarios</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+              <i class="bi bi-plus-lg me-1"></i>Añadir usuario
+            </button>
+          </div>
+        </div>
+
+        <!-- Users Filters -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Filtrar usuarios</h5>
+            <form id="admin-user-filter-form" class="row g-3">
+              <div class="col-md-3">
+                <label for="admin-user-role" class="form-label">Rol</label>
+                <select class="form-select" id="admin-user-role">
+                  <option value="">Todos los roles</option>
+                  <option value="user">Usuario</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="admin-user-status" class="form-label">Estado</label>
+                <select class="form-select" id="admin-user-status">
+                  <option value="">Todos</option>
+                  <option value="active">Activo</option>
+                  <option value="inactive">Inactivo</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="admin-user-search" class="form-label">Buscar</label>
+                <input type="text" class="form-control" id="admin-user-search" placeholder="Nombre, email...">
+              </div>
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-outline-secondary me-2" id="admin-clear-user-filters">Limpiar filtros</button>
+                <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="card border-0 shadow-sm">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Fecha registro</th>
+                  <th>Alquileres</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="admin-users-table">
+                <!-- Users will be loaded here dynamically -->
+                <tr>
+                  <td colspan="8" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Paginación de usuarios" class="mt-4">
+          <ul class="pagination justify-content-center" id="admin-users-pagination">
+            <!-- Pagination will be generated dynamically -->
+          </ul>
+        </nav>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Add Vehicle Modal -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Añadir nuevo vehículo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-vehicle-form" class="row g-3">
+          <div class="col-md-6">
+            <label for="vehicle-brand" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="vehicle-brand" required>
+          </div>
+          <div class="col-md-6">
+            <label for="vehicle-model" class="form-label">Modelo</label>
+            <input type="text" class="form-control" id="vehicle-model" required>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-category" class="form-label">Categoría</label>
+            <select class="form-select" id="vehicle-category" required>
+              <option value="">Seleccionar categoría</option>
+              <option value="sedan">Sedán</option>
+              <option value="suv">SUV</option>
+              <option value="deportivo">Deportivo</option>
+              <option value="lujo">Lujo</option>
+              <option value="familiar">Familiar</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-year" class="form-label">Año</label>
+            <input type="number" class="form-control" id="vehicle-year" required>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-plate" class="form-label">Matrícula</label>
+            <input type="text  class="form-label">Matrícula</label>
+            <input type="text" class="form-control" id="vehicle-plate" required>
+          </div>
+          <div class="col-md-6">
+            <label for="vehicle-price" class="form-label">Precio por día (€)</label>
+            <input type="number" class="form-control" id="vehicle-price" required>
+          </div>
+          <div class="col-md-6">
+            <label for="vehicle-status" class="form-label">Estado</label>
+            <select class="form-select" id="vehicle-status" required>
+              <option value="available">Disponible</option>
+              <option value="maintenance">En mantenimiento</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-seats" class="form-label">Plazas</label>
+            <input type="number" class="form-control" id="vehicle-seats" required>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-doors" class="form-label">Puertas</label>
+            <input type="number" class="form-control" id="vehicle-doors" required>
+          </div>
+          <div class="col-md-4">
+            <label for="vehicle-transmission" class="form-label">Transmisión</label>
+            <select class="form-select" id="vehicle-transmission" required>
+              <option value="manual">Manual</option>
+              <option value="automatic">Automática</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label for="vehicle-description" class="form-label">Descripción</label>
+            <textarea class="form-control" id="vehicle-description" rows="3" required></textarea>
+          </div>
+          <div class="col-12">
+            <label for="vehicle-features" class="form-label">Características (separadas por comas)</label>
+            <input type="text" class="form-control" id="vehicle-features" placeholder="Aire acondicionado, GPS, Bluetooth...">
+          </div>
+          <div class="col-12">
+            <label for="vehicle-image" class="form-label">Imagen principal</label>
+            <input type="file" class="form-control" id="vehicle-image" accept="image/*">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="save-vehicle-button">Guardar vehículo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Añadir nuevo usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-user-form">
+          <div class="mb-3">
+            <label for="user-name" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="user-name" required>
+          </div>
+          <div class="mb-3">
+            <label for="user-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="user-email" required>
+          </div>
+          <div class="mb-3">
+            <label for="user-password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="user-password" required>
+          </div>
+          <div class="mb-3">
+            <label for="user-role" class="form-label">Rol</label>
+            <select class="form-select" id="user-role" required>
+              <option value="user">Usuario</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="user-status" class="form-label">Estado</label>
+            <select class="form-select" id="user-status" required>
+              <option value="active">Activo</option>
+              <option value="inactive">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="save-user-button">Guardar usuario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mi perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="admin-profile-form">
+          <div class="mb-3">
+            <label for="admin-profile-name" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="admin-profile-name" required>
+          </div>
+          <div class="mb-3">
+            <label for="admin-profile-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="admin-profile-email" required>
+          </div>
+          <div class="mb-3">
+            <label for="admin-profile-current-password" class="form-label">Contraseña actual</label>
+            <input type="password" class="form-control" id="admin-profile-current-password">
+            <div class="form-text">Introduce tu contraseña actual para confirmar los cambios</div>
+          </div>
+          <div class="mb-3">
+            <label for="admin-profile-new-password" class="form-label">Nueva contraseña (opcional)</label>
+            <input type="password" class="form-control" id="admin-profile-new-password">
+            <div class="form-text">Deja en blanco si no deseas cambiar tu contraseña</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="save-admin-profile-button">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

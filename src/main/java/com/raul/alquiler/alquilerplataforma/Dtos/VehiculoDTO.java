@@ -1,5 +1,6 @@
 package com.raul.alquiler.alquilerplataforma.Dtos;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,6 @@ public class VehiculoDTO {
     private double precio;
     private double latitud;
     private double longitud;
+    private String matricula;
+    private String imagen;
 }

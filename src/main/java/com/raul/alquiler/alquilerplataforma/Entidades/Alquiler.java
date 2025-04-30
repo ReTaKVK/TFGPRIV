@@ -20,9 +20,11 @@ public class Alquiler {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "usuarios_id")
     private Usuario usuario;
 
     @ManyToOne
+    @JoinColumn(name = "vehiculos_id")
     private Vehiculo vehiculo;
 
     private LocalDateTime fechaInicio;

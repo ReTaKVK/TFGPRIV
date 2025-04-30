@@ -10,4 +10,3 @@ import java.util.List;
 public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
     List<Vehiculo> findByDisponibleTrue();
 }
-
