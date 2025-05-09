@@ -1,162 +1,152 @@
-// Main JavaScript for index.html
 document.addEventListener("DOMContentLoaded", () => {
-    // Load featured vehicles
-    loadFeaturedVehicles()
+    // Verificar si el usuario está autenticado y actualizar la interfaz
+    if (window.authService) {
+        window.authService.updateUI()
+    }
 
-    // Handle contact form submission
-    const contactForm = document.getElementById("contact-form")
-    if (contactForm) {
-        contactForm.addEventListener("submit", (e) => {
-            e.preventDefault()
+    // Inicializar tooltips de Bootstrap
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    if (typeof bootstrap !== "undefined") {
+        tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+    }
 
-            // Get form data
-            const name = document.getElementById("name").value
-            const email = document.getElementById("email").value
-            const subject = document.getElementById("subject").value
-            const message = document.getElementById("message").value
+    // Cargar vehículos destacados en la página principal
+    if (document.querySelector(".featured-vehicles")) {
+        loadFeaturedVehicles()
+    }
 
-            // In a real app, this would be an API call
-            console.log("Contact form submitted:", { name, email, subject, message })
-
-            // Show success message
-            showAlert("Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.", "success")
-
-            // Reset form
-            contactForm.reset()
-        })
+    // Inicializar el mapa si existe el contenedor
+    if (document.getElementById("vehicleMap")) {
+        initMap()
     }
 })
 
-// Load featured vehicles
-function loadFeaturedVehicles() {
-    const featuredVehiclesContainer = document.getElementById("featured-vehicles")
-    if (!featuredVehiclesContainer) return
+// Función para cargar vehículos destacados
+async function loadFeaturedVehicles() {
+    const featuredContainer = document.querySelector(".featured-vehicles .row")
+    if (!featuredContainer) return
 
-    // In a real app, this would be an API call
-    fetch("http://localhost:8080/api/vehiculos/disponibles")
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Error al obtener vehículos")
-            }
-            return response.json()
-        })
-        .then((vehicles) => {
-            // Get 3 random vehicles
-            const featuredVehicles = vehicles.sort(() => 0.5 - Math.random()).slice(0, 3)
+    try {
+        // Simulación de carga de datos (reemplazar con llamada a API real)
+        const vehicles = [
+            {
+                id: 1,
+                name: "Toyota Corolla",
+                category: "Sedán",
+                price: 45,
+                image: "img/vehicles/corolla.jpg",
+                features: ["5 Pasajeros", "Automático", "A/C", "Bluetooth"],
+                location: "Centro",
+            },
+            {
+                id: 2,
+                name: "Honda CR-V",
+                category: "SUV",
+                price: 65,
+                image: "img/vehicles/crv.jpg",
+                features: ["5 Pasajeros", "Automático", "A/C", "GPS"],
+                location: "Norte",
+            },
+            {
+                id: 3,
+                name: "Ford Mustang",
+                category: "Deportivo",
+                price: 95,
+                image: "img/vehicles/mustang.jpg",
+                features: ["2 Pasajeros", "Manual", "A/C", "Bluetooth"],
+                location: "Sur",
+            },
+            {
+                id: 4,
+                name: "Chevrolet Suburban",
+                category: "SUV Grande",
+                price: 120,
+                image: "img/vehicles/suburban.jpg",
+                features: ["8 Pasajeros", "Automático", "A/C", "GPS"],
+                location: "Este",
+            },
+        ]
 
-            // Clear loading spinner
-            featuredVehiclesContainer.innerHTML = ""
+        // Limpiar el contenedor
+        featuredContainer.innerHTML = ""
 
-            // Render vehicles
-            featuredVehicles.forEach((vehicle) => {
-                const vehicleCard = createVehicleCard(vehicle)
-                featuredVehiclesContainer.appendChild(vehicleCard)
-            })
-        })
-        .catch((error) => {
-            console.error("Error:", error)
-
-            // For demo purposes, use mock data
-            const mockVehicles = [
-                {
-                    id: 1,
-                    marca: "Audi",
-                    modelo: "A5 Sportback",
-                    año: 2023,
-                    tipo: "Sedán",
-                    precio: 85,
-                    disponible: true,
-                    imagen: "img/audi-a5.jpg",
-                    descripcion: "Elegante sedán deportivo con un potente motor y acabados de lujo.",
-                },
-                {
-                    id: 2,
-                    marca: "BMW",
-                    modelo: "X5",
-                    año: 2023,
-                    tipo: "SUV",
-                    precio: 120,
-                    disponible: true,
-                    imagen: "img/bmw-x5.jpg",
-                    descripcion: "SUV de lujo con amplio espacio interior y tecnología de vanguardia.",
-                },
-                {
-                    id: 3,
-                    marca: "Mercedes-Benz",
-                    modelo: "Clase C",
-                    año: 2022,
-                    tipo: "Sedán",
-                    precio: 95,
-                    disponible: true,
-                    imagen: "img/mercedes-c.jpg",
-                    descripcion: "Sedán de lujo con un diseño elegante y un interior sofisticado.",
-                },
-            ]
-
-            // Clear loading spinner
-            featuredVehiclesContainer.innerHTML = ""
-
-            // Render mock vehicles
-            mockVehicles.forEach((vehicle) => {
-                const vehicleCard = createVehicleCard(vehicle)
-                featuredVehiclesContainer.appendChild(vehicleCard)
-            })
-        })
-}
-
-// Create vehicle card element
-function createVehicleCard(vehicle) {
-    const col = document.createElement("div")
-    col.className = "col-md-4"
-
-    col.innerHTML = `
-        <div class="card h-100 border-0 shadow-sm vehicle-card">
-            <img src="${vehicle.imagen || "img/car-placeholder.jpg"}" class="card-img-top vehicle-image" alt="${vehicle.marca} ${vehicle.modelo}">
-            <div class="card-body p-4">
-                <h5 class="card-title fw-bold mb-2">${vehicle.marca} ${vehicle.modelo}</h5>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="badge bg-primary rounded-pill">${vehicle.tipo}</span>
-                    <span class="fw-bold text-primary">${vehicle.precio}€/día</span>
+        // Generar HTML para cada vehículo
+        vehicles.forEach((vehicle) => {
+            const vehicleCard = document.createElement("div")
+            vehicleCard.className = "col-md-6 col-lg-3 mb-4"
+            vehicleCard.innerHTML = `
+                <div class="card h-100 vehicle-card">
+                    <img src="${vehicle.image || "img/vehicle-placeholder.jpg"}" class="card-img-top" alt="${vehicle.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${vehicle.name}</h5>
+                        <p class="card-text text-muted">${vehicle.category}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="price">$${vehicle.price}/día</span>
+                            <span class="location"><i class="bi bi-geo-alt"></i> ${vehicle.location}</span>
+                        </div>
+                        <ul class="list-unstyled features-list">
+                            ${vehicle.features.map((feature) => `<li><i class="bi bi-check-circle-fill text-success me-2"></i>${feature}</li>`).join("")}
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-grid gap-2">
+                            <a href="vehicle-details.html?id=${vehicle.id}" class="btn btn-primary">Ver detalles</a>
+                        </div>
+                    </div>
                 </div>
-                <p class="card-text text-muted mb-4">${vehicle.descripcion || `${vehicle.marca} ${vehicle.modelo} ${vehicle.año}`}</p>
-                <a href="vehicles.html" class="btn btn-primary w-100">Ver detalles</a>
+            `
+            featuredContainer.appendChild(vehicleCard)
+        })
+    } catch (error) {
+        console.error("Error al cargar vehículos destacados:", error)
+        featuredContainer.innerHTML = `
+            <div class="col-12 text-center">
+                <div class="alert alert-danger">
+                    Error al cargar vehículos. Por favor, intenta de nuevo más tarde.
+                </div>
             </div>
-        </div>
-    `
-
-    return col
+        `
+    }
 }
 
-// Show alert message
-function showAlert(message, type) {
-    // Create alert element
-    const alertDiv = document.createElement("div")
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show`
-    alertDiv.setAttribute("role", "alert")
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `
-
-    // Find alert container
-    let alertContainer = document.querySelector(".alert-container")
-
-    // Create container if it doesn't exist
-    if (!alertContainer) {
-        alertContainer = document.createElement("div")
-        alertContainer.className = "alert-container position-fixed top-0 end-0 p-3"
-        alertContainer.style.zIndex = "1050"
-        document.body.appendChild(alertContainer)
+// Función para inicializar el mapa
+function initMap() {
+    // Esta función se implementa en map.js
+    if (window.initializeMap) {
+        window.initializeMap()
     }
+}
 
-    // Add alert to container
-    alertContainer.appendChild(alertDiv)
+// Función para mostrar modal de login requerido
+function showLoginRequiredModal() {
+    const modalElement = document.getElementById("loginRequiredModal")
+    if (modalElement && window.bootstrap) {
+        const modal = new bootstrap.Modal(modalElement)
+        modal.show()
+    } else {
+        // Fallback si no existe el modal
+        alert("Debes iniciar sesión para realizar esta acción.")
+        window.location.href = "login.html"
+    }
+}
 
-    // Remove alert after 5 seconds
-    setTimeout(() => {
-        alertDiv.classList.remove("show")
-        setTimeout(() => {
-            alertDiv.remove()
-        }, 150)
-    }, 5000)
+// Función para verificar si el usuario está autenticado
+function isUserLoggedIn() {
+    return window.authService && window.authService.isAuthenticated()
+}
+
+// Función para verificar si el usuario es administrador
+function isUserAdmin() {
+    return window.authService && window.authService.isAdmin()
+}
+
+// Función para formatear precio
+function formatCurrency(amount) {
+    return "$" + Number.parseFloat(amount).toFixed(2)
+}
+
+// Función para formatear fecha
+function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric" }
+    return new Date(dateString).toLocaleDateString("es-ES", options)
 }

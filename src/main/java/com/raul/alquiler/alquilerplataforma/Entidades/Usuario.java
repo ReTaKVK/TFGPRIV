@@ -18,10 +18,10 @@ public class Usuario {
     private Long id;
     @Column(nullable = false)
     private String nombre;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private String password;
+    private String password; // Agrega este campo
     @Enumerated(EnumType.STRING)
     private Rol rol;
 }

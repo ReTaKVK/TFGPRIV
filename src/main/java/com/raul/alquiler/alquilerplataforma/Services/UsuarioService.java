@@ -5,6 +5,7 @@ import com.raul.alquiler.alquilerplataforma.Entidades.Usuario;
 import com.raul.alquiler.alquilerplataforma.Mappers.UsuarioMapper;
 import com.raul.alquiler.alquilerplataforma.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,16 @@ import java.util.List;
 public class UsuarioService {
     private final UsuarioRepository repo;
     private final UsuarioMapper mapper;
+    private final PasswordEncoder passwordEncoder; // Inyecta el PasswordEncoder
 
     public UsuarioDTO registrar(UsuarioDTO dto) {
-        Usuario entidad = mapper.toEntidad(dto);
-        return mapper.toDTO(repo.save(entidad));
+        System.out.println("DTO recibido en Servicio: " + dto); // Imprime el DTO en el servicio
+        Usuario usuario = mapper.toEntidad(dto);
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // Encripta la contraseña
+        Usuario savedUsuario = repo.save(usuario);
+        UsuarioDTO savedDto = mapper.toDTO(savedUsuario);
+        System.out.println("Usuario guardado: " + savedDto);  // Imprime el usuario guardado
+        return savedDto;
     }
 
     public List<UsuarioDTO> listarTodos() {

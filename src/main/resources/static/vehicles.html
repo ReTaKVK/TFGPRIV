@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="es">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vehículos - AutoRent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos - AutoRent</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/dark-mode.css" disabled id="dark-mode-styles">
     <link rel="stylesheet" href="css/colorblind.css" disabled id="colorblind-styles">
+    <link rel="stylesheet" href="css/cart.css">
 </head>
 <body>
 <!-- Navbar -->
@@ -41,6 +38,12 @@
                 </li>
             </ul>
             <div class="d-flex align-items-center">
+                <!-- Cart Button -->
+                <a href="cart.html" class="btn btn-outline-primary position-relative me-3">
+                    <i class="bi bi-cart"></i>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">0</span>
+                </a>
+
                 <div class="dropdown me-3">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="accessibilityDropdown" data-bs-toggle="dropdown">
                         <i class="bi bi-palette"></i>
@@ -253,26 +256,90 @@
                             </div>
                         </div>
 
-                        <div id="rental-form-container">
-                            <h5 class="fw-bold mb-3">Reservar ahora</h5>
-                            <form id="rental-form">
-                                <input type="hidden" id="vehicle-id">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
+                        <!-- Rental Options Tabs -->
+                        <ul class="nav nav-tabs mb-3" id="rentalTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="hourly-tab" data-bs-toggle="tab" data-bs-target="#hourly-content" type="button" role="tab" aria-controls="hourly-content" aria-selected="true">Por horas</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="daily-tab" data-bs-toggle="tab" data-bs-target="#daily-content" type="button" role="tab" aria-controls="daily-content" aria-selected="false">Por días</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="rentalTabsContent">
+                            <!-- Hourly Rental Tab -->
+                            <div class="tab-pane fade show active" id="hourly-content" role="tabpanel" aria-labelledby="hourly-tab">
+                                <form id="hourly-rental-form">
+                                    <input type="hidden" id="vehicle-id" value="">
+                                    <div class="mb-3">
+                                        <label for="hourly-duration" class="form-label">Duración (horas)</label>
+                                        <select class="form-select" id="hourly-duration" required>
+                                            <option value="1">1 hora</option>
+                                            <option value="2">2 horas</option>
+                                            <option value="3">3 horas</option>
+                                            <option value="4">4 horas</option>
+                                            <option value="5">5 horas</option>
+                                            <option value="6">6 horas</option>
+                                            <option value="7">7 horas</option>
+                                            <option value="8">8 horas</option>
+                                            <option value="9">9 horas</option>
+                                            <option value="10">10 horas</option>
+                                            <option value="11">11 horas</option>
+                                            <option value="12">12 horas</option>
+                                        </select>
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Descuento del 10% a partir de 3 horas, 15% a partir de 6 horas
+                                        </small>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="pickup-date" class="form-label">Fecha de recogida</label>
                                         <input type="date" class="form-control" id="pickup-date" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="return-date" class="form-label">Fecha de devolución</label>
-                                        <input type="date" class="form-control" id="return-date" required>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" id="add-to-cart-btn" class="btn btn-outline-primary">
+                                            <i class="bi bi-cart-plus me-2"></i>Añadir al carrito
+                                        </button>
+                                        <button type="button" id="rent-now-btn" class="btn btn-primary">
+                                            <i class="bi bi-lightning-charge me-2"></i>Alquilar ahora
+                                        </button>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary" id="rent-button">Alquilar ahora</button>
-                                        </div>
+                                </form>
+                            </div>
+
+                            <!-- Daily Rental Tab -->
+                            <div class="tab-pane fade" id="daily-content" role="tabpanel" aria-labelledby="daily-tab">
+                                <form id="daily-rental-form">
+                                    <div class="mb-3">
+                                        <label for="daily-duration" class="form-label">Duración (días)</label>
+                                        <select class="form-select" id="daily-duration" required>
+                                            <option value="1">1 día</option>
+                                            <option value="2">2 días</option>
+                                            <option value="3">3 días</option>
+                                            <option value="4">4 días</option>
+                                            <option value="5">5 días</option>
+                                            <option value="6">6 días</option>
+                                            <option value="7">7 días</option>
+                                        </select>
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Descuento del 15% a partir de 3 días, 25% a partir de 5 días
+                                        </small>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="mb-3">
+                                        <label for="pickup-date-daily" class="form-label">Fecha de recogida</label>
+                                        <input type="date" class="form-control" id="pickup-date-daily" required>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" id="add-to-cart-btn-daily" class="btn btn-outline-primary">
+                                            <i class="bi bi-cart-plus me-2"></i>Añadir al carrito
+                                        </button>
+                                        <button type="button" id="rent-now-btn-daily" class="btn btn-primary">
+                                            <i class="bi bi-lightning-charge me-2"></i>Alquilar ahora
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <div id="login-required-message" class="d-none">
@@ -287,6 +354,59 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add to Cart Success Modal -->
+<div class="modal fade" id="add-to-cart-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vehículo añadido al carrito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="bi bi-cart-check text-success display-1 mb-3"></i>
+                <h4 class="mb-3">¡Vehículo añadido correctamente!</h4>
+                <p>El vehículo ha sido añadido a tu carrito de alquiler.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
+                <a href="cart.html" class="btn btn-primary">Ver carrito</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Required Modal -->
+<div class="modal fade" id="login-required-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Iniciar sesión requerido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="bi bi-person-lock display-1 text-primary mb-3"></i>
+                <p>Debes iniciar sesión para alquilar un vehículo.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="login.html" class="btn btn-primary">Iniciar sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+    <div id="cart-toast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="cart-toast-message">
+                Vehículo añadido al carrito
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     </div>
 </div>
@@ -341,16 +461,14 @@
     </div>
 </footer>
 
+<!-- Alert Container for Notifications -->
+<div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/vehicles.js"></script>
-</body>
-</html>
-</title>
-</head>
-<body>
-
+<script src="js/cart.js"></script>
 </body>
 </html>

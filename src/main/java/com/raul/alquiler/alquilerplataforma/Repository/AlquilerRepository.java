@@ -6,3 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {}
+
+

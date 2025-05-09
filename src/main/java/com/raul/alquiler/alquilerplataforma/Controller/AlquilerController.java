@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,7 +18,9 @@ public class AlquilerController {
 
     @PostMapping("/crear")
     public AlquilerDTO alquilar(@RequestBody AlquilerDTO dto) {
+        System.out.println("Anxela fue añadida");
         return service.alquilar(dto);
+
     }
 
     @GetMapping
