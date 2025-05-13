@@ -3,6 +3,7 @@ package com.raul.alquiler.alquilerplataforma.Services;
 import com.raul.alquiler.alquilerplataforma.Entidades.Usuario;
 import com.raul.alquiler.alquilerplataforma.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,14 +15,18 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        // Aquí puedes personalizar los roles/autoridades si es necesario
-        return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getPassword(), new ArrayList<>());
+        return org.springframework.security.core.userdetails.User
+                .withUsername(usuario.getEmail())
+                .password(usuario.getPassword()) // IMPORTANTE: debe estar cifrada
+                .authorities(usuario.getRol().name()) // o List.of(new SimpleGrantedAuthority("ROLE_" + rol))
+                .build();
     }
 }

@@ -18,6 +18,9 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder; // Inyecta el PasswordEncoder
 
     public UsuarioDTO registrar(UsuarioDTO dto) {
+        if (repo.findByEmail(dto.getEmail()).isPresent()) {
+            throw new RuntimeException("El email ya está registrado");
+        }
         System.out.println("DTO recibido en Servicio: " + dto); // Imprime el DTO en el servicio
         Usuario usuario = mapper.toEntidad(dto);
         usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // Encripta la contraseña

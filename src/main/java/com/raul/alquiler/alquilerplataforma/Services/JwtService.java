@@ -19,20 +19,13 @@ import java.util.function.Function;
 public class JwtService {
 
     @Value("${jwt.secret}")
-    private String secret;
+    private String SECRET_KEY;
 
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    @Value("${jwt.refresh-token.expiration}")
-    private long refreshExpiration;
-
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -40,42 +33,20 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildTokenWithClaims(extraClaims, userDetails, new Date(System.currentTimeMillis() + jwtExpiration));
-    }
-
-    public String generateRefreshToken(UserDetails userDetails) {
-        return buildTokenWithClaims(new HashMap<>(), userDetails, new Date(System.currentTimeMillis() + refreshExpiration));
-    }
-
-    private String buildTokenWithClaims(Map<String, Object> claims, UserDetails userDetails, Date expiration) {
-        // Agregar el nombre de usuario como subject si no está ya presente
-        if (!claims.containsKey("sub")) {
-            claims.put("sub", userDetails.getUsername());
-        }
-
-        return Jwts.builder()
-                .setClaims(claims)
+    public String generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(expiration)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -89,8 +60,21 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    // Método para extraer el rol (opcional, puedes usar extractClaim directamente)
-    public String extractRol(String token) {
-        return extractClaim(token, claims -> claims.get("rol", String.class));
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }
