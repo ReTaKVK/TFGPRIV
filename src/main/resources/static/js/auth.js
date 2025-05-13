@@ -127,7 +127,7 @@ function updateNavbarButtons() {
 // Función para iniciar sesión
 async function login(email, password) {
     try {
-        const response = await fetch(`${API_URL}/auth/authenticate`, {
+        const response = await fetch(`http://localhost:8080/api/auth/authenticate`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -155,7 +155,7 @@ async function login(email, password) {
 // Función para registrarse
 async function register(nombre, email, password) {
     try {
-        const response = await fetch(`${API_URL}/auth/register`, {
+        const response = await fetch(`http://localhost:8080/api/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -164,7 +164,7 @@ async function register(nombre, email, password) {
                 nombre,
                 email,
                 password,
-                rol: "USER", // Por defecto, todos los usuarios nuevos son de tipo USER
+                rol: "CLIENTE", // Por defecto, todos los usuarios nuevos son de tipo USER
             }),
         })
 

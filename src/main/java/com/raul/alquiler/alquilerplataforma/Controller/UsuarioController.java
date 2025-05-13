@@ -25,7 +25,7 @@ public class UsuarioController {
 
     @PostMapping("/registrar")
     public UsuarioDTO registrar(@RequestBody UsuarioDTO dto) {
-        System.out.println("Anxela fue añadida");
+        System.out.println("el usuario fue añadido");
         return service.registrar(dto);
     }
 
