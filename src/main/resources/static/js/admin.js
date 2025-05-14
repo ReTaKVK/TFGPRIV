@@ -980,7 +980,7 @@ function setupNavButtons() {
 
     // Botón de perfil
     html += `
-        <a href="profile.html" class="btn btn-outline-light me-2">
+        <a href="perfil.html" class="btn btn-outline-light me-2">
             <i class="bi bi-person-circle me-1"></i>Mi perfil
         </a>
     `;
