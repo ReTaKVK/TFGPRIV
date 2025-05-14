@@ -125,3 +125,33 @@ document.addEventListener("DOMContentLoaded", () => {
         applyFiltersBtn.addEventListener("click", applyFilters);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+// Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+// Scroll reveal animation
+    function reveal() {
+        const reveals = document.querySelectorAll('.reveal');
+
+        for (let i = 0; i < reveals.length; i++) {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveals[i].getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add('active');
+            }
+        }
+    }
+
+    window.addEventListener('scroll', reveal);
+    reveal(); // Para elementos visibles al cargar la página
+});

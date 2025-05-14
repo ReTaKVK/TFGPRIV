@@ -1,18 +1,22 @@
 package com.raul.alquiler.alquilerplataforma.Services;
 
 import com.raul.alquiler.alquilerplataforma.Dtos.VehiculoDTO;
+import com.raul.alquiler.alquilerplataforma.Entidades.Alquiler;
 import com.raul.alquiler.alquilerplataforma.Entidades.Vehiculo;
 import com.raul.alquiler.alquilerplataforma.Mappers.VehiculoMapper;
+import com.raul.alquiler.alquilerplataforma.Repository.AlquilerRepository;
 import com.raul.alquiler.alquilerplataforma.Repository.VehiculoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class VehiculoService {
     private final VehiculoRepository repo;
+    private final AlquilerRepository alquilerRepo;
     private final VehiculoMapper mapper;
 
     // Listar todos los vehículos
@@ -51,8 +55,36 @@ public class VehiculoService {
         repo.deleteById(id);
     }
 
-    // Obtener vehículos disponibles
+    // Obtener vehículos disponibles (ahora solo verifica el flag disponible)
     public List<VehiculoDTO> disponibles() {
         return repo.findByDisponibleTrue().stream().map(mapper::toDTO).toList();
+    }
+
+    // Nuevo método: Verificar si un vehículo está disponible en un rango de fechas
+    public boolean isDisponibleEnFechas(Long vehiculoId, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        Vehiculo vehiculo = repo.findById(vehiculoId)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+
+        // Si el vehículo está marcado como no disponible, retornar false
+        if (!vehiculo.isDisponible()) {
+            return false;
+        }
+
+        // Buscar alquileres que se solapen con el rango de fechas solicitado
+        List<Alquiler> alquileres = alquilerRepo.findByVehiculoAndFechaFinAfterAndFechaInicioBefore(
+                vehiculo, fechaInicio, fechaFin);
+
+        // Si no hay alquileres que se solapen, el vehículo está disponible
+        return alquileres.isEmpty();
+    }
+
+    // Nuevo método: Obtener vehículos disponibles en un rango de fechas
+    public List<VehiculoDTO> disponiblesEnFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        List<Vehiculo> vehiculos = repo.findByDisponibleTrue();
+
+        return vehiculos.stream()
+                .filter(v -> isDisponibleEnFechas(v.getId(), fechaInicio, fechaFin))
+                .map(mapper::toDTO)
+                .toList();
     }
 }

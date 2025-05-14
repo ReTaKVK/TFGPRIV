@@ -2,30 +2,32 @@ package com.raul.alquiler.alquilerplataforma.Controller;
 
 import com.raul.alquiler.alquilerplataforma.Dtos.AlquilerDTO;
 import com.raul.alquiler.alquilerplataforma.Services.AlquilerService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alquileres")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class AlquilerController {
     private final AlquilerService service;
 
     @PostMapping("/crear")
     public AlquilerDTO alquilar(@RequestBody AlquilerDTO dto) {
-        System.out.println("Anxela fue añadida");
         return service.alquilar(dto);
-
     }
 
     @GetMapping
     public List<AlquilerDTO> listarTodos() {
         return service.listarTodos();
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public List<AlquilerDTO> listarPorUsuario(@PathVariable Long usuarioId) {
+        return service.listarPorUsuario(usuarioId);
     }
 
     @GetMapping("/{id}")
@@ -39,7 +41,22 @@ public class AlquilerController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        service.eliminar(id);
+    public ResponseEntity<String> eliminar(@PathVariable Long id) {
+        try {
+            service.eliminar(id);
+            return ResponseEntity.ok("Alquiler cancelado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/cancelar")
+    public ResponseEntity<String> cancelar(@PathVariable Long id) {
+        try {
+            service.cancelarAlquiler(id);
+            return ResponseEntity.ok("Alquiler cancelado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

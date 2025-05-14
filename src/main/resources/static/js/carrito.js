@@ -247,3 +247,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Actualización inicial del carrito
     actualizarCarrito();
 });
+
+

@@ -1,12 +1,14 @@
-
 package com.raul.alquiler.alquilerplataforma.Controller;
 
 import com.raul.alquiler.alquilerplataforma.Dtos.VehiculoDTO;
 import com.raul.alquiler.alquilerplataforma.Services.VehiculoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/vehiculos")
@@ -17,6 +19,21 @@ public class VehiculoController {
     @GetMapping("/disponibles")
     public List<VehiculoDTO> disponibles() {
         return service.disponibles();
+    }
+
+    @GetMapping("/disponibles-en-fechas")
+    public List<VehiculoDTO> disponiblesEnFechas(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaInicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin) {
+        return service.disponiblesEnFechas(fechaInicio, fechaFin);
+    }
+
+    @GetMapping("/{id}/disponibilidad")
+    public boolean verificarDisponibilidad(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaInicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin) {
+        return service.isDisponibleEnFechas(id, fechaInicio, fechaFin);
     }
 
     @GetMapping
@@ -31,7 +48,6 @@ public class VehiculoController {
 
     @PostMapping
     public VehiculoDTO crear(@RequestBody VehiculoDTO dto) {
-        System.out.println("Imagen recibida: " + dto.getImagen());
         return service.crear(dto);
     }
 
@@ -45,5 +61,3 @@ public class VehiculoController {
         service.eliminar(id);
     }
 }
-
-

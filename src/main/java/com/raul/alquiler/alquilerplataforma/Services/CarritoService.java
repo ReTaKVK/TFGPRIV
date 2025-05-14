@@ -27,13 +27,19 @@ public class CarritoService {
     private final VehiculoRepository vehiculoRepo;
     private final AlquilerRepository alquilerRepo;
     private final CarritoItemMapper carritoItemMapper;
+    private final VehiculoService vehiculoService;
 
-    // ✅ Agregar vehículo al carrito
+    // Agregar vehículo al carrito con fechas
     public void agregarAlCarrito(Long usuarioId, Long vehiculoId, int dias, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         Vehiculo vehiculo = vehiculoRepo.findById(vehiculoId)
                 .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+
+        // Verificar disponibilidad en las fechas seleccionadas
+        if (!vehiculoService.isDisponibleEnFechas(vehiculoId, fechaInicio, fechaFin)) {
+            throw new RuntimeException("El vehículo no está disponible en las fechas seleccionadas");
+        }
 
         CarritoItem item = CarritoItem.builder()
                 .usuario(usuario)
@@ -48,10 +54,14 @@ public class CarritoService {
 
     // Mantener el método original para compatibilidad
     public void agregarAlCarrito(Long usuarioId, Long vehiculoId, int dias) {
-        agregarAlCarrito(usuarioId, vehiculoId, dias, null, null);
+        // Calcular fechas por defecto si no se proporcionan
+        LocalDateTime fechaInicio = LocalDateTime.now();
+        LocalDateTime fechaFin = fechaInicio.plusDays(dias);
+
+        agregarAlCarrito(usuarioId, vehiculoId, dias, fechaInicio, fechaFin);
     }
 
-    // ✅ Listar carrito como DTO
+    // Listar carrito como DTO
     public List<CarritoItemDTO> obtenerCarritoDTO(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -63,7 +73,7 @@ public class CarritoService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ Calcular total del carrito
+    // Calcular total del carrito
     public double calcularTotalCarrito(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -75,8 +85,7 @@ public class CarritoService {
                 .sum();
     }
 
-    // ✅ Confirmar alquiler (crear alquileres y vaciar carrito)
-    // ✅ Confirmar alquiler (crear alquileres y vaciar carrito)
+    // Confirmar alquiler (crear alquileres y vaciar carrito)
     @Transactional
     public void confirmarAlquiler(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
@@ -87,7 +96,7 @@ public class CarritoService {
         for (CarritoItem item : items) {
             Vehiculo vehiculo = item.getVehiculo();
 
-            // Usar las fechas almacenadas en el carrito en lugar de LocalDateTime.now()
+            // Usar las fechas almacenadas en el carrito
             LocalDateTime fechaInicio = item.getFechaInicio() != null ?
                     item.getFechaInicio() :
                     LocalDateTime.now();
@@ -95,6 +104,12 @@ public class CarritoService {
             LocalDateTime fechaFin = item.getFechaFin() != null ?
                     item.getFechaFin() :
                     LocalDateTime.now().plusDays(item.getDias());
+
+            // Verificar disponibilidad nuevamente antes de confirmar
+            if (!vehiculoService.isDisponibleEnFechas(vehiculo.getId(), fechaInicio, fechaFin)) {
+                throw new RuntimeException("El vehículo " + vehiculo.getMarca() + " " +
+                        vehiculo.getModelo() + " ya no está disponible en las fechas seleccionadas");
+            }
 
             Alquiler alquiler = Alquiler.builder()
                     .usuario(usuario)
@@ -105,11 +120,15 @@ public class CarritoService {
 
             alquilerRepo.save(alquiler);
 
-            // Marcar vehículo como no disponible
-            vehiculo.setDisponible(false);
-            vehiculoRepo.save(vehiculo);
+            // Ya no marcamos el vehículo como no disponible globalmente
+            // Solo estará no disponible durante las fechas del alquiler
         }
 
         carritoRepo.deleteAll(items); // Vaciar el carrito
+    }
+
+    // Nuevo método: Eliminar un item del carrito
+    public void eliminarItem(Long itemId) {
+        carritoRepo.deleteById(itemId);
     }
 }

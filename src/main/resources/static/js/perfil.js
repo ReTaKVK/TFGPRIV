@@ -179,6 +179,7 @@ function displayUserRentals() {
                         </div>
                     </div>
                 </td>
+                <td>${(rental.id)}</td>
                 <td>${formatDate(rental.fechaInicio)}</td>
                 <td>${formatDate(rental.fechaFin)}</td>
                 <td><span class="badge ${estadoClass}">${estado}</span></td>

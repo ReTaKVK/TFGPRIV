@@ -168,6 +168,31 @@ function obtenerUsuarioId() {
     return null;
 }
 // Función para agregar el vehículo al carrito
+async function verificarDisponibilidad(vehiculoId, fechaInicio, fechaFin) {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return false;
+        }
+
+        const response = await fetch(`http://localhost:8080/api/vehiculos/${vehiculoId}/disponibilidad?fechaInicio=${fechaInicio.toISOString()}&fechaFin=${fechaFin.toISOString()}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            return false;
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al verificar disponibilidad:', error);
+        return false;
+    }
+}
+
+// Función para agregar el vehículo al carrito
 async function addToCart() {
     const fechaInicio = document.getElementById("fechaInicio").value;
     const fechaFin = document.getElementById("fechaFin").value;
@@ -191,6 +216,13 @@ async function addToCart() {
     const usuarioId = obtenerUsuarioId();
     if (!usuarioId) {
         showToast("Error", "No se pudo obtener el ID del usuario", "error");
+        return;
+    }
+
+    // Verificar disponibilidad antes de agregar al carrito
+    const disponible = await verificarDisponibilidad(vehiculo.id, inicio, fin);
+    if (!disponible) {
+        showToast("Error", "El vehículo no está disponible en las fechas seleccionadas", "error");
         return;
     }
 
