@@ -622,7 +622,7 @@ async function saveUsuario(event) {
                 throw new Error("La contraseña es obligatoria para crear un nuevo usuario");
             }
 
-            response = await fetch(`http://localhost:8080/api/usuarios`, {
+            response = await fetch(`http://localhost:8080/api/usuarios/registrar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
