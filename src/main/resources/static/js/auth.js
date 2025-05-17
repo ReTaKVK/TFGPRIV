@@ -98,7 +98,7 @@ function setupNavButtons() {
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
-                    <li><a class="dropdown-item" href="bookings.html"><i class="bi bi-calendar-check me-2"></i>Mis Reservas</a></li>
+                    <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-calendar-check me-2"></i>Mis Reservas</a></li>
         `;
 
         if (user.rol === "ADMIN") {
