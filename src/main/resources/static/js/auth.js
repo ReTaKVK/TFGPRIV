@@ -82,7 +82,7 @@ function setupNavButtons() {
     if (user) {
         // Usuario autenticado
         html += `
-            <a href="cart.html" class="btn btn-outline-light position-relative me-2">
+            <a href="carrito.html" class="btn btn-outline-light position-relative me-2">
                 <i class="bi bi-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     <span id="cart-count">0</span>
