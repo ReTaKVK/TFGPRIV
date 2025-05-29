@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - RentCar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader-icon">
+        <i class="bi bi-car-front preloader-car"></i>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <i class="bi bi-car-front-fill me-2"></i>RentCar Admin
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Sitio Web</a>
+                </li>
+            </ul>
+            <div class="d-flex" id="navbarButtons">
+                <!-- Los botones se cargarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-2 col-md-3 p-0 admin-sidebar">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#v-pills-dashboard" type="button" role="tab" aria-controls="v-pills-dashboard" aria-selected="true" data-tab="dashboard">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a class="nav-link" id="v-pills-vehiculos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-vehiculos" type="button" role="tab" aria-controls="v-pills-vehiculos" aria-selected="false" data-tab="vehiculos">
+                    <i class="bi bi-car-front"></i> Vehículos
+                </a>
+                <a class="nav-link" id="v-pills-usuarios-tab" data-bs-toggle="pill" data-bs-target="#v-pills-usuarios" type="button" role="tab" aria-controls="v-pills-usuarios" aria-selected="false" data-tab="usuarios">
+                    <i class="bi bi-people"></i> Usuarios
+                </a>
+                <a class="nav-link" id="v-pills-alquileres-tab" data-bs-toggle="pill" data-bs-target="#v-pills-alquileres" type="button" role="tab" aria-controls="v-pills-alquileres" aria-selected="false" data-tab="alquileres">
+                    <i class="bi bi-calendar-check"></i> Alquileres
+                </a>
+                <a class="nav-link" id="v-pills-configuracion-tab" data-bs-toggle="pill" data-bs-target="#v-pills-configuracion" type="button" role="tab" aria-controls="v-pills-configuracion" aria-selected="false" data-tab="configuracion">
+                    <i class="bi bi-gear"></i> Configuración
+                </a>
+                <a class="nav-link text-danger" href="#" id="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                </a>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-lg-10 col-md-9 admin-content">
+            <!-- Loading Spinner -->
+            <div id="admin-loading" class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-3">Cargando datos...</p>
+            </div>
+
+            <!-- Admin Content -->
+            <div id="admin-content" class="d-none">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <!-- Dashboard Tab -->
+                    <div class="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                        <h2 class="mb-4 fade-in-down">Dashboard</h2>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card admin-card fade-in-up delay-1">
+                                    <div class="card-body">
+                                        <div class="admin-stat">
+                                            <div class="admin-stat-icon">
+                                                <i class="bi bi-car-front"></i>
+                                            </div>
+                                            <div class="admin-stat-content">
+                                                <h3 id="total-vehiculos">0</h3>
+                                                <p>Vehículos</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card admin-card fade-in-up delay-2">
+                                    <div class="card-body">
+                                        <div class="admin-stat">
+                                            <div class="admin-stat-icon">
+                                                <i class="bi bi-people"></i>
+                                            </div>
+                                            <div class="admin-stat-content">
+                                                <h3 id="total-usuarios">0</h3>
+                                                <p>Usuarios</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card admin-card fade-in-up delay-3">
+                                    <div class="card-body">
+                                        <div class="admin-stat">
+                                            <div class="admin-stat-icon">
+                                                <i class="bi bi-calendar-check"></i>
+                                            </div>
+                                            <div class="admin-stat-content">
+                                                <h3 id="total-alquileres">0</h3>
+                                                <p>Alquileres</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card admin-card fade-in-up delay-4">
+                                    <div class="card-body">
+                                        <div class="admin-stat">
+                                            <div class="admin-stat-icon">
+                                                <i class="bi bi-currency-euro"></i>
+                                            </div>
+                                            <div class="admin-stat-content">
+                                                <h3 id="total-ingresos">0€</h3>
+                                                <p>Ingresos</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="card admin-card fade-in-up delay-5">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Alquileres recientes</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover admin-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Usuario</th>
+                                                    <th>Vehículo</th>
+                                                    <th>Fecha inicio</th>
+                                                    <th>Fecha fin</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="recent-rentals-table">
+                                                <!-- Los alquileres recientes se cargarán dinámicamente -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card admin-card fade-in-up delay-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vehículos más alquilados</h5>
+                                        <div id="top-vehicles">
+                                            <!-- Los vehículos más alquilados se cargarán dinámicamente -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehículos Tab -->
+                    <div class="tab-pane fade" id="v-pills-vehiculos" role="tabpanel" aria-labelledby="v-pills-vehiculos-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="mb-0 fade-in-down">Gestión de Vehículos</h2>
+                            <button id="new-vehiculo-btn" class="btn btn-primary fade-in-right">
+                                <i class="bi bi-plus-lg me-2"></i>Nuevo vehículo
+                            </button>
+                        </div>
+
+                        <div class="card admin-card fade-in-up">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover admin-table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Vehículo</th>
+                                            <th>Precio/día</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="vehiculos-table-body">
+                                        <!-- Los vehículos se cargarán dinámicamente con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usuarios Tab -->
+                    <div class="tab-pane fade" id="v-pills-usuarios" role="tabpanel" aria-labelledby="v-pills-usuarios-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="mb-0 fade-in-down">Gestión de Usuarios</h2>
+                            <button id="new-usuario-btn" class="btn btn-primary fade-in-right">
+                                <i class="bi bi-plus-lg me-2"></i>Nuevo usuario
+                            </button>
+                        </div>
+
+                        <div class="card admin-card fade-in-up">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover admin-table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Rol</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="usuarios-table-body">
+                                        <!-- Los usuarios se cargarán dinámicamente con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alquileres Tab -->
+                    <div class="tab-pane fade" id="v-pills-alquileres" role="tabpanel" aria-labelledby="v-pills-alquileres-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="mb-0 fade-in-down">Gestión de Alquileres</h2>
+                            <button id="new-alquiler-btn" class="btn btn-primary fade-in-right">
+                                <i class="bi bi-plus-lg me-2"></i>Nuevo alquiler
+                            </button>
+                        </div>
+
+                        <div class="card admin-card fade-in-up">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover admin-table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Vehículo</th>
+                                            <th>Usuario</th>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="alquileres-table-body">
+                                        <!-- Los alquileres se cargarán dinámicamente con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración Tab -->
+                    <div class="tab-pane fade" id="v-pills-configuracion" role="tabpanel" aria-labelledby="v-pills-configuracion-tab">
+                        <h2 class="mb-4 fade-in-down">Configuración</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card admin-card fade-in-up">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Configuración general</h5>
+                                        <form id="config-form">
+                                            <div class="mb-3">
+                                                <label for="config-nombre-sitio" class="form-label">Nombre del sitio</label>
+                                                <input type="text" class="form-control" id="config-nombre-sitio" value="RentCar">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="config-email-contacto" class="form-label">Email de contacto</label>
+                                                <input type="email" class="form-control" id="config-email-contacto" value="info@rentcar.com">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="config-telefono" class="form-label">Teléfono</label>
+                                                <input type="text" class="form-control" id="config-telefono" value="(+34) 123 456 789">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="config-direccion" class="form-label">Dirección</label>
+                                                <input type="text" class="form-control" id="config-direccion" value="Calle Principal 123, Ciudad">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Guardar configuración</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card admin-card fade-in-up delay-1">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Configuración de alquileres</h5>
+                                        <form id="config-alquileres-form">
+                                            <div class="mb-3">
+                                                <label for="config-iva" class="form-label">IVA (%)</label>
+                                                <input type="number" class="form-control" id="config-iva" value="21">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="config-dias-min" class="form-label">Días mínimos de alquiler</label>
+                                                <input type="number" class="form-control" id="config-dias-min" value="1">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="config-dias-max" class="form-label">Días máximos de alquiler</label>
+                                                <input type="number" class="form-control" id="config-dias-max" value="30">
+                                            </div>
+                                            <div class="mb-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="config-permitir-cancelaciones" checked>
+                                                <label class="form-check-label" for="config-permitir-cancelaciones">Permitir cancelaciones</label>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Guardar configuración</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para vehículos -->
+<div class="modal fade" id="vehiculoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vehiculoModalLabel">Nuevo vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="vehiculo-form">
+                    <input type="hidden" id="vehiculo-id">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="vehiculo-marca" class="form-label">Marca</label>
+                            <input type="text" class="form-control" id="vehiculo-marca" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vehiculo-modelo" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="vehiculo-modelo" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vehiculo-matricula" class="form-label">Matrícula</label>
+                            <input type="text" class="form-control" id="vehiculo-matricula" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vehiculo-precio" class="form-label">Precio por día (€)</label>
+                            <input type="number" class="form-control" id="vehiculo-precio" min="0" step="0.01" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="vehiculo-imagen" class="form-label">URL de la imagen</label>
+                            <input type="url" class="form-control" id="vehiculo-imagen">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vehiculo-latitud" class="form-label">Latitud</label>
+                            <input type="number" class="form-control" id="vehiculo-latitud" step="0.000001">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vehiculo-longitud" class="form-label">Longitud</label>
+                            <input type="number" class="form-control" id="vehiculo-longitud" step="0.000001">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="vehiculo-disponible" checked>
+                                <label class="form-check-label" for="vehiculo-disponible">
+                                    Disponible
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('vehiculo-form').requestSubmit()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para usuarios -->
+<div class="modal fade" id="usuarioModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usuarioModalLabel">Nuevo usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="usuario-form">
+                    <input type="hidden" id="usuario-id">
+                    <div class="mb-3">
+                        <label for="usuario-nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="usuario-nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="usuario-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="usuario-password">
+                        <small class="text-muted">Dejar en blanco para mantener la contraseña actual</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-rol" class="form-label">Rol</label>
+                        <select class="form-select" id="usuario-rol" required>
+                            <option value="CLIENTE">Cliente</option>
+                            <option value="ADMIN">Administrador</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('usuario-form').requestSubmit()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para alquileres -->
+<div class="modal fade" id="alquilerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alquilerModalLabel">Nuevo alquiler</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="alquiler-form">
+                    <input type="hidden" id="alquiler-id">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="alquiler-usuario" class="form-label">Usuario</label>
+                            <select class="form-select" id="alquiler-usuario" required>
+                                <!-- Los usuarios se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="alquiler-vehiculo" class="form-label">Vehículo</label>
+                            <select class="form-select" id="alquiler-vehiculo" required>
+                                <!-- Los vehículos se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="alquiler-fecha-inicio" class="form-label">Fecha de inicio</label>
+                            <input type="date" class="form-control" id="alquiler-fecha-inicio" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="alquiler-fecha-fin" class="form-label">Fecha de fin</label>
+                            <input type="date" class="form-control" id="alquiler-fecha-fin" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('alquiler-form').requestSubmit()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast para notificaciones -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto" id="toastTitle">Notificación</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/prueba.js"></script>
+
+</body>
+</html>

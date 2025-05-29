@@ -3,17 +3,694 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentCar - Alquiler de Vehículos</title>
+    <title>RentCar - Alquiler de Vehículos Premium</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           ESTILOS INTEGRADOS PARA EVITAR PROBLEMAS DE MIME TYPE
+           ========================================= */
+
+        :root {
+            --primary: #0a4da3;
+            --primary-dark: #083a7d;
+            --primary-light: #1e6fd0;
+            --primary-gradient: linear-gradient(135deg, #0a4da3, #1e6fd0);
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --dark: #1a1a1a;
+            --dark-gray: #333333;
+            --medium-gray: #6c757d;
+            --light-gray: #e9ecef;
+            --ultra-light: #f8f9fa;
+            --white: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Montserrat', sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-full: 9999px;
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background-color: var(--ultra-light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* =========================================
+           NAVBAR STYLES
+           ========================================= */
+        .navbar {
+            padding: 1.25rem 0;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            background: linear-gradient(145deg, #2c3e50, #1a1a1a) !important;
+        }
+
+        .navbar-brand {
+            font-family: var(--font-secondary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            color: white !important;
+        }
+
+        .navbar-brand i {
+            font-size: 1.25rem;
+            margin-right: 0.5rem;
+            color: var(--accent);
+            transition: transform var(--transition-normal);
+        }
+
+        .navbar-brand:hover i {
+            transform: translateX(5px) rotate(15deg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            position: relative;
+            transition: color var(--transition-fast);
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--white);
+            transform: translateX(-100%);
+            transition: transform var(--transition-normal);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            transform: translateX(0);
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .navbar .btn {
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            margin: 0 0.25rem;
+        }
+
+        .navbar .btn-outline-light {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .navbar .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            border-color: white;
+        }
+
+        .navbar .btn-light {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+        }
+
+        .navbar .btn-light:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero-section {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 77, 163, 0.9), rgba(44, 62, 80, 0.95));
+            padding: 8rem 0;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-section .display-4 {
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-section .lead {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out 0.3s;
+            animation-fill-mode: both;
+        }
+
+        .hero-section .btn {
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-bounce);
+            animation: fadeInUp 1s ease-out 0.6s;
+            animation-fill-mode: both;
+            margin: 0.5rem;
+        }
+
+        .hero-section .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* =========================================
+           FEATURES SECTION
+           ========================================= */
+        .features-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-normal);
+            border: none;
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: white;
+            background: var(--primary-gradient);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-full);
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-bounce);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* =========================================
+           VEHICLES SECTION
+           ========================================= */
+        .vehicles-section {
+            padding: 5rem 0;
+            background-color: var(--ultra-light);
+        }
+
+        .vehicle-card {
+            border: none;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-bounce);
+            background-color: white;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .vehicle-img {
+            height: 220px;
+            object-fit: cover;
+            transition: all var(--transition-normal);
+        }
+
+        .vehicle-card:hover .vehicle-img {
+            transform: scale(1.1);
+        }
+
+        .vehicle-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .vehicle-card .card-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            transition: color var(--transition-normal);
+        }
+
+        .vehicle-card:hover .card-title {
+            color: var(--primary);
+        }
+
+        .vehicle-card .btn {
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            transition: all var(--transition-bounce);
+        }
+
+        .vehicle-card .btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* =========================================
+           HOW IT WORKS SECTION
+           ========================================= */
+        .how-it-works-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .step-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-bounce);
+        }
+
+        .step-circle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        footer h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        footer p, footer address {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* =========================================
+           ANIMATIONS
+           ========================================= */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           AUTH SYSTEM STYLES
+           ========================================= */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 50%, rgba(255, 154, 158, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .auth-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .auth-overlay.active .auth-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .auth-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+        }
+
+        .auth-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .auth-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .auth-body {
+            padding: 1rem 2rem 2rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-field-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .auth-field-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .auth-divider span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .auth-switch {
+            text-align: center;
+        }
+
+        .auth-switch a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .auth-switch a:hover {
+            color: white;
+        }
+
+        .auth-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .auth-error.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 5rem 0;
+            }
+
+            .hero-section .display-4 {
+                font-size: 2rem;
+            }
+
+            .features-section,
+            .vehicles-section,
+            .how-it-works-section {
+                padding: 3rem 0;
+            }
+
+            .auth-container {
+                width: 95%;
+                margin: 1rem;
+            }
+        }
+
+        /* =========================================
+           UTILITIES
+           ========================================= */
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn-gradient {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #083a7d, #0a4da3);
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <i class="bi bi-car-front-fill me-2"></i>RentCar
+            <i class="bi bi-car-front-fill"></i>RentCar
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -21,60 +698,101 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Inicio</a>
+                    <a class="nav-link active" href="#inicio">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="vehiculos.html">Vehículos</a>
+                    <a class="nav-link" href="#vehiculos">Vehículos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contacto.html">Contacto</a>
+                    <a class="nav-link" href="#como-funciona">Cómo Funciona</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contacto">Contacto</a>
                 </li>
             </ul>
             <div class="d-flex" id="navbarButtons">
-                <!-- Los botones se cargarán dinámicamente con JavaScript -->
+                <!-- Los botones se cargarán dinámicamente -->
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<header class="hero-section">
-    <div class="container text-center text-white">
-        <h1 class="display-4 fw-bold">Alquila tu vehículo ideal</h1>
-        <p class="lead">La forma más rápida y sencilla de alquilar un vehículo</p>
-        <a href="vehiculos.html" class="btn btn-light btn-lg">Ver vehículos disponibles</a>
+<section id="inicio" class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-4 text-white mb-4">
+                    Alquila el Vehículo <span class="text-gradient">Perfecto</span>
+                </h1>
+                <p class="lead text-white mb-4">
+                    Descubre nuestra flota premium de vehículos. Desde económicos hasta de lujo,
+                    tenemos el auto ideal para cada ocasión y presupuesto.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button class="btn btn-light btn-lg" onclick="authSystem.open('register')">
+                        <i class="bi bi-car-front me-2"></i>Comenzar Ahora
+                    </button>
+                    <button class="btn btn-outline-light btn-lg" onclick="authSystem.open('login')">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
+</section>
 
 <!-- Features Section -->
-<section class="py-5">
+<section class="features-section">
     <div class="container">
-        <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">¿Por qué elegir RentCar?</h2>
+                <p class="lead text-muted">
+                    Ofrecemos la mejor experiencia de alquiler con servicios premium y atención personalizada
+                </p>
+            </div>
+        </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="bi bi-geo-alt feature-icon"></i>
-                        <h3 class="card-title h5 mt-3">Ubicación en tiempo real</h3>
-                        <p class="card-text">Localiza los vehículos disponibles más cercanos a tu ubicación.</p>
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4 class="card-title">Seguridad Garantizada</h4>
+                        <p class="card-text">
+                            Todos nuestros vehículos cuentan con seguro completo y mantenimiento regular
+                            para garantizar tu seguridad en cada viaje.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="bi bi-clock feature-icon"></i>
-                        <h3 class="card-title h5 mt-3">Reserva instantánea</h3>
-                        <p class="card-text">Proceso de reserva rápido y sencillo, sin complicaciones.</p>
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h4 class="card-title">Disponibilidad 24/7</h4>
+                        <p class="card-text">
+                            Servicio disponible las 24 horas, los 7 días de la semana.
+                            Recoge y devuelve tu vehículo cuando más te convenga.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="bi bi-shield-check feature-icon"></i>
-                        <h3 class="card-title h5 mt-3">Seguridad garantizada</h3>
-                        <p class="card-text">Todos nuestros vehículos cuentan con seguro a todo riesgo.</p>
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <h4 class="card-title">Flota Premium</h4>
+                        <p class="card-text">
+                            Vehículos de las mejores marcas, desde económicos hasta de lujo,
+                            todos en excelente estado y con la última tecnología.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -82,88 +800,118 @@
     </div>
 </section>
 
-<!-- Featured Vehicles -->
-<section class="py-5 bg-light">
+<!-- Vehicles Section -->
+<section id="vehiculos" class="vehicles-section">
     <div class="container">
-        <h2 class="text-center mb-5">Vehículos destacados</h2>
-        <div class="row g-4" id="featured-vehicles">
-            <div class="row g-4" id="vehiculos-container">
-                <div class="text-center w-100">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Nuestra Flota</h2>
+                <p class="lead text-muted">
+                    Explora nuestra amplia selección de vehículos para cada necesidad
+                </p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card vehicle-card">
+                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="Económico">
+                    <div class="card-body">
+                        <h5 class="card-title">Categoría Económica</h5>
+                        <p class="card-text">Perfectos para la ciudad y viajes cortos. Eficientes en combustible y fáciles de manejar.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">Desde €25/día</span>
+                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Los vehículos destacados se cargarán dinámicamente con JavaScript -->
-            <div class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Cargando...</span>
+            <div class="col-md-4">
+                <div class="card vehicle-card">
+                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="SUV">
+                    <div class="card-body">
+                        <h5 class="card-title">SUVs y Familiares</h5>
+                        <p class="card-text">Ideales para familias y grupos. Amplio espacio y comodidad para viajes largos.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">Desde €45/día</span>
+                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="text-center mt-4">
-            <a href="vehiculos.html" class="btn btn-primary">Ver todos los vehículos</a>
+            <div class="col-md-4">
+                <div class="card vehicle-card">
+                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="Lujo">
+                    <div class="card-body">
+                        <h5 class="card-title">Vehículos de Lujo</h5>
+                        <p class="card-text">Para ocasiones especiales. Experimenta el máximo confort y prestigio.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">Desde €120/día</span>
+                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- How It Works -->
-<section class="py-5">
+<!-- How It Works Section -->
+<section id="como-funciona" class="how-it-works-section">
     <div class="container">
-        <h2 class="text-center mb-5">¿Cómo funciona?</h2>
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">¿Cómo Funciona?</h2>
+                <p class="lead text-muted">
+                    Alquilar tu vehículo ideal es muy fácil con nuestro proceso simplificado
+                </p>
+            </div>
+        </div>
         <div class="row g-4">
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="step-circle">1</div>
-                    <h3 class="h5 mt-3">Regístrate</h3>
-                    <p>Crea una cuenta en nuestra plataforma.</p>
-                </div>
+            <div class="col-md-3 text-center">
+                <div class="step-circle">1</div>
+                <h4>Regístrate</h4>
+                <p class="text-muted">Crea tu cuenta en minutos y accede a ofertas exclusivas</p>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="step-circle">2</div>
-                    <h3 class="h5 mt-3">Busca</h3>
-                    <p>Encuentra el vehículo que mejor se adapte a tus necesidades.</p>
-                </div>
+            <div class="col-md-3 text-center">
+                <div class="step-circle">2</div>
+                <h4>Elige tu Vehículo</h4>
+                <p class="text-muted">Explora nuestra flota y selecciona el auto perfecto para ti</p>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="step-circle">3</div>
-                    <h3 class="h5 mt-3">Reserva</h3>
-                    <p>Selecciona las fechas y completa la reserva.</p>
-                </div>
+            <div class="col-md-3 text-center">
+                <div class="step-circle">3</div>
+                <h4>Reserva Online</h4>
+                <p class="text-muted">Completa tu reserva de forma segura con nuestro sistema</p>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="step-circle">4</div>
-                    <h3 class="h5 mt-3">Disfruta</h3>
-                    <p>Recoge el vehículo y comienza tu aventura.</p>
-                </div>
+            <div class="col-md-3 text-center">
+                <div class="step-circle">4</div>
+                <h4>¡Disfruta!</h4>
+                <p class="text-muted">Recoge tu vehículo y comienza tu aventura</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white py-4">
+<footer id="contacto">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h5>RentCar</h5>
-                <p>La mejor plataforma de alquiler de vehículos.</p>
+            <div class="col-md-4 mb-4">
+                <h5><i class="bi bi-car-front-fill me-2"></i>RentCar</h5>
+                <p>Tu plataforma de confianza para el alquiler de vehículos premium. Calidad, seguridad y servicio excepcional.</p>
             </div>
-            <div class="col-md-4">
-                <h5>Enlaces rápidos</h5>
+            <div class="col-md-4 mb-4">
+                <h5>Enlaces Rápidos</h5>
                 <ul class="list-unstyled">
-                    <li><a href="index.html" class="text-white">Inicio</a></li>
-                    <li><a href="vehiculos.html" class="text-white">Vehículos</a></li>
-                    <li><a href="contacto.html" class="text-white">Contacto</a></li>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#vehiculos">Vehículos</a></li>
+                    <li><a href="#como-funciona">Cómo Funciona</a></li>
+                    <li><a href="perfil.html">Mi Perfil</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <h5>Contacto</h5>
                 <address>
-                    <p><i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad</p>
+                    <p><i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Madrid</p>
                     <p><i class="bi bi-telephone me-2"></i>(+34) 123 456 789</p>
                     <p><i class="bi bi-envelope me-2"></i>info@rentcar.com</p>
                 </address>
@@ -176,87 +924,507 @@
     </div>
 </footer>
 
-<!-- Modals -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Iniciar sesión</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="loginForm">
-                    <div class="mb-3">
-                        <label for="loginEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="loginEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="loginPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="loginPassword" required>
-                    </div>
-                    <div class="alert alert-danger d-none" id="loginError"></div>
-                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-                </form>
-                <div class="mt-3 text-center">
-                    <p>¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="registerForm">
-                    <div class="mb-3">
-                        <label for="registerNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="registerNombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="registerEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="registerPassword" required>
-                    </div>
-                    <div class="alert alert-danger d-none" id="registerError"></div>
-                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-                </form>
-                <div class="mt-3 text-center">
-                    <p>¿Ya tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Inicia sesión</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Toast para notificaciones -->
+<!-- Toast Notifications -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="toast" class="toast" role="alert">
         <div class="toast-header">
             <strong class="me-auto" id="toastTitle">Notificación</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
 </div>
 
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./js/auth.js"></script>
-<script src="./js/main.js"></script>
-<script src="./js/vehiculos.js"></script>
-<script src="js/prueba.js"></script>
 
+<script>
+    // =========================================
+    // SISTEMA DE AUTENTICACIÓN ULTRA MODERNO
+    // =========================================
 
-<script> window.chtlConfig = { chatbotId: "1451485925" } </script>
-<script async data-id="1451485925" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    class UltraAuthSystem {
+        constructor() {
+            this.overlay = null;
+            this.container = null;
+            this.currentForm = "login";
+            this.isAnimating = false;
+            this.init();
+        }
 
+        init() {
+            this.createAuthOverlay();
+            this.bindEvents();
+            this.setupFormValidation();
+        }
+
+        createAuthOverlay() {
+            this.overlay = document.createElement("div");
+            this.overlay.className = "auth-overlay";
+
+            this.container = document.createElement("div");
+            this.container.className = "auth-container";
+
+            this.container.innerHTML = `
+                    <div class="auth-header">
+                        <button class="auth-close" onclick="authSystem.close()">
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <h2 class="auth-title">Bienvenido a RentCar</h2>
+                        <p class="auth-subtitle">Tu plataforma de alquiler de vehículos</p>
+                    </div>
+
+                    <div class="auth-body">
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" data-form="login">Iniciar Sesión</button>
+                            <button class="auth-tab" data-form="register">Registrarse</button>
+                        </div>
+
+                        <!-- Formulario de Login -->
+                        <form class="auth-form active" id="ultra-login-form">
+                            <div class="auth-error" id="login-error"></div>
+
+                            <div class="auth-field-group">
+                                <input type="email" class="auth-input" id="ultra-login-email" placeholder="Correo Electrónico" required>
+                                <i class="bi bi-envelope auth-field-icon"></i>
+                            </div>
+
+                            <div class="auth-field-group">
+                                <input type="password" class="auth-input" id="ultra-login-password" placeholder="Contraseña" required>
+                                <i class="bi bi-lock auth-field-icon"></i>
+                            </div>
+
+                            <button type="submit" class="auth-submit">
+                                <span>Iniciar Sesión</span>
+                            </button>
+
+                            <div class="auth-divider">
+                                <span>¿Nuevo en RentCar?</span>
+                            </div>
+
+                            <div class="auth-switch">
+                                <a href="#" onclick="authSystem.switchForm('register')">Crear una cuenta nueva</a>
+                            </div>
+                        </form>
+
+                        <!-- Formulario de Registro -->
+                        <form class="auth-form" id="ultra-register-form">
+                            <div class="auth-error" id="register-error"></div>
+
+                            <div class="auth-field-group">
+                                <input type="text" class="auth-input" id="ultra-register-name" placeholder="Nombre Completo" required>
+                                <i class="bi bi-person auth-field-icon"></i>
+                            </div>
+
+                            <div class="auth-field-group">
+                                <input type="email" class="auth-input" id="ultra-register-email" placeholder="Correo Electrónico" required>
+                                <i class="bi bi-envelope auth-field-icon"></i>
+                            </div>
+
+                            <div class="auth-field-group">
+                                <input type="password" class="auth-input" id="ultra-register-password" placeholder="Contraseña" required>
+                                <i class="bi bi-lock auth-field-icon"></i>
+                            </div>
+
+                            <button type="submit" class="auth-submit">
+                                <span>Crear Cuenta</span>
+                            </button>
+
+                            <div class="auth-divider">
+                                <span>¿Ya tienes cuenta?</span>
+                            </div>
+
+                            <div class="auth-switch">
+                                <a href="#" onclick="authSystem.switchForm('login')">Iniciar sesión aquí</a>
+                            </div>
+                        </form>
+                    </div>
+                `;
+
+            this.overlay.appendChild(this.container);
+            document.body.appendChild(this.overlay);
+        }
+
+        bindEvents() {
+            // Eventos de tabs
+            document.querySelectorAll(".auth-tab").forEach((tab) => {
+                tab.addEventListener("click", (e) => {
+                    const formType = e.target.dataset.form;
+                    this.switchForm(formType);
+                });
+            });
+
+            // Eventos de formularios
+            document.getElementById("ultra-login-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                this.handleLogin();
+            });
+
+            document.getElementById("ultra-register-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                this.handleRegister();
+            });
+
+            // Cerrar con ESC
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && this.overlay.classList.contains("active")) {
+                    this.close();
+                }
+            });
+
+            // Cerrar al hacer clic fuera
+            this.overlay.addEventListener("click", (e) => {
+                if (e.target === this.overlay) {
+                    this.close();
+                }
+            });
+        }
+
+        setupFormValidation() {
+            // Validación básica
+            const inputs = document.querySelectorAll(".auth-input");
+            inputs.forEach((input) => {
+                input.addEventListener("blur", () => {
+                    this.validateField(input);
+                });
+            });
+        }
+
+        validateField(input) {
+            const isValid = input.checkValidity() && input.value.trim().length > 0;
+            input.style.borderColor = isValid ? "rgba(16, 185, 129, 0.6)" : "rgba(239, 68, 68, 0.6)";
+            return isValid;
+        }
+
+        switchForm(formType) {
+            if (this.isAnimating || this.currentForm === formType) return;
+
+            this.isAnimating = true;
+            this.currentForm = formType;
+
+            // Actualizar tabs
+            document.querySelectorAll(".auth-tab").forEach((tab) => {
+                tab.classList.toggle("active", tab.dataset.form === formType);
+            });
+
+            // Animar cambio de formularios
+            const forms = document.querySelectorAll(".auth-form");
+            forms.forEach((form) => {
+                form.classList.remove("active");
+            });
+
+            setTimeout(() => {
+                document.getElementById(`ultra-${formType}-form`).classList.add("active");
+                this.isAnimating = false;
+            }, 200);
+
+            this.clearErrors();
+        }
+
+        async handleLogin() {
+            const email = document.getElementById("ultra-login-email").value;
+            const password = document.getElementById("ultra-login-password").value;
+            const submitBtn = document.querySelector("#ultra-login-form .auth-submit");
+
+            if (!email || !password) {
+                this.showError("login", "Por favor, completa todos los campos");
+                return;
+            }
+
+            this.setLoading(submitBtn, true);
+            this.clearErrors();
+
+            try {
+                const response = await fetch("http://localhost:8080/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Credenciales incorrectas");
+                }
+
+                const data = await response.json();
+
+                // Guardar datos de autenticación
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
+
+                this.close();
+
+                // Actualizar navbar
+                if (window.updateNavbarButtons) {
+                    window.updateNavbarButtons();
+                }
+
+                this.showToast("¡Bienvenido!", `Hola ${data.user.nombre}, has iniciado sesión correctamente`, "success");
+
+                // Redirigir a perfil
+                setTimeout(() => {
+                    window.location.href = "perfil.html";
+                }, 1500);
+
+            } catch (error) {
+                console.error("Error en login:", error);
+                this.showError("login", error.message || "Error al iniciar sesión");
+            } finally {
+                this.setLoading(submitBtn, false);
+            }
+        }
+
+        async handleRegister() {
+            const name = document.getElementById("ultra-register-name").value;
+            const email = document.getElementById("ultra-register-email").value;
+            const password = document.getElementById("ultra-register-password").value;
+            const submitBtn = document.querySelector("#ultra-register-form .auth-submit");
+
+            if (!name || !email || password.length < 6) {
+                this.showError("register", "Por favor, completa todos los campos correctamente");
+                return;
+            }
+
+            this.setLoading(submitBtn, true);
+            this.clearErrors();
+
+            try {
+                const response = await fetch("http://localhost:8080/api/usuarios/registrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        nombre: name,
+                        email: email,
+                        password: password,
+                        rol: "USER",
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    throw new Error(errorData || "Error al registrar usuario");
+                }
+
+                // Cambiar a login automáticamente
+                this.switchForm("login");
+                this.showToast("¡Registro exitoso!", "Tu cuenta ha sido creada. Ahora puedes iniciar sesión", "success");
+
+                // Pre-llenar el email en el login
+                document.getElementById("ultra-login-email").value = email;
+
+            } catch (error) {
+                console.error("Error en registro:", error);
+                this.showError("register", error.message || "Error al crear la cuenta");
+            } finally {
+                this.setLoading(submitBtn, false);
+            }
+        }
+
+        showError(formType, message) {
+            const errorElement = document.getElementById(`${formType}-error`);
+            errorElement.textContent = message;
+            errorElement.classList.add("show");
+
+            setTimeout(() => {
+                errorElement.classList.remove("show");
+            }, 5000);
+        }
+
+        clearErrors() {
+            document.querySelectorAll(".auth-error").forEach((error) => {
+                error.classList.remove("show");
+            });
+        }
+
+        setLoading(button, isLoading) {
+            if (isLoading) {
+                button.style.opacity = "0.7";
+                button.disabled = true;
+                button.innerHTML = '<i class="bi bi-arrow-clockwise spin"></i> Procesando...';
+            } else {
+                button.style.opacity = "1";
+                button.disabled = false;
+                const isLogin = button.closest("#ultra-login-form");
+                button.innerHTML = isLogin ? "<span>Iniciar Sesión</span>" : "<span>Crear Cuenta</span>";
+            }
+        }
+
+        showToast(title, message, type = "success") {
+            const toast = document.getElementById("toast");
+            const toastTitle = document.getElementById("toastTitle");
+            const toastMessage = document.getElementById("toastMessage");
+
+            if (!toast || !toastTitle || !toastMessage) return;
+
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            toast.classList.remove("bg-success", "bg-danger", "bg-warning", "text-white");
+            if (type === "success") {
+                toast.classList.add("bg-success", "text-white");
+            } else if (type === "error") {
+                toast.classList.add("bg-danger", "text-white");
+            }
+
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        }
+
+        open(formType = "login") {
+            this.currentForm = formType;
+            this.switchForm(formType);
+            this.overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+
+            // Limpiar formularios
+            document.querySelectorAll(".auth-form").forEach((form) => {
+                form.reset();
+            });
+
+            this.clearErrors();
+        }
+
+        close() {
+            this.overlay.classList.remove("active");
+            document.body.style.overflow = "";
+
+            setTimeout(() => {
+                // Limpiar formularios
+                document.querySelectorAll(".auth-form").forEach((form) => {
+                    form.reset();
+                });
+                this.clearErrors();
+            }, 600);
+        }
+    }
+
+    // =========================================
+    // NAVBAR MANAGEMENT
+    // =========================================
+
+    function updateNavbarButtons() {
+        const navbarButtons = document.getElementById("navbarButtons");
+        if (!navbarButtons) return;
+
+        if (isAuthenticated()) {
+            const user = getUser();
+            const isAdmin = user?.rol === "ADMIN";
+
+            navbarButtons.innerHTML = `
+                    <a href="carrito.html" class="btn btn-outline-light me-2">
+                        <i class="bi bi-cart3"></i>
+                        <span class="d-none d-lg-inline ms-1">Carrito</span>
+                    </a>
+                    ${isAdmin ? `
+                        <a href="admin.html" class="btn btn-outline-light me-2">
+                            <i class="bi bi-shield-check"></i>
+                            <span class="d-none d-lg-inline ms-1">Admin</span>
+                        </a>
+                    ` : ""}
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span class="d-none d-lg-inline">${user?.nombre || "Usuario"}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="perfil.html">
+                                <i class="bi bi-person me-2"></i>Mi Perfil
+                            </a></li>
+                            <li><a class="dropdown-item" href="carrito.html">
+                                <i class="bi bi-cart me-2"></i>Mi Carrito
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                            </a></li>
+                        </ul>
+                    </div>
+                `;
+        } else {
+            navbarButtons.innerHTML = `
+                    <button class="btn btn-outline-light me-2" onclick="authSystem.open('login')">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span class="d-none d-lg-inline ms-1">Iniciar Sesión</span>
+                    </button>
+                    <button class="btn btn-light" onclick="authSystem.open('register')">
+                        <i class="bi bi-person-plus"></i>
+                        <span class="d-none d-lg-inline ms-1">Registrarse</span>
+                    </button>
+                `;
+        }
+    }
+
+    function isAuthenticated() {
+        return localStorage.getItem("token") !== null;
+    }
+
+    function getUser() {
+        const user = localStorage.getItem("user");
+        return user ? JSON.parse(user) : null;
+    }
+
+    function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        updateNavbarButtons();
+
+        // Mostrar toast
+        const toast = document.getElementById("toast");
+        const toastTitle = document.getElementById("toastTitle");
+        const toastMessage = document.getElementById("toastMessage");
+
+        if (toast && toastTitle && toastMessage) {
+            toastTitle.textContent = "Sesión Cerrada";
+            toastMessage.textContent = "Has cerrado sesión correctamente";
+            toast.classList.add("bg-info", "text-white");
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        }
+    }
+
+    // =========================================
+    // INITIALIZATION
+    // =========================================
+
+    let authSystem;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        authSystem = new UltraAuthSystem();
+        updateNavbarButtons();
+
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+
+    // Hacer updateNavbarButtons global
+    window.updateNavbarButtons = updateNavbarButtons;
+
+    // Agregar estilo para el spinner
+    const style = document.createElement('style');
+    style.textContent = `
+            .spin {
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+    document.head.appendChild(style);
+</script>
 </body>
 </html>

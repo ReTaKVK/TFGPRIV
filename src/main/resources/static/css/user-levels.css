@@ -1,0 +1,615 @@
+/* =========================================
+   USER LEVELS - ENHANCED STYLES
+   ========================================= */
+
+/* Variables para niveles de usuario */
+:root {
+    --bronce-primary: #cd7f32;
+    --bronce-secondary: #a0522d;
+    --bronce-gradient: linear-gradient(135deg, #cd7f32, #a0522d, #b8860b);
+
+    --plata-primary: #c0c0c0;
+    --plata-secondary: #a8a8a8;
+    --plata-gradient: linear-gradient(135deg, #c0c0c0, #a8a8a8, #e5e5e5);
+
+    --oro-primary: #ffd700;
+    --oro-secondary: #ffa500;
+    --oro-gradient: linear-gradient(135deg, #ffd700, #ffa500, #ff8c00);
+
+    --diamante-primary: #00bfff;
+    --diamante-secondary: #87ceeb;
+    --diamante-gradient: linear-gradient(135deg, #00bfff, #87ceeb, #b0e0e6);
+}
+
+/* Estilos para nombres de usuario por nivel */
+.user-name-bronce {
+    color: var(--bronce-primary) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(205, 127, 50, 0.3) !important;
+    background: var(--bronce-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.user-name-plata {
+    color: var(--plata-primary) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(192, 192, 192, 0.4) !important;
+    background: var(--plata-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.user-name-oro {
+    color: var(--oro-primary) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(255, 215, 0, 0.4) !important;
+    background: var(--oro-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.user-name-diamante {
+    color: var(--diamante-primary) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 191, 255, 0.4) !important;
+    background: var(--diamante-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Animación shimmer para efectos metálicos */
+@keyframes shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Badges de nivel súper mejorados con efectos 3D */
+.level-badge-bronce {
+    background: linear-gradient(145deg, #cd7f32, #a0522d, #8b4513) !important;
+    color: white !important;
+    border: 3px solid #daa520 !important;
+    box-shadow: 0 8px 16px rgba(205, 127, 50, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.2) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 800 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.3s ease !important;
+}
+
+.level-badge-bronce:hover {
+    transform: perspective(1000px) rotateX(-5deg) translateY(-2px);
+    box-shadow: 0 12px 24px rgba(205, 127, 50, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.3) !important;
+}
+
+.level-badge-bronce::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.level-badge-bronce:hover::before {
+    left: 100%;
+}
+
+.level-badge-plata {
+    background: linear-gradient(145deg, #c0c0c0, #a8a8a8, #909090) !important;
+    color: #2d3748 !important;
+    border: 3px solid #e2e8f0 !important;
+    box-shadow: 0 8px 16px rgba(192, 192, 192, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.1) !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+    font-weight: 800 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.3s ease !important;
+}
+
+.level-badge-plata:hover {
+    transform: perspective(1000px) rotateX(-5deg) translateY(-2px);
+    box-shadow: 0 12px 24px rgba(192, 192, 192, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.2) !important;
+}
+
+.level-badge-plata::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transition: left 0.6s ease;
+}
+
+.level-badge-plata:hover::before {
+    left: 100%;
+}
+
+.level-badge-oro {
+    background: linear-gradient(145deg, #ffd700, #ffb347, #ff8c00) !important;
+    color: #744210 !important;
+    border: 3px solid #ffed4e !important;
+    box-shadow: 0 8px 16px rgba(255, 215, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.2) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    font-weight: 800 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.3s ease !important;
+}
+
+.level-badge-oro:hover {
+    transform: perspective(1000px) rotateX(-5deg) translateY(-2px);
+    box-shadow: 0 12px 24px rgba(255, 215, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.3) !important;
+}
+
+.level-badge-oro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: left 0.6s ease;
+}
+
+.level-badge-oro:hover::before {
+    left: 100%;
+}
+
+.level-badge-diamante {
+    background: linear-gradient(145deg, #00bfff, #87ceeb, #4682b4) !important;
+    color: white !important;
+    border: 3px solid #87ceeb !important;
+    box-shadow: 0 8px 16px rgba(0, 191, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.2) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 800 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.3s ease !important;
+}
+
+.level-badge-diamante:hover {
+    transform: perspective(1000px) rotateX(-5deg) translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 191, 255, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 4px
+    rgba(0, 0, 0, 0.3) !important;
+}
+
+.level-badge-diamante::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.level-badge-diamante:hover::before {
+    left: 100%;
+}
+
+/* Avatar mini mejorado para navbar */
+.avatar-mini {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.avatar-mini:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones de navbar mejorados */
+.navbar .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+}
+
+.navbar .cart-btn,
+.navbar .auth-btn {
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .cart-btn {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar .cart-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.navbar .auth-btn {
+    min-width: 140px;
+}
+
+.navbar .btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    color: var(--dark-gray);
+}
+
+.navbar .btn-light:hover {
+    background: white;
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Admin link mejorado */
+.admin-link {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9)) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    position: relative;
+    backdrop-filter: blur(10px);
+    min-width: 140px;
+}
+
+.admin-link::after {
+    content: "ADMIN";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+}
+
+.admin-link:hover {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 1), rgba(192, 57, 43, 1)) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+}
+
+/* Dropdown de usuario mejorado */
+.user-dropdown-btn {
+    min-width: 200px;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.user-dropdown-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.user-dropdown-menu {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    min-width: 280px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+    margin-top: 0.5rem;
+}
+
+.user-dropdown-menu .dropdown-header {
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    margin: -0.5rem -0rem 0.5rem -0rem;
+    border-radius: 12px 12px 0 0;
+}
+
+.user-dropdown-menu .dropdown-item {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 0.5rem;
+    font-weight: 500;
+}
+
+.user-dropdown-menu .dropdown-item:hover {
+    background-color: var(--light-gray);
+    transform: translateX(5px);
+}
+
+.user-dropdown-menu .dropdown-item i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Badge del carrito mejorado */
+.position-relative .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    animation: bounce 1s ease-in-out;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1199.98px) {
+    .navbar .btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .user-dropdown-btn {
+        min-width: 160px;
+    }
+
+    .navbar .cart-btn,
+    .navbar .auth-btn,
+    .admin-link {
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar .btn {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.875rem;
+    }
+
+    .user-dropdown-btn {
+        min-width: 140px;
+    }
+
+    .navbar .cart-btn,
+    .navbar .auth-btn,
+    .admin-link {
+        min-width: 80px;
+    }
+
+    .admin-link::after {
+        font-size: 0.5rem;
+        padding: 0.1rem 0.3rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .avatar-mini {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .user-dropdown-menu {
+        min-width: 250px;
+    }
+
+    .navbar .btn {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+/* Efectos hover para elementos interactivos */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Animaciones adicionales */
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Estilos para elementos con gradientes metálicos */
+.metallic-text {
+    background: linear-gradient(45deg, #f0f0f0, #d0d0d0, #f0f0f0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Botones de nivel en el carrito con efectos 3D mejorados */
+.level-badge {
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border: 3px solid;
+}
+
+.level-badge.bronce {
+    background: linear-gradient(145deg, #cd7f32 0%, #daa520 50%, #b8860b 100%);
+    border-color: #daa520;
+    color: white;
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.4), inset 0 3px 6px rgba(255, 255, 255, 0.2), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.level-badge.bronce:hover {
+    transform: perspective(1000px) rotateX(-8deg) translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(205, 127, 50, 0.6), inset 0 3px 6px rgba(255, 255, 255, 0.3), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.3);
+}
+
+.level-badge.plata {
+    background: linear-gradient(145deg, #c0c0c0 0%, #e5e5e5 50%, #a8a8a8 100%);
+    border-color: #e2e8f0;
+    color: #2d3748;
+    box-shadow: 0 10px 20px rgba(192, 192, 192, 0.4), inset 0 3px 6px rgba(255, 255, 255, 0.4), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.level-badge.plata:hover {
+    transform: perspective(1000px) rotateX(-8deg) translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(192, 192, 192, 0.6), inset 0 3px 6px rgba(255, 255, 255, 0.5), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.2);
+}
+
+.level-badge.oro {
+    background: linear-gradient(145deg, #ffd700 0%, #ffed4e 50%, #ff8c00 100%);
+    border-color: #ffed4e;
+    color: #744210;
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5), inset 0 3px 6px rgba(255, 255, 255, 0.3), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.level-badge.oro:hover {
+    transform: perspective(1000px) rotateX(-8deg) translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 215, 0, 0.7), inset 0 3px 6px rgba(255, 255, 255, 0.4), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.3);
+}
+
+.level-badge.diamante {
+    background: linear-gradient(145deg, #00bfff 0%, #87ceeb 50%, #4682b4 100%);
+    border-color: #87ceeb;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.5), inset 0 3px 6px rgba(255, 255, 255, 0.3), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.level-badge.diamante:hover {
+    transform: perspective(1000px) rotateX(-8deg) translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 191, 255, 0.7), inset 0 3px 6px rgba(255, 255, 255, 0.4), inset 0 -3px 6px
+    rgba(0, 0, 0, 0.3);
+}
+
+/* Efectos de partículas para los badges */
+.level-badge::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+
+.level-badge:hover::after {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+}
+
+/* Iconos mejorados en los badges */
+.level-badge i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) brightness(1.2);
+    }
+}
