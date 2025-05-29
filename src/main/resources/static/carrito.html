@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Alquiler - RentCar</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrito de RentCar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" />
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/cart-styles.css" />
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+
+<!-- Navbar Unificada -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-primary">
     <div class="container">
         <a class="navbar-brand" href="index.html">
             <i class="bi bi-car-front-fill me-2"></i>RentCar
@@ -20,20 +26,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="vehiculos.html">Vehículos</a></li>
-                <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-house-door me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vehiculos-unificado.html">
+                        <i class="bi bi-car-front me-1"></i>Vehículos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contacto.html">
+                        <i class="bi bi-envelope me-1"></i>Contacto
+                    </a>
+                </li>
             </ul>
+            <!-- Aquí puedes agregar botones o enlaces adicionales si es necesario -->
         </div>
     </div>
 </nav>
 
-<!-- Page Header -->
-<header class="page-header bg-light py-5">
+<!-- Encabezado de página -->
+<header class="page-header bg-light py-4">
     <div class="container">
-        <h1 class="fw-bold">Carrito de Alquiler</h1>
+        <h1 class="fw-bold mb-2">Carrito de RentCar</h1>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Carrito</li>
             </ol>
@@ -41,41 +60,52 @@
     </div>
 </header>
 
-<!-- Cart Section -->
+<!-- Sección principal del carrito -->
 <section class="py-5">
     <div class="container">
-        <div id="cart-loading" class="text-center">
+        <!-- Carga y contenido del carrito -->
+        <div id="cart-loading" class="text-center mb-4 d-none">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
-
         <div id="cart-content" class="d-none">
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="card shadow-sm mb-4">
+                <!-- Lista de vehículos en el carrito -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card shadow-sm">
                         <div class="card-body">
-                            <h3 class="card-title">Vehículos en tu carrito</h3>
-                            <div id="cart-items"></div>
+                            <h3 class="card-title mb-3">Vehículos en tu carrito</h3>
+                            <div id="cart-items">
+                                <!-- Aquí se cargarán dinámicamente los vehículos -->
+                            </div>
+                            <!-- Si el carrito está vacío, mostrar mensaje -->
+                            <div id="empty-message" class="text-center text-muted d-none">
+                                <i class="bi bi-cart-x display-4 mb-3"></i>
+                                <h4>Tu carrito está vacío</h4>
+                                <p>No tienes vehículos en tu carrito de alquiler.</p>
+                                <a href="vehiculos-unificado.html" class="btn btn-primary mt-3">Explorar vehículos</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- Resumen de la compra -->
                 <div class="col-lg-4">
                     <div class="card shadow-sm sticky-top" style="top: 80px;">
                         <div class="card-body">
-                            <h3 class="card-title">Resumen</h3>
-                            <div class="d-flex justify-content-between mb-2">
+                            <h3 class="card-title mb-3">Resumen</h3>
+                            <div class="mb-2 d-flex justify-content-between">
                                 <span>Subtotal:</span>
                                 <span id="cart-subtotal">0€</span>
                             </div>
-                            <div class="d-flex justify-content-between mb-2">
+                            <div class="mb-2 d-flex justify-content-between">
                                 <span>IVA (21%):</span>
                                 <span id="cart-tax">0€</span>
                             </div>
-                            <hr>
-                            <div class="d-flex justify-content-between mb-3">
-                                <strong>Total:</strong>
-                                <strong id="cart-total">0€</strong>
+                            <hr />
+                            <div class="mb-3 d-flex justify-content-between fw-bold">
+                                <span>Total:</span>
+                                <span id="cart-total">0€</span>
                             </div>
                             <button id="checkout-btn" class="btn btn-primary w-100">Completar alquiler</button>
                         </div>
@@ -83,37 +113,29 @@
                 </div>
             </div>
         </div>
-
-        <div id="empty-cart" class="d-none">
-            <div class="card shadow-sm">
-                <div class="card-body text-center py-5">
-                    <i class="bi bi-cart-x display-1 text-muted"></i>
-                    <h3 class="mt-4">Tu carrito está vacío</h3>
-                    <p class="text-muted">No tienes vehículos en tu carrito de alquiler.</p>
-                    <a href="vehiculos.html" class="btn btn-primary mt-3">Explorar vehículos</a>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-dark text-white py-4">
+<!-- Footer unificado -->
+<footer class="bg-dark text-white py-4 mt-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <!-- Información de la empresa -->
+            <div class="col-md-4 mb-3">
                 <h5>RentCar</h5>
                 <p>La mejor plataforma de alquiler de vehículos.</p>
             </div>
-            <div class="col-md-4">
+            <!-- Enlaces rápidos -->
+            <div class="col-md-4 mb-3">
                 <h5>Enlaces rápidos</h5>
                 <ul class="list-unstyled">
                     <li><a href="index.html" class="text-white">Inicio</a></li>
-                    <li><a href="vehiculos.html" class="text-white">Vehículos</a></li>
+                    <li><a href="vehiculos-unificado.html" class="text-white">Vehículos</a></li>
                     <li><a href="contacto.html" class="text-white">Contacto</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
+            <!-- Información de contacto -->
+            <div class="col-md-4 mb-3">
                 <h5>Contacto</h5>
                 <address>
                     <p><i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad</p>
@@ -122,16 +144,19 @@
                 </address>
             </div>
         </div>
-        <hr>
+        <hr />
         <div class="text-center">
             <p>&copy; 2025 RentCar. Todos los derechos reservados.</p>
         </div>
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Scripts Bootstrap y funcionalidad -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<!-- Tus scripts personalizados -->
 <script src="js/carrito.js" defer></script>
 <script src="js/prueba.js"></script>
-
 </body>
 </html>

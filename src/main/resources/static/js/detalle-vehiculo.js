@@ -16,7 +16,7 @@ async function loadVehicleDetails() {
     try {
         const { id } = getUrlParams()
         if (!id) {
-            window.location.href = "vehiculos.html"
+            window.location.href = "vehiculos-unificado.html"
             return
         }
 

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!lastPayment) {
             showToast("Información", "No se encontraron datos de pago reciente", "warning")
             setTimeout(() => {
-                window.location.href = "perfil.html"
+                window.location.href = "perfil-mejorado.html"
             }, 3000)
             return
         }

@@ -1,4 +1,4 @@
-// Función global para actualizar los botones de la navbar
+// Función global para actualizar los botones de la navbar con sistema de niveles
 window.updateNavbarButtons = () => {
     const navbarButtons = document.getElementById("navbarButtons")
     if (!navbarButtons) return
@@ -26,7 +26,7 @@ window.updateNavbarButtons = () => {
             ${
             isAdmin
                 ? `
-                <a href="admin.html" class="btn admin-link me-2">
+                <a href="admin-premium.html" class="btn admin-link me-2">
                     <i class="bi bi-shield-check"></i>
                     <span class="d-none d-lg-inline ms-1">Panel Admin</span>
                 </a>
@@ -34,14 +34,14 @@ window.updateNavbarButtons = () => {
                 : ""
         }
             <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle d-flex align-items-center user-dropdown-btn" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-light dropdown-toggle d-flex align-items-center user-dropdown-btn ${nivelClass}" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <div class="avatar-mini me-2" style="background: ${nivelInfo.gradient};">
                             ${getInitials(user?.nombre)}
                         </div>
                         <div class="d-none d-lg-block text-start">
-                            <div class="fw-bold ${nivelClass}">${user?.nombre || "Usuario"}</div>
-                            <small style="color: ${nivelInfo.color};">
+                            <div class="fw-bold user-name-display">${user?.nombre || "Usuario"}</div>
+                            <small class="level-indicator" style="color: ${nivelInfo.color};">
                                 <i class="bi bi-star-fill"></i> ${nivelInfo.nombre}
                             </small>
                         </div>
@@ -50,10 +50,10 @@ window.updateNavbarButtons = () => {
                 <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
                     <li class="dropdown-header">
                         <div class="text-center">
-                            <div class="fw-bold ${nivelClass}">${user?.nombre}</div>
+                            <div class="fw-bold user-name-display">${user?.nombre}</div>
                             <small class="text-muted">${user?.email}</small>
                             <div class="mt-1">
-                                <span class="badge level-badge-${user?.nivelUsuario?.toLowerCase() || "bronce"}" style="background: ${nivelInfo.gradient}; color: white;">
+                                <span class="badge level-badge" style="background: ${nivelInfo.gradient}; color: white;">
                                     <i class="bi bi-star-fill"></i> ${nivelInfo.nombre}
                                 </span>
                                 ${
@@ -71,18 +71,23 @@ window.updateNavbarButtons = () => {
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <a class="dropdown-item" href="perfil.html">
-                            <i class="bi bi-person-circle me-2"></i>Mi perfil
+                            <i class="bi bi-person-circle me-2"></i>Mi Perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="perfil.html#my-rentals" onclick="showRentalsTab()">
+                            <i class="bi bi-car-front me-2"></i>Mis Alquileres
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="carrito.html">
-                            <i class="bi bi-cart me-2"></i>Mi carrito
+                            <i class="bi bi-cart me-2"></i>Mi Carrito
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <a class="dropdown-item text-danger" href="#" id="logout-link">
-                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
                         </a>
                     </li>
                 </ul>
@@ -104,13 +109,26 @@ window.updateNavbarButtons = () => {
         navbarButtons.innerHTML = `
             <button class="btn btn-outline-light me-2 auth-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <i class="bi bi-box-arrow-in-right"></i>
-                <span class="d-none d-lg-inline ms-1">Iniciar sesión</span>
+                <span class="d-none d-lg-inline ms-1">Iniciar Sesión</span>
             </button>
             <button class="btn btn-light auth-btn" data-bs-toggle="modal" data-bs-target="#registerModal">
                 <i class="bi bi-person-plus"></i>
                 <span class="d-none d-lg-inline ms-1">Registrarse</span>
             </button>
         `
+    }
+}
+
+// Función para mostrar la pestaña de alquileres directamente
+window.showRentalsTab = () => {
+    // Si estamos en la página de perfil, activar la pestaña
+    if (window.location.pathname.includes("perfil.html")) {
+        setTimeout(() => {
+            const rentalsTab = document.querySelector('[data-bs-target="#my-rentals"]')
+            if (rentalsTab) {
+                rentalsTab.click()
+            }
+        }, 100)
     }
 }
 
@@ -178,10 +196,11 @@ function getNivelInfo(nivel) {
 
 function getUserNameClass(nivel) {
     const clases = {
-        BRONCE: "user-name-bronce",
-        PLATA: "user-name-plata",
-        ORO: "user-name-oro",
-        DIAMANTE: "user-name-diamante",
+        BRONCE: "user-level-bronce",
+        PLATA: "user-level-plata",
+        ORO: "user-level-oro",
+        DIAMANTE: "user-level-diamante",
+        ADMIN: "user-level-admin",
     }
     return clases[nivel] || clases["BRONCE"]
 }
@@ -256,5 +275,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Actualizar cada 30 segundos el badge del carrito
     if (isAuthenticated()) {
         setInterval(updateCartBadge, 30000)
+    }
+
+    // Verificar si hay hash en la URL para mostrar pestaña específica
+    if (window.location.hash === "#my-rentals") {
+        showRentalsTab()
     }
 })

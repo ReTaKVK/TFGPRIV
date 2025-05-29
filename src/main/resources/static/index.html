@@ -9,10 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* =========================================
-           ESTILOS INTEGRADOS PARA EVITAR PROBLEMAS DE MIME TYPE
-           ========================================= */
-
         :root {
             --primary: #0a4da3;
             --primary-dark: #083a7d;
@@ -68,9 +64,6 @@
             color: var(--dark);
         }
 
-        /* =========================================
-           NAVBAR STYLES
-           ========================================= */
         .navbar {
             padding: 1.25rem 0;
             transition: all var(--transition-normal);
@@ -159,9 +152,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* =========================================
-           HERO SECTION
-           ========================================= */
         .hero-section {
             position: relative;
             background: linear-gradient(135deg, rgba(10, 77, 163, 0.9), rgba(44, 62, 80, 0.95));
@@ -214,9 +204,6 @@
             box-shadow: var(--shadow-xl);
         }
 
-        /* =========================================
-           FEATURES SECTION
-           ========================================= */
         .features-section {
             padding: 5rem 0;
             background-color: white;
@@ -256,9 +243,6 @@
             transform: scale(1.1) rotate(10deg);
         }
 
-        /* =========================================
-           VEHICLES SECTION
-           ========================================= */
         .vehicles-section {
             padding: 5rem 0;
             background-color: var(--ultra-light);
@@ -319,9 +303,6 @@
             transform: translateY(-3px);
         }
 
-        /* =========================================
-           HOW IT WORKS SECTION
-           ========================================= */
         .how-it-works-section {
             padding: 5rem 0;
             background-color: white;
@@ -347,9 +328,6 @@
             transform: scale(1.1) rotate(10deg);
         }
 
-        /* =========================================
-           FOOTER
-           ========================================= */
         footer {
             background: var(--dark);
             color: white;
@@ -377,9 +355,6 @@
             color: white;
         }
 
-        /* =========================================
-           ANIMATIONS
-           ========================================= */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -402,9 +377,6 @@
             }
         }
 
-        /* =========================================
-           AUTH SYSTEM STYLES
-           ========================================= */
         .auth-overlay {
             position: fixed;
             top: 0;
@@ -638,9 +610,6 @@
             transform: translateY(0);
         }
 
-        /* =========================================
-           RESPONSIVE
-           ========================================= */
         @media (max-width: 768px) {
             .hero-section {
                 padding: 5rem 0;
@@ -662,9 +631,6 @@
             }
         }
 
-        /* =========================================
-           UTILITIES
-           ========================================= */
         .text-gradient {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -681,6 +647,14 @@
         .btn-gradient:hover {
             background: linear-gradient(135deg, #083a7d, #0a4da3);
             color: white;
+        }
+
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -730,10 +704,10 @@
                     tenemos el auto ideal para cada ocasión y presupuesto.
                 </p>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <button class="btn btn-light btn-lg" onclick="authSystem.open('register')">
+                    <button class="btn btn-light btn-lg" onclick="handleGetStarted()">
                         <i class="bi bi-car-front me-2"></i>Comenzar Ahora
                     </button>
-                    <button class="btn btn-outline-light btn-lg" onclick="authSystem.open('login')">
+                    <button class="btn btn-outline-light btn-lg" onclick="handleLogin()">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
                     </button>
                 </div>
@@ -814,39 +788,39 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card vehicle-card">
-                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="Económico">
+                    <img src="/img/economico.jpg?height=220&width=400" class="card-img-top vehicle-img" alt="Económico">
                     <div class="card-body">
                         <h5 class="card-title">Categoría Económica</h5>
                         <p class="card-text">Perfectos para la ciudad y viajes cortos. Eficientes en combustible y fáciles de manejar.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-bold">Desde €25/día</span>
-                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                            <button class="btn btn-outline-primary" onclick="handleVehicleView()">Ver Más</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card vehicle-card">
-                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="SUV">
+                    <img src="/img/sub.webp?height=220&width=400" class="card-img-top vehicle-img" alt="SUV">
                     <div class="card-body">
                         <h5 class="card-title">SUVs y Familiares</h5>
                         <p class="card-text">Ideales para familias y grupos. Amplio espacio y comodidad para viajes largos.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-bold">Desde €45/día</span>
-                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                            <button class="btn btn-outline-primary" onclick="handleVehicleView()">Ver Más</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card vehicle-card">
-                    <img src="/placeholder.svg?height=220&width=400" class="card-img-top vehicle-img" alt="Lujo">
+                    <img src="/img/lujo.webp?height=220&width=400" class="card-img-top vehicle-img" alt="Lujo">
                     <div class="card-body">
                         <h5 class="card-title">Vehículos de Lujo</h5>
                         <p class="card-text">Para ocasiones especiales. Experimenta el máximo confort y prestigio.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-bold">Desde €120/día</span>
-                            <button class="btn btn-outline-primary" onclick="authSystem.open('register')">Ver Más</button>
+                            <button class="btn btn-outline-primary" onclick="handleVehicleView()">Ver Más</button>
                         </div>
                     </div>
                 </div>
@@ -905,7 +879,7 @@
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#vehiculos">Vehículos</a></li>
                     <li><a href="#como-funciona">Cómo Funciona</a></li>
-                    <li><a href="perfil.html">Mi Perfil</a></li>
+                    <li><a href="perfil-mejorado.html">Mi Perfil</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-4">
@@ -1164,7 +1138,7 @@
 
                 // Redirigir a perfil
                 setTimeout(() => {
-                    window.location.href = "perfil.html";
+                    window.location.href = "perfil-mejorado.html";
                 }, 1500);
 
             } catch (error) {
@@ -1319,7 +1293,7 @@
                         <span class="d-none d-lg-inline ms-1">Carrito</span>
                     </a>
                     ${isAdmin ? `
-                        <a href="admin.html" class="btn btn-outline-light me-2">
+                        <a href="admin-premium.html" class="btn btn-outline-light me-2">
                             <i class="bi bi-shield-check"></i>
                             <span class="d-none d-lg-inline ms-1">Admin</span>
                         </a>
@@ -1330,7 +1304,7 @@
                             <span class="d-none d-lg-inline">${user?.nombre || "Usuario"}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="perfil.html">
+                            <li><a class="dropdown-item" href="perfil-mejorado.html">
                                 <i class="bi bi-person me-2"></i>Mi Perfil
                             </a></li>
                             <li><a class="dropdown-item" href="carrito.html">
@@ -1386,6 +1360,40 @@
     }
 
     // =========================================
+    // FUNCIONES DE MANEJO DE VEHÍCULOS
+    // =========================================
+
+    function handleVehicleView() {
+        if (isAuthenticated()) {
+            // Si el usuario está autenticado, redirigir a la página de vehículos
+            window.location.href = "vehiculos-unificado.html";
+        } else {
+            // Si no está autenticado, abrir el modal de login
+            authSystem.open('login');
+        }
+    }
+
+    function handleGetStarted() {
+        if (isAuthenticated()) {
+            // Si ya está autenticado, ir directamente a vehículos
+            window.location.href = "vehiculos-unificado.html";
+        } else {
+            // Si no, abrir registro
+            authSystem.open('register');
+        }
+    }
+
+    function handleLogin() {
+        if (isAuthenticated()) {
+            // Si ya está autenticado, ir al perfil
+            window.location.href = "perfil-mejorado.html";
+        } else {
+            // Si no, abrir login
+            authSystem.open('login');
+        }
+    }
+
+    // =========================================
     // INITIALIZATION
     // =========================================
 
@@ -1412,19 +1420,6 @@
 
     // Hacer updateNavbarButtons global
     window.updateNavbarButtons = updateNavbarButtons;
-
-    // Agregar estilo para el spinner
-    const style = document.createElement('style');
-    style.textContent = `
-            .spin {
-                animation: spin 1s linear infinite;
-            }
-            @keyframes spin {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-        `;
-    document.head.appendChild(style);
 </script>
 </body>
 </html>

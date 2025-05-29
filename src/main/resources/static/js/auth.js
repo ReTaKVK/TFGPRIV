@@ -97,12 +97,12 @@ function setupNavButtons() {
                     <i class="bi bi-person-circle me-1"></i>${user.nombre} ${user.rol === "ADMIN" ? '<span class="badge bg-light text-danger ms-1">ADMIN</span>' : ''}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
-                    <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-calendar-check me-2"></i>Mis Reservas</a></li>
+                    <li><a class="dropdown-item" href="perfil-mejorado.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                    <li><a class="dropdown-item" href="perfil-mejorado.html"><i class="bi bi-calendar-check me-2"></i>Mis Reservas</a></li>
         `;
 
         if (user.rol === "ADMIN") {
-            html += `<li><a class="dropdown-item text-danger" href="admin.html"><i class="bi bi-shield-lock-fill me-2"></i>Panel Admin</a></li>`;
+            html += `<li><a class="dropdown-item text-danger" href="admin-premium.html"><i class="bi bi-shield-lock-fill me-2"></i>Panel Admin</a></li>`;
 
             // Añadir enlace de administración en la barra de navegación
             if (adminNavItem) {
@@ -114,7 +114,7 @@ function setupNavButtons() {
                     const adminNavItem = document.createElement("li");
                     adminNavItem.className = "nav-item admin-nav-item";
                     adminNavItem.innerHTML = `
-                        <a class="nav-link admin-link" href="admin.html">
+                        <a class="nav-link admin-link" href="admin-premium.html">
                             <i class="bi bi-shield-lock-fill me-1"></i>Administración
                         </a>
                     `;
@@ -204,7 +204,7 @@ function updateNavbarButtons() {
                     <i class="bi bi-person-circle"></i> ${user?.nombre || "Usuario"}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="perfil.html">Mi perfil</a></li>
+                    <li><a class="dropdown-item" href="perfil-mejorado.html">Mi perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#" id="logout-link">Cerrar sesión</a></li>
                 </ul>

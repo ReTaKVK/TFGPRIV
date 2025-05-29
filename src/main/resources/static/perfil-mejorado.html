@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - RentCar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/futuristic-profile.css" />
+    <link rel="stylesheet" href="css/user-levels.css" />
+</head>
+<body class="professional-body">
+<!-- Fondo Profesional -->
+<div class="professional-background">
+    <div class="subtle-pattern"></div>
+    <div class="gradient-overlay"></div>
+</div>
+<!-- Navbar Unificada -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top professional-navbar">
+    <div class="container">
+        <a class="navbar-brand professional-brand" href="index.html">
+            <i class="bi bi-car-front-fill brand-icon"></i>
+            <span class="brand-text">RentCar</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="index.html">
+                        <i class="bi bi-house-door me-1"></i>Inicio </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="vehiculos-unificado.html">
+                        <i class="bi bi-car-front me-1"></i>Vehículos </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="contacto.html">
+                        <i class="bi bi-envelope me-1"></i>Contacto </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center" id="navbarButtons">
+                <!-- Los botones se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Encabezado Profesional -->
+<header class="professional-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="breadcrumb-section">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb professional-breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">Inicio</a>
+                        </li>
+                        <li class="breadcrumb-item active">Panel de Usuario</li>
+                    </ol>
+                </nav>
+            </div>
+            <h1 class="professional-title">Panel de Usuario</h1>
+            <p class="professional-subtitle">Gestiona tu perfil y revisa tu historial de alquileres</p>
+        </div>
+    </div>
+</header>
+<!-- Sección de Perfil -->
+<section class="professional-profile-section">
+    <div class="container">
+        <!-- Estado de carga -->
+        <div class="loading-placeholder">
+            <div class="loading-grid">
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+            </div>
+        </div>
+        <!-- Contenido del perfil (oculto inicialmente) -->
+        <div class="profile-content d-none">
+            <div class="row g-4">
+                <!-- Sidebar de Información del Usuario -->
+                <div class="col-lg-4">
+                    <div class="professional-card user-summary-card">
+                        <div class="card-header-professional">
+                            <h3>Resumen de Cuenta</h3>
+                        </div>
+                        <div class="card-content">
+                            <!-- Identidad del Usuario -->
+                            <div class="user-identity">
+                                <div class="avatar-professional">
+                                    <span class="avatar-initials" id="avatar-initials">U</span>
+                                    <div class="status-indicator"></div>
+                                </div>
+                                <div class="user-info">
+                                    <h4 class="user-name" id="user-name">Cargando...</h4>
+                                    <p class="user-email" id="user-email">Cargando...</p>
+                                    <div class="membership-badge" id="membership-level">
+                                        <i class="bi bi-award"></i>
+                                        <span>Miembro Bronce</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Estadísticas rápidas -->
+                            <div class="quick-stats">
+                                <div class="stat-item" id="total-rentals-stat">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-car-front"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <span class="stat-number" data-target="0">0</span>
+                                        <span class="stat-label">Alquileres Totales</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item" id="active-rentals-stat">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-clock"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <span class="stat-number" data-target="0">0</span>
+                                        <span class="stat-label">Alquileres Activos</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item" id="member-days-stat">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <span class="stat-number" data-target="0">0</span>
+                                        <span class="stat-label">Días como Miembro</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item full-width" id="level-progress-stat">
+                                    <div class="progress-section">
+                                        <div class="progress-header">
+                                            <span class="progress-label">Progreso hacia siguiente nivel</span>
+                                            <span class="progress-percentage">0%</span>
+                                        </div>
+                                        <div class="progress-bar-professional">
+                                            <div class="progress-fill" style="width: 0%"></div>
+                                        </div>
+                                        <div class="progress-footer">
+                                            <span class="progress-remaining">Faltan 5 alquileres</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Navegación -->
+                            <div class="profile-navigation">
+                                <a href="#" class="nav-link-professional active" data-bs-toggle="list" data-bs-target="#profile-info">
+                                    <i class="bi bi-person-gear"></i>
+                                    <span>Información Personal</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a href="#" class="nav-link-professional" data-bs-toggle="list" data-bs-target="#my-rentals">
+                                    <i class="bi bi-car-front"></i>
+                                    <span>Historial de Alquileres</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a href="#" class="nav-link-professional" data-bs-toggle="list" data-bs-target="#level-benefits">
+                                    <i class="bi bi-star-fill"></i>
+                                    <span>Beneficios de Nivel</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a href="#" class="nav-link-professional" data-bs-toggle="list" data-bs-target="#account-settings">
+                                    <i class="bi bi-gear"></i>
+                                    <span>Configuración</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a href="#" class="nav-link-professional logout-link" id="logout-btn">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Cerrar Sesión</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Principal -->
+                <div class="col-lg-8">
+                    <div class="tab-content">
+                        <!-- Pestaña Información Personal -->
+                        <div class="tab-pane fade show active" id="profile-info">
+                            <div class="professional-card">
+                                <div class="card-header-professional">
+                                    <h3>
+                                        <i class="bi bi-person-gear me-2"></i> Información Personal
+                                    </h3>
+                                    <p>Mantén actualizada tu información de contacto y preferencias</p>
+                                </div>
+                                <div class="card-content">
+                                    <form id="profile-form" class="professional-form">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label for="profile-nombre" class="professional-label">
+                                                    <i class="bi bi-person"></i> Nombre Completo </label>
+                                                <input type="text" class="professional-input" id="profile-nombre" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-email" class="professional-label">
+                                                    <i class="bi bi-envelope"></i> Correo Electrónico </label>
+                                                <input type="email" class="professional-input" id="profile-email" readonly />
+                                                <small class="form-text">El correo electrónico no puede modificarse</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-telefono" class="professional-label">
+                                                    <i class="bi bi-telephone"></i> Teléfono de Contacto </label>
+                                                <input type="tel" class="professional-input" id="profile-telefono" placeholder="+34 123 456 789" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-fecha-nacimiento" class="professional-label">
+                                                    <i class="bi bi-calendar"></i> Fecha de Nacimiento </label>
+                                                <input type="date" class="professional-input" id="profile-fecha-nacimiento" />
+                                            </div>
+                                            <div class="form-group full-width">
+                                                <label for="profile-direccion" class="professional-label">
+                                                    <i class="bi bi-geo-alt"></i> Dirección Completa </label>
+                                                <textarea class="professional-input" id="profile-direccion" rows="3" placeholder="Calle, número, ciudad, código postal"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn-professional btn-secondary-professional me-2" onclick="window.refreshUserProfile()">
+                                                <i class="bi bi-arrow-clockwise me-2"></i> Refrescar Datos </button>
+                                            <button type="submit" class="btn-professional btn-primary-professional">
+                                                <i class="bi bi-check-circle me-2"></i> Actualizar Información </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Historial de Alquileres -->
+                        <div class="tab-pane fade" id="my-rentals">
+                            <div class="professional-card">
+                                <div class="card-header-professional">
+                                    <h3>
+                                        <i class="bi bi-car-front me-2"></i> Historial de Alquileres
+                                    </h3>
+                                    <p>Revisa todos tus alquileres pasados y actuales</p>
+                                </div>
+                                <div class="card-content">
+                                    <div id="rentals-container" class="d-none">
+                                        <div class="table-responsive">
+                                            <table class="professional-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Vehículo</th>
+                                                    <th>ID Alquiler</th>
+                                                    <th>Fecha Inicio</th>
+                                                    <th>Fecha Fin</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="rentals-table-body">
+                                                <!-- Contenido dinámico -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="no-rentals" class="empty-state-professional">
+                                        <div class="empty-content">
+                                            <div class="empty-icon">
+                                                <i class="bi bi-car-front"></i>
+                                            </div>
+                                            <h4>No hay alquileres registrados</h4>
+                                            <p>Aún no has realizado ningún alquiler. Explora nuestra flota de vehículos disponibles.</p>
+                                            <a href="vehiculos-unificado.html" class="btn-professional btn-primary-professional">
+                                                <i class="bi bi-search me-2"></i>Explorar Vehículos </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Beneficios de Nivel -->
+                        <div class="tab-pane fade" id="level-benefits">
+                            <div class="professional-card">
+                                <div class="card-header-professional">
+                                    <h3>
+                                        <i class="bi bi-star-fill me-2"></i> Beneficios de Nivel
+                                    </h3>
+                                    <p>Descubre las ventajas de tu nivel actual y cómo subir al siguiente</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="levels-comparison">
+                                        <!-- Nivel Bronce -->
+                                        <div class="level-card bronce">
+                                            <div class="level-header">
+                                                <i class="bi bi-award"></i>
+                                                <h4>Bronce</h4>
+                                                <span class="level-requirement">0-4 alquileres</span>
+                                            </div>
+                                            <ul class="level-benefits">
+                                                <li>
+                                                    <i class="bi bi-check"></i> Acceso básico a la plataforma
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Soporte por email
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Descuento 0%
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Nivel Plata -->
+                                        <div class="level-card plata">
+                                            <div class="level-header">
+                                                <i class="bi bi-award"></i>
+                                                <h4>Plata</h4>
+                                                <span class="level-requirement">5-14 alquileres</span>
+                                            </div>
+                                            <ul class="level-benefits">
+                                                <li>
+                                                    <i class="bi bi-check"></i> Descuento 5% en alquileres
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Soporte prioritario
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Cancelación gratuita
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Nivel Oro -->
+                                        <div class="level-card oro">
+                                            <div class="level-header">
+                                                <i class="bi bi-award"></i>
+                                                <h4>Oro</h4>
+                                                <span class="level-requirement">15-29 alquileres</span>
+                                            </div>
+                                            <ul class="level-benefits">
+                                                <li>
+                                                    <i class="bi bi-check"></i> Descuento 10% en alquileres
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Acceso a vehículos premium
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Upgrade gratuito (sujeto a disponibilidad)
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Nivel Diamante -->
+                                        <div class="level-card diamante">
+                                            <div class="level-header">
+                                                <i class="bi bi-gem"></i>
+                                                <h4>Diamante</h4>
+                                                <span class="level-requirement">30+ alquileres</span>
+                                            </div>
+                                            <ul class="level-benefits">
+                                                <li>
+                                                    <i class="bi bi-check"></i> Descuento 15% en alquileres
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Concierge personal
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Acceso VIP a eventos
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check"></i> Entrega a domicilio gratuita
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Configuración de Cuenta -->
+                        <div class="tab-pane fade" id="account-settings">
+                            <div class="professional-card">
+                                <div class="card-header-professional">
+                                    <h3>
+                                        <i class="bi bi-gear me-2"></i> Configuración de Cuenta
+                                    </h3>
+                                    <p>Gestiona la seguridad y preferencias de tu cuenta</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="settings-section">
+                                        <h5>Seguridad</h5>
+                                        <div class="setting-item">
+                                            <div class="setting-info">
+                                                <h6>Cambiar Contraseña</h6>
+                                                <p>Actualiza tu contraseña regularmente para mantener tu cuenta segura</p>
+                                            </div>
+                                            <button class="btn-professional btn-outline-professional" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                                <i class="bi bi-key me-2"></i> Cambiar </button>
+                                        </div>
+                                    </div>
+                                    <div class="settings-section">
+                                        <h5>Notificaciones</h5>
+                                        <div class="setting-item">
+                                            <div class="setting-info">
+                                                <h6>Notificaciones por Email</h6>
+                                                <p>Recibe actualizaciones sobre tus alquileres y ofertas especiales</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked />
+                                                <label class="form-check-label" for="emailNotifications"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="settings-section">
+                                        <h5>Zona Peligrosa</h5>
+                                        <div class="setting-item danger">
+                                            <div class="setting-info">
+                                                <h6>Eliminar Cuenta</h6>
+                                                <p>Esta acción no se puede deshacer. Se eliminarán todos tus datos permanentemente.</p>
+                                            </div>
+                                            <button class="btn-professional btn-danger-professional" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                                                <i class="bi bi-trash me-2"></i> Eliminar </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pie de Página -->
+<footer class="professional-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>RentCar</h5>
+                <p>Soluciones profesionales de alquiler de vehículos.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Enlaces</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="index.html">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="vehiculos-unificado.html">Vehículos</a>
+                    </li>
+                    <li>
+                        <a href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <address>
+                    <p>
+                        <i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad
+                    </p>
+                    <p>
+                        <i class="bi bi-telephone me-2"></i>(+34) 123 456 789
+                    </p>
+                    <p>
+                        <i class="bi bi-envelope me-2"></i>info@rentcar.com
+                    </p>
+                </address>
+            </div>
+        </div>
+        <hr />
+        <div class="text-center">
+            <p>&copy; 2025 RentCar. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+<!-- Modal Cambiar Contraseña -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content professional-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-key me-2"></i> Cambiar Contraseña
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="mb-3">
+                        <label for="current-password" class="form-label">Contraseña Actual</label>
+                        <input type="password" class="form-control" id="current-password" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-password" class="form-label">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="new-password" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm-password" class="form-label">Confirmar Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="confirm-password" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="save-password-btn">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Cancelar Alquiler -->
+<div class="modal fade" id="cancelRentalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content professional-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle me-2"></i> Confirmar Cancelación
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <div class="warning-icon-professional">
+                        <i class="bi bi-question-circle"></i>
+                    </div>
+                    <h6>¿Confirma la cancelación del alquiler?</h6>
+                    <p>Esta acción no se puede deshacer. El alquiler será cancelado permanentemente.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-professional btn-secondary-professional" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-2"></i> Mantener Alquiler </button>
+                <button type="button" class="btn-professional btn-danger-professional" id="confirm-cancel-rental">
+                    <i class="bi bi-trash me-2"></i> Confirmar Cancelación </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Toasts de Notificación -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="toast" class="toast professional-toast" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto" id="toastTitle">Notificación</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/navbar-mejorado.js"></script>
+<script src="js/perfil-mejorado.js"></script>
+</body>
+</html>

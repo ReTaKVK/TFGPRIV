@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirmación de Pago - RentCar</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/cart-styles.css">
-  <!-- jsPDF para generar PDFs -->
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9O52fxxpTkK6vD5THqyQbzMoGjERQUMjW0pM6IBV4" crossorigin="anonymous" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/cart-styles.css" />
+  <!-- jsPDF y html2canvas para generación de PDFs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<!-- Navbar Unificada -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0d6efd;">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <i class="bi bi-car-front-fill me-2"></i>RentCar
-    </a>
+      <i class="bi bi-car-front-fill me-2"></i>RentCar </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="vehiculos.html">Vehículos</a></li>
-        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <i class="bi bi-house-door me-1"></i>Inicio </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="vehiculos-unificado.html">
+            <i class="bi bi-car-front me-1"></i>Vehículos </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contacto.html">
+            <i class="bi bi-envelope me-1"></i>Contacto </a>
+        </li>
       </ul>
       <div class="d-flex" id="navbarButtons">
         <!-- Los botones se cargarán dinámicamente -->
@@ -35,8 +45,7 @@
     </div>
   </div>
 </nav>
-
-<!-- Success Header -->
+<!-- Encabezado de Confirmación -->
 <header class="bg-success text-white py-5">
   <div class="container text-center">
     <div class="row justify-content-center">
@@ -46,66 +55,76 @@
         </div>
         <h1 class="display-4 fw-bold mb-3">¡Pago Completado!</h1>
         <p class="lead mb-4">Tu alquiler ha sido confirmado exitosamente</p>
-        <div class="booking-number">
-          <h3>Número de Reserva: <span class="fw-bold" id="booking-number">ALQ-12345</span></h3>
-        </div>
+        <h3>Número de Reserva: <span class="fw-bold" id="booking-number">ALQ-12345</span>
+        </h3>
       </div>
     </div>
   </div>
 </header>
-
-<!-- Confirmation Details -->
+<!-- Sección de detalles y resumen -->
 <section class="py-5" id="pdf-content">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-
-        <!-- Booking Summary -->
+        <!-- Resumen de reserva -->
         <div class="card mb-4">
           <div class="card-header bg-primary text-white">
             <h4 class="mb-0">
-              <i class="bi bi-receipt me-2"></i>
-              Resumen de tu Reserva
+              <i class="bi bi-receipt me-2"></i>Resumen de tu Reserva
             </h4>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6">
+              <!-- Detalles de reserva -->
+              <div class="col-md-6 mb-3">
                 <h6 class="text-primary mb-3">
-                  <i class="bi bi-calendar-check me-2"></i>
-                  Detalles de la Reserva
+                  <i class="bi bi-calendar-check me-2"></i>Detalles de la Reserva
                 </h6>
                 <table class="table table-borderless">
                   <tr>
-                    <td><strong>Número de Reserva:</strong></td>
+                    <td>
+                      <strong>Número de Reserva:</strong>
+                    </td>
                     <td id="confirmation-booking-number">ALQ-12345</td>
                   </tr>
                   <tr>
-                    <td><strong>Fecha de Reserva:</strong></td>
+                    <td>
+                      <strong>Fecha de Reserva:</strong>
+                    </td>
                     <td id="booking-date">25/01/2025</td>
                   </tr>
                   <tr>
-                    <td><strong>Estado:</strong></td>
-                    <td><span class="badge bg-success">Confirmado</span></td>
+                    <td>
+                      <strong>Estado:</strong>
+                    </td>
+                    <td>
+                      <span class="badge bg-success">Confirmado</span>
+                    </td>
                   </tr>
                 </table>
               </div>
-              <div class="col-md-6">
+              <!-- Información del cliente -->
+              <div class="col-md-6 mb-3">
                 <h6 class="text-primary mb-3">
-                  <i class="bi bi-person me-2"></i>
-                  Información del Cliente
+                  <i class="bi bi-person me-2"></i>Información del Cliente
                 </h6>
                 <table class="table table-borderless">
                   <tr>
-                    <td><strong>Nombre:</strong></td>
+                    <td>
+                      <strong>Nombre:</strong>
+                    </td>
                     <td id="customer-name">-</td>
                   </tr>
                   <tr>
-                    <td><strong>Email:</strong></td>
+                    <td>
+                      <strong>Email:</strong>
+                    </td>
                     <td id="customer-email">-</td>
                   </tr>
                   <tr>
-                    <td><strong>Nivel:</strong></td>
+                    <td>
+                      <strong>Nivel:</strong>
+                    </td>
                     <td id="customer-level">-</td>
                   </tr>
                 </table>
@@ -113,39 +132,33 @@
             </div>
           </div>
         </div>
-
-        <!-- Vehicle Details -->
+        <!-- Detalles del vehículo -->
         <div class="card mb-4">
           <div class="card-header bg-info text-white">
             <h4 class="mb-0">
-              <i class="bi bi-car-front me-2"></i>
-              Vehículos Alquilados
+              <i class="bi bi-car-front me-2"></i>Vehículos Alquilados
             </h4>
           </div>
           <div class="card-body" id="vehicles-details">
             <!-- Se llenará dinámicamente -->
           </div>
         </div>
-
-        <!-- Payment Summary -->
+        <!-- Resumen del pago -->
         <div class="card mb-4">
           <div class="card-header bg-warning text-dark">
             <h4 class="mb-0">
-              <i class="bi bi-credit-card me-2"></i>
-              Resumen del Pago
+              <i class="bi bi-credit-card me-2"></i>Resumen del Pago
             </h4>
           </div>
           <div class="card-body" id="payment-details">
             <!-- Se llenará dinámicamente -->
           </div>
         </div>
-
-        <!-- QR Code -->
+        <!-- Código QR -->
         <div class="card mb-4">
           <div class="card-header bg-secondary text-white">
             <h4 class="mb-0">
-              <i class="bi bi-qr-code me-2"></i>
-              Código QR de la Reserva
+              <i class="bi bi-qr-code me-2"></i>Código QR de la Reserva
             </h4>
           </div>
           <div class="card-body text-center">
@@ -153,74 +166,76 @@
             <p class="text-muted">Presenta este código QR al recoger tu vehículo</p>
           </div>
         </div>
-
-        <!-- Actions -->
-        <div class="text-center">
-          <a href="perfil.html" class="btn btn-primary btn-lg me-3">
-            <i class="bi bi-person-circle me-2"></i>
-            Ver Mi Perfil
-          </a>
+        <!-- Acciones -->
+        <div class="text-center mb-5">
+          <a href="perfil-mejorado.html" class="btn btn-primary btn-lg me-3">
+            <i class="bi bi-person-circle me-2"></i>Ver Mi Perfil </a>
           <button class="btn btn-outline-primary btn-lg me-3" id="download-btn">
-            <i class="bi bi-download me-2"></i>
-            Descargar Comprobante PDF
-          </button>
-          <a href="vehiculos.html" class="btn btn-outline-secondary btn-lg">
-            <i class="bi bi-car-front me-2"></i>
-            Alquilar Más Vehículos
-          </a>
+            <i class="bi bi-download me-2"></i>Descargar Comprobante PDF </button>
+          <a href="vehiculos-unificado.html" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-car-front me-2"></i>Alquilar Más Vehículos </a>
         </div>
-
       </div>
     </div>
   </div>
 </section>
-
-<!-- Footer -->
-<footer class="professional-footer">
+<!-- Pie de página -->
+<footer class="professional-footer bg-dark text-light py-4">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 mb-3">
         <h5>RentCar</h5>
         <p>Soluciones profesionales de alquiler de vehículos.</p>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 mb-3">
         <h5>Enlaces</h5>
         <ul class="list-unstyled">
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="vehiculos.html">Vehículos</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
+          <li>
+            <a href="index.html" class="text-light">Inicio</a>
+          </li>
+          <li>
+            <a href="vehiculos-unificado.html" class="text-light">Vehículos</a>
+          </li>
+          <li>
+            <a href="contacto.html" class="text-light">Contacto</a>
+          </li>
         </ul>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 mb-3">
         <h5>Contacto</h5>
         <address>
-          <p><i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad</p>
-          <p><i class="bi bi-telephone me-2"></i>(+34) 123 456 789</p>
-          <p><i class="bi bi-envelope me-2"></i>info@rentcar.com</p>
+          <p>
+            <i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad
+          </p>
+          <p>
+            <i class="bi bi-telephone me-2"></i>(+34) 123 456 789
+          </p>
+          <p>
+            <i class="bi bi-envelope me-2"></i>info@rentcar.com
+          </p>
         </address>
       </div>
     </div>
-    <hr>
+    <hr class="my-3" />
     <div class="text-center">
       <p>&copy; 2025 RentCar. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
-
 <!-- Toast Notifications -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="toast" class="toast professional-toast" role="alert">
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+  <div id="toast" class="toast professional-toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <strong class="me-auto" id="toastTitle">Notificación</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
     </div>
     <div class="toast-body" id="toastMessage"></div>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/navbar.js"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YtXWltOUq3JhEaVjJ1jJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJjJj" crossorigin="anonymous"></script>
+<!-- Scripts adicionales -->
+<script src="js/navbar-mejorado.js"></script>
 <script src="js/confirmacion.js"></script>
-
 </body>
 </html>
