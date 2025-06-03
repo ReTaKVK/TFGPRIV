@@ -13,21 +13,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UsuarioService {
+
     private final UsuarioRepository repo;
     private final UsuarioMapper mapper;
-    private final PasswordEncoder passwordEncoder; // Inyecta el PasswordEncoder
+    private final PasswordEncoder passwordEncoder;
 
     public UsuarioDTO registrar(UsuarioDTO dto) {
-        if (repo.findByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("El email ya está registrado");
-        }
-        System.out.println("DTO recibido en Servicio: " + dto); // Imprime el DTO en el servicio
-        Usuario usuario = mapper.toEntidad(dto);
-        usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // Encripta la contraseña
-        Usuario savedUsuario = repo.save(usuario);
-        UsuarioDTO savedDto = mapper.toDTO(savedUsuario);
-        System.out.println("Usuario guardado: " + savedDto);  // Imprime el usuario guardado
-        return savedDto;
+        repo.findByEmail(dto.getEmail())
+                .ifPresent(u -> { throw new RuntimeException("El email ya está registrado"); });
+
+        Usuario entidad = mapper.toEntidad(dto);
+        entidad.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Usuario saved = repo.save(entidad);
+        return mapper.toDTO(saved);
     }
 
     public List<UsuarioDTO> listarTodos() {
@@ -35,12 +33,13 @@ public class UsuarioService {
     }
 
     public UsuarioDTO obtener(Long id) {
-        Usuario entidad = repo.findById(id).orElseThrow();
-        return mapper.toDTO(entidad);
+        return mapper.toDTO(
+                repo.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+        );
     }
 
     public UsuarioDTO actualizar(Long id, UsuarioDTO dto) {
-        Usuario existente = repo.findById(id).orElseThrow();
+        Usuario existente = repo.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         existente.setNombre(dto.getNombre());
         existente.setEmail(dto.getEmail());
         return mapper.toDTO(repo.save(existente));

@@ -737,3 +737,109 @@
 .cart-item:nth-child(5) {
     animation-delay: 0.5s;
 }
+
+/* Estilos para el modal de pago */
+.payment-methods .payment-option {
+    border: 2px solid var(--cart-border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: var(--cart-transition);
+    background: white;
+}
+
+.payment-methods .payment-option:hover {
+    border-color: var(--cart-primary);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.payment-methods .payment-option.active {
+    border-color: var(--cart-primary);
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.payment-methods .payment-option .form-check-input {
+    display: none;
+}
+
+.payment-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cart-light);
+    border-radius: 8px;
+    font-size: 1.5rem;
+    color: var(--cart-primary);
+}
+
+.payment-form {
+    background: var(--cart-light);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--cart-border);
+}
+
+/* Animaciones para la confirmación */
+.success-animation {
+    animation: successPulse 2s ease-in-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.booking-number-display {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    display: inline-block;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    animation: slideInUp 0.8s ease-out;
+}
+
+/* Mejoras para los vehículos en confirmación */
+.vehicle-item {
+    padding: 1.5rem;
+    border: 1px solid var(--cart-border);
+    border-radius: var(--cart-radius);
+    margin-bottom: 1rem;
+    background: white;
+    transition: var(--cart-transition);
+}
+
+.vehicle-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--cart-shadow-lg);
+}
+
+/* Responsive para confirmación */
+@media (max-width: 767.98px) {
+    .booking-number-display {
+        padding: 1rem;
+        margin: 0 1rem;
+    }
+
+    .professional-title {
+        font-size: 1.75rem;
+    }
+
+    .btn-lg {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+}

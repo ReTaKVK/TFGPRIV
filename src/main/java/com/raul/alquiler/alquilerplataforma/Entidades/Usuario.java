@@ -1,10 +1,7 @@
 package com.raul.alquiler.alquilerplataforma.Entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,11 +27,23 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
+    /**
+     * Contraseña encriptada.  No se envía a la capa de presentación.
+     */
     @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    /**
+     * Número total de alquileres que ha realizado el usuario.
+     */
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer totalAlquileres = 0;
+
+    /* ------------------------------ UserDetails ----------------------------- */
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

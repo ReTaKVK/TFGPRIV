@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Verificar autenticación
     if (!isAuthenticated()) {
-        showToast("Error", "Debes iniciar sesión para ver esta página", "error")
+        showToastSimple("Error", "Debes iniciar sesión para ver esta página", "error")
         setTimeout(() => {
             window.location.href = "index.html"
         }, 2000)
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const currentUser = getUser()
 
         if (!lastPayment) {
-            showToast("Información", "No se encontraron datos de pago reciente", "warning")
+            showToastSimple("Información", "No se encontraron datos de pago reciente", "warning")
             setTimeout(() => {
                 window.location.href = "perfil-mejorado.html"
             }, 3000)
@@ -29,37 +29,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Mostrar detalles de la confirmación
         displayConfirmationDetails(paymentData, currentUser)
 
-        // Limpiar datos del pago después de mostrarlos
-        localStorage.removeItem("lastPayment")
+        // NO limpiar datos del pago para permitir regenerar PDF
+        // localStorage.removeItem("lastPayment")
     } catch (error) {
         console.error("Error al cargar confirmación:", error)
-        showToast("Error", "Error al cargar los detalles de la confirmación", "error")
+        showToastSimple("Error", "Error al cargar los detalles de la confirmación", "error")
     }
 })
 
 function displayConfirmationDetails(paymentData, user) {
-    // Generar número de reserva
+    // Generar número de reserva único
     const bookingNumber = `ALQ-${Date.now().toString().slice(-6)}`
 
     // Actualizar números de reserva
-    document.getElementById("booking-number").textContent = bookingNumber
-    document.getElementById("confirmation-booking-number").textContent = bookingNumber
+    const bookingElements = document.querySelectorAll("#booking-number, #confirmation-booking-number")
+    bookingElements.forEach((el) => {
+        if (el) el.textContent = bookingNumber
+    })
 
     // Fecha actual
     const today = new Date().toLocaleDateString("es-ES")
-    document.getElementById("booking-date").textContent = today
+    const dateElement = document.getElementById("booking-date")
+    if (dateElement) dateElement.textContent = today
 
     // Información del cliente
     if (user) {
-        document.getElementById("customer-name").textContent = user.nombre || "No disponible"
-        document.getElementById("customer-email").textContent = user.email || "No disponible"
+        const nameElement = document.getElementById("customer-name")
+        const emailElement = document.getElementById("customer-email")
+        const levelElement = document.getElementById("customer-level")
 
-        const nivelInfo = getNivelInfo(user.nivelUsuario || "BRONCE")
-        document.getElementById("customer-level").innerHTML = `
-      <span class="badge" style="background: ${nivelInfo.gradient}; color: white;">
-        <i class="bi bi-star-fill"></i> ${nivelInfo.nombre}
-      </span>
-    `
+        if (nameElement) nameElement.textContent = user.nombre || "No disponible"
+        if (emailElement) emailElement.textContent = user.email || "No disponible"
+
+        if (levelElement) {
+            const nivelInfo = getNivelInfo(user.nivelUsuario || "BRONCE")
+            levelElement.innerHTML = `
+        <span class="badge" style="background: ${nivelInfo.gradient}; color: white;">
+          <i class="bi bi-star-fill"></i> ${nivelInfo.nombre}
+        </span>
+      `
+        }
     }
 
     // Detalles de vehículos
@@ -74,6 +83,7 @@ function displayConfirmationDetails(paymentData, user) {
 
 function displayVehicleDetails(vehicles) {
     const container = document.getElementById("vehicles-details")
+    if (!container) return
 
     if (!vehicles || vehicles.length === 0) {
         container.innerHTML = `
@@ -87,26 +97,36 @@ function displayVehicleDetails(vehicles) {
 
     let html = ""
     vehicles.forEach((vehicle, index) => {
+        // Usar directamente la URL de la imagen que devuelve la API
+        console.log("Datos del vehículo:", vehicle)
+        console.log("URL de imagen:", vehicle.imagen)
+        console.log("Matrícula:", vehicle.matricula)
+
         html += `
       <div class="vehicle-item ${index > 0 ? "border-top pt-3 mt-3" : ""}">
         <div class="row align-items-center">
           <div class="col-md-3">
-            <img src="${vehicle.imagen || "/placeholder.svg?height=100&width=150"}" 
-                 alt="${vehicle.marca} ${vehicle.modelo}" 
-                 class="img-fluid rounded"
-                 onerror="this.src='/placeholder.svg?height=100&width=150'">
+            <img src="${vehicle.imagen }" 
+                 class="card-img-top vehicle-img" 
+                 alt="${vehicle.marca} ${vehicle.modelo}"
+                 >
           </div>
           <div class="col-md-6">
             <h5 class="mb-1">${vehicle.marca} ${vehicle.modelo}</h5>
-            <p class="text-muted mb-1">Matrícula: ${vehicle.matricula || "No disponible"}</p>
-            <p class="text-muted mb-1">Duración: ${vehicle.dias} días</p>
+            <p class="text-muted mb-1">
+              <i class="bi bi-credit-card me-1"></i>Matrícula: ${vehicle.matricula}
+            </p>
+            <p class="text-muted mb-1">
+              <i class="bi bi-calendar3 me-1"></i>Duración: ${vehicle.dias ?? 1} día${(vehicle.dias ?? 1) > 1 ? "s" : ""}
+            </p>
             <p class="text-muted mb-0">
+              <i class="bi bi-calendar-range me-1"></i>
               Del ${formatDate(vehicle.fechaInicio)} al ${formatDate(vehicle.fechaFin)}
             </p>
           </div>
           <div class="col-md-3 text-end">
-            <h5 class="text-success mb-0">${vehicle.total.toFixed(2)}€</h5>
-            <small class="text-muted">${vehicle.precioPorDia.toFixed(2)}€/día</small>
+            <h5 class="text-success mb-0">${(vehicle.total ?? vehicle.precio).toFixed(2)}€</h5>
+            <small class="text-muted">${(vehicle.precioPorDia ?? vehicle.precio).toFixed(2)}€/día</small>
           </div>
         </div>
       </div>
@@ -118,6 +138,7 @@ function displayVehicleDetails(vehicles) {
 
 function displayPaymentSummary(paymentData, user) {
     const container = document.getElementById("payment-details")
+    if (!container) return
 
     const subtotal = paymentData.subtotal || 0
     const descuento = paymentData.descuento || 0
@@ -137,55 +158,58 @@ function displayPaymentSummary(paymentData, user) {
     container.innerHTML = `
     <div class="row">
       <div class="col-md-6">
-        <h6 class="text-primary mb-3">Desglose del Pago</h6>
-        <table class="table table-borderless">
-          <tr>
-            <td>Subtotal:</td>
-            <td class="text-end">${subtotal.toFixed(2)}€</td>
-          </tr>
+        <h6 class="text-primary mb-3">
+          <i class="bi bi-calculator me-2"></i>Desglose del Pago
+        </h6>
+        <div class="bg-light p-3 rounded">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Subtotal:</span>
+            <span class="fw-bold">${subtotal.toFixed(2)}€</span>
+          </div>
           ${
         descuento > 0
             ? `
-          <tr class="text-success">
-            <td>Descuento ${nivelUsuario} (${descuentoPorcentaje}%):</td>
-            <td class="text-end">-${descuento.toFixed(2)}€</td>
-          </tr>
+          <div class="d-flex justify-content-between mb-2 text-success">
+            <span><i class="bi bi-tag-fill me-1"></i>Descuento ${nivelUsuario} (${descuentoPorcentaje}%):</span>
+            <span class="fw-bold">-${descuento.toFixed(2)}€</span>
+          </div>
           `
             : ""
     }
-          <tr>
-            <td>IVA (21%):</td>
-            <td class="text-end">${iva.toFixed(2)}€</td>
-          </tr>
-          <tr class="border-top">
-            <td><strong>Total Pagado:</strong></td>
-            <td class="text-end"><strong class="text-success fs-5">${total.toFixed(2)}€</strong></td>
-          </tr>
-        </table>
+          <div class="d-flex justify-content-between mb-2">
+            <span>IVA (21%):</span>
+            <span class="fw-bold">${iva.toFixed(2)}€</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <span class="fw-bold fs-5">Total Pagado:</span>
+            <span class="fw-bold text-success fs-4">${total.toFixed(2)}€</span>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
-        <h6 class="text-primary mb-3">Método de Pago</h6>
+        <h6 class="text-primary mb-3">
+          <i class="bi bi-credit-card me-2"></i>Método de Pago
+        </h6>
         <div class="payment-method-used">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-${paymentMethod === "card" ? "credit-card" : paymentMethod === "paypal" ? "paypal" : "bank"} me-2 text-primary"></i>
-            <span>${methodNames[paymentMethod]}</span>
-          </div>
-          ${
+          <div class="d-flex align-items-center mb-3">
+            <div class="payment-method-icon">
+              <i class="bi bi-${paymentMethod === "card" ? "credit-card" : paymentMethod === "paypal" ? "paypal" : "bank"}"></i>
+            </div>
+            <div>
+              <h6 class="mb-0">${methodNames[paymentMethod]}</h6>
+              ${
         paymentMethod === "card"
-            ? `
-            <small class="text-muted">**** **** **** ${paymentData.cardLast4 || "9012"}</small>
-          `
+            ? `<small class="text-muted">**** **** **** ${paymentData.cardLast4 || "9012"}</small>`
             : paymentMethod === "paypal"
-                ? `
-            <small class="text-muted">${paymentData.paypalEmail || "sb-buyer@personal.example.com"}</small>
-          `
-                : `
-            <small class="text-muted">Transferencia completada</small>
-          `
+                ? `<small class="text-muted">${paymentData.paypalEmail || "usuario@paypal.com"}</small>`
+                : `<small class="text-muted">Transferencia completada</small>`
     }
-          <div class="mt-2">
-            <span class="badge bg-success">
-              <i class="bi bi-check-circle me-1"></i>
+            </div>
+          </div>
+          <div class="text-center">
+            <span class="badge bg-success fs-6 px-3 py-2">
+              <i class="bi bi-check-circle-fill me-2"></i>
               Pago Confirmado
             </span>
           </div>
@@ -194,10 +218,16 @@ function displayPaymentSummary(paymentData, user) {
     </div>
 
     <div class="alert alert-success mt-4">
-      <i class="bi bi-check-circle-fill me-2"></i>
-      <strong>¡Pago procesado exitosamente!</strong><br>
-      ${descuento > 0 ? `Has ahorrado ${descuento.toFixed(2)}€ gracias a tu nivel ${nivelUsuario}. ` : ""}
-      Recibirás un email de confirmación en breve.
+      <div class="d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-3" style="font-size: 1.5rem;"></i>
+        <div>
+          <h6 class="mb-1">¡Pago procesado exitosamente!</h6>
+          <p class="mb-0">
+            ${descuento > 0 ? `Has ahorrado ${descuento.toFixed(2)}€ gracias a tu nivel ${nivelUsuario}. ` : ""}
+            Recibirás un email de confirmación en breve.
+          </p>
+        </div>
+      </div>
     </div>
   `
 }
@@ -208,6 +238,7 @@ function generateQRCode(bookingNumber) {
         // Generar QR con datos de la reserva
         const qrData = `RENTCAR-${bookingNumber}-${Date.now()}`
         qrElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`
+        qrElement.alt = `QR Code para reserva ${bookingNumber}`
     }
 }
 
@@ -242,7 +273,11 @@ function formatDate(dateString) {
 
     try {
         const date = new Date(dateString)
-        return date.toLocaleDateString("es-ES")
+        return date.toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        })
     } catch (error) {
         return "Fecha inválida"
     }
@@ -257,52 +292,103 @@ function getUser() {
     return user ? JSON.parse(user) : null
 }
 
-function showToast(title, message, type = "success") {
-    const toast = document.getElementById("toast")
-    const toastTitle = document.getElementById("toastTitle")
-    const toastMessage = document.getElementById("toastMessage")
+// Función de toast simple que no depende de Bootstrap
+function showToastSimple(title, message, type = "success") {
+    console.log(`[${type.toUpperCase()}] ${title}: ${message}`)
 
-    if (!toast || !toastTitle || !toastMessage) return
+    // Crear un toast simple con CSS puro si no existe
+    let toastContainer = document.getElementById("toast-container")
 
-    toastTitle.textContent = title
-    toastMessage.textContent = message
-
-    toast.classList.remove("bg-success", "bg-danger", "bg-warning", "text-white")
-    if (type === "success") {
-        toast.classList.add("bg-success", "text-white")
-    } else if (type === "error") {
-        toast.classList.add("bg-danger", "text-white")
-    } else if (type === "warning") {
-        toast.classList.add("bg-warning")
+    if (!toastContainer) {
+        toastContainer = document.createElement("div")
+        toastContainer.id = "toast-container"
+        toastContainer.style.position = "fixed"
+        toastContainer.style.bottom = "20px"
+        toastContainer.style.right = "20px"
+        toastContainer.style.zIndex = "9999"
+        document.body.appendChild(toastContainer)
     }
 
-    const bsToast = new bootstrap.Toast(toast)
-    bsToast.show()
+    // Crear el toast
+    const toast = document.createElement("div")
+    toast.className = "simple-toast"
+    toast.style.backgroundColor =
+        type === "success" ? "#10b981" : type === "error" ? "#ef4444" : type === "warning" ? "#f59e0b" : "#3b82f6"
+    toast.style.color = "white"
+    toast.style.padding = "12px 20px"
+    toast.style.borderRadius = "8px"
+    toast.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)"
+    toast.style.marginTop = "10px"
+    toast.style.opacity = "0"
+    toast.style.transition = "opacity 0.3s ease"
+
+    // Contenido del toast
+    toast.innerHTML = `
+    <div style="font-weight: bold; margin-bottom: 5px;">${title}</div>
+    <div>${message}</div>
+  `
+
+    // Añadir al contenedor
+    toastContainer.appendChild(toast)
+
+    // Mostrar con animación
+    setTimeout(() => {
+        toast.style.opacity = "1"
+    }, 10)
+
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+        toast.style.opacity = "0"
+        setTimeout(() => {
+            toastContainer.removeChild(toast)
+        }, 300)
+    }, 3000)
 }
 
+// =========================================
+// GENERADOR DE PDF PROFESIONAL MEJORADO
+// =========================================
+
 // Configurar botón de descarga con PDF ULTRA PROFESIONAL
-document.getElementById("download-btn")?.addEventListener("click", async (e) => {
-    e.preventDefault()
+document.addEventListener("DOMContentLoaded", () => {
+    const downloadBtn = document.getElementById("download-btn")
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", async (e) => {
+            e.preventDefault()
 
-    try {
-        showToast("Información", "Generando comprobante PDF ultra profesional...", "info")
+            try {
+                showToastSimple("Información", "Generando comprobante PDF ultra profesional...", "info")
 
-        // Obtener datos para el PDF
-        const currentUser = getUser()
-        const bookingNumber = document.getElementById("booking-number").textContent
-        const lastPayment = localStorage.getItem("lastPayment")
-        const paymentData = lastPayment ? JSON.parse(lastPayment) : null
+                // Obtener datos para el PDF
+                const currentUser = getUser()
+                const bookingNumber =
+                    document.getElementById("booking-number")?.textContent || `ALQ-${Date.now().toString().slice(-6)}`
+                const lastPayment = localStorage.getItem("lastPayment")
+                const paymentData = lastPayment ? JSON.parse(lastPayment) : null
 
-        await generateUltraProfessionalPDF(currentUser, bookingNumber, paymentData)
+                if (!paymentData) {
+                    showToastSimple("Error", "No se encontraron datos de pago para generar el PDF", "error")
+                    return
+                }
 
-        showToast("Éxito", "Comprobante PDF ultra profesional descargado", "success")
-    } catch (error) {
-        console.error("Error al generar PDF:", error)
-        showToast("Error", "Error al generar el comprobante PDF", "error")
+                await generateProfessionalPDF(currentUser, bookingNumber, paymentData)
+
+                showToastSimple("Éxito", "Comprobante PDF ultra profesional descargado", "success")
+            } catch (error) {
+                console.error("Error al generar PDF:", error)
+                showToastSimple("Error", "Error al generar el comprobante PDF: " + error.message, "error")
+            }
+        })
     }
 })
 
-async function generateUltraProfessionalPDF(user, bookingNumber, paymentData) {
+async function generateProfessionalPDF(user, bookingNumber, paymentData) {
+    // Verificar que jsPDF esté disponible
+    if (typeof window.jspdf === "undefined") {
+        // Intentar cargar jsPDF si no está disponible
+        await loadJsPDF()
+    }
+
     const { jsPDF } = window.jspdf
 
     // Crear documento PDF A4
@@ -421,8 +507,10 @@ async function generateUltraProfessionalPDF(user, bookingNumber, paymentData) {
         yPosition += 25
 
         // Lista de vehículos con diseño premium
-        paymentData.vehicles.forEach((vehicle, index) => {
-            if (yPosition > pageHeight - 60) {
+        for (let index = 0; index < paymentData.vehicles.length; index++) {
+            const vehicle = paymentData.vehicles[index]
+
+            if (yPosition > pageHeight - 80) {
                 doc.addPage()
                 yPosition = 30
             }
@@ -430,32 +518,62 @@ async function generateUltraProfessionalPDF(user, bookingNumber, paymentData) {
             // Fondo alternado
             if (index % 2 === 0) {
                 doc.setFillColor(252, 252, 252)
-                doc.rect(15, yPosition - 5, pageWidth - 30, 35, "F")
+                doc.rect(15, yPosition - 5, pageWidth - 30, 50, "F")
             }
 
             // Borde izquierdo colorido
             doc.setFillColor(...colors.accent)
-            doc.rect(15, yPosition - 5, 3, 35, "F")
+            doc.rect(15, yPosition - 5, 3, 50, "F")
 
+            // Intentar cargar y añadir imagen del vehículo
+            try {
+                if (vehicle.imagen) {
+                    await addVehicleImageToPDF(doc, vehicle.imagen, 25, yPosition, 40, 30)
+                }
+            } catch (error) {
+                console.warn("No se pudo cargar la imagen del vehículo:", error)
+                // Continuar sin imagen
+            }
+
+            // Información del vehículo (ajustada para la imagen)
             doc.setTextColor(...colors.dark)
             doc.setFontSize(13)
             doc.setFont("helvetica", "bold")
-            doc.text(`${index + 1}. ${vehicle.marca} ${vehicle.modelo}`, 25, yPosition + 5)
+            doc.text(`${index + 1}. ${vehicle.marca} ${vehicle.modelo}`, 75, yPosition + 5)
+
+            // Depuración de matrícula
+            console.log("Matrícula en PDF:", vehicle.matricula)
+
+            // Buscar la matrícula en todas las propiedades posibles
+            let matricula = "No disponible"
+            if (vehicle.matricula) {
+                matricula = vehicle.matricula
+            } else if (vehicle.Matricula) {
+                matricula = vehicle.Matricula
+            } else {
+                // Buscar en todas las propiedades
+                for (const key in vehicle) {
+                    if (key.toLowerCase() === "matricula") {
+                        matricula = vehicle[key]
+                        break
+                    }
+                }
+            }
 
             doc.setFontSize(10)
             doc.setFont("helvetica", "normal")
-            doc.text(`Matrícula: ${vehicle.matricula || "No disponible"}`, 30, yPosition + 13)
-            doc.text(`Duración: ${vehicle.dias} día${vehicle.dias > 1 ? "s" : ""}`, 30, yPosition + 20)
-            doc.text(`Precio por día: ${vehicle.precioPorDia.toFixed(2)}€`, 30, yPosition + 27)
+            doc.text(`Matrícula: ${matricula}`, 75, yPosition + 13)
+            doc.text(`Duración: ${vehicle.dias ?? 1} día${(vehicle.dias ?? 1) > 1 ? "s" : ""}`, 75, yPosition + 20)
+            doc.text(`Precio por día: ${(vehicle.precioPorDia ?? vehicle.precio).toFixed(2)}€`, 75, yPosition + 27)
 
             // Precio total destacado
             doc.setTextColor(...colors.secondary)
             doc.setFontSize(14)
             doc.setFont("helvetica", "bold")
-            doc.text(`${vehicle.total.toFixed(2)}€`, pageWidth - 25, yPosition + 15, { align: "right" })
+            doc.text(`${(vehicle.total ?? vehicle.precio).toFixed(2)}€`, pageWidth - 25, yPosition + 15, { align: "right" })
 
-            yPosition += 40
-        })
+            yPosition += 55
+        }
     }
 
     // === RESUMEN FINANCIERO PREMIUM ===
@@ -538,35 +656,54 @@ async function generateUltraProfessionalPDF(user, bookingNumber, paymentData) {
         customer: user?.email,
         date: new Date().toISOString(),
         total: paymentData?.total || 0,
-        vehicles: paymentData?.vehicles?.length || 0,
+        vehicles:
+            paymentData?.vehicles?.map((v) => ({
+                marca: v.marca,
+                modelo: v.modelo,
+                matricula: v.matricula || "No disponible",
+                dias: v.dias ?? 1,
+                total: v.total ?? v.precio,
+            })) || [],
     })
+
+    // Título para la sección QR
+    doc.setTextColor(...colors.primary)
+    doc.setFontSize(14)
+    doc.setFont("helvetica", "bold")
+    doc.text("CÓDIGO QR DE VERIFICACIÓN", pageWidth / 2, yPosition, { align: "center" })
+
+    yPosition += 10
 
     // Caja para QR
     doc.setFillColor(...colors.white)
-    doc.roundedRect(pageWidth - 70, yPosition, 50, 50, 3, 3, "F")
+    doc.roundedRect(pageWidth / 2 - 30, yPosition, 60, 60, 3, 3, "F")
     doc.setDrawColor(...colors.primary)
     doc.setLineWidth(1)
-    doc.roundedRect(pageWidth - 70, yPosition, 50, 50, 3, 3, "S")
+    doc.roundedRect(pageWidth / 2 - 30, yPosition, 60, 60, 3, 3, "S")
 
     // Texto del QR
-    doc.setTextColor(...colors.dark)
-    doc.setFontSize(10)
-    doc.setFont("helvetica", "bold")
-    doc.text("CÓDIGO QR", pageWidth - 45, yPosition - 5, { align: "center" })
-    doc.setFont("helvetica", "normal")
     doc.setFontSize(8)
-    doc.text("Escanear para verificar", pageWidth - 45, yPosition + 55, { align: "center" })
+    doc.setFont("helvetica", "normal")
+    doc.text("Escanear para verificar la reserva", pageWidth / 2, yPosition + 65, { align: "center" })
 
-    // Generar QR usando API externa
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`
+    // Añadir QR real
+    try {
+        await addQRCodeToPDF(doc, qrData, pageWidth / 2 - 25, yPosition + 5, 50, 50)
+    } catch (error) {
+        console.warn("No se pudo generar el código QR:", error)
+        // Simular QR con texto
+        doc.setFontSize(6)
+        doc.text("QR CODE", pageWidth / 2, yPosition + 30, { align: "center" })
+        doc.text(bookingNumber, pageWidth / 2, yPosition + 35, { align: "center" })
+    }
 
-    // Simular QR con texto (ya que no podemos insertar imagen real)
-    doc.setFontSize(6)
-    doc.text("QR CODE", pageWidth - 45, yPosition + 25, { align: "center" })
-    doc.text(bookingNumber, pageWidth - 45, yPosition + 30, { align: "center" })
+    yPosition += 70
 
     // === INFORMACIÓN IMPORTANTE ===
-    yPosition += 60
+    if (yPosition > pageHeight - 60) {
+        doc.addPage()
+        yPosition = 30
+    }
 
     // Caja de información crítica
     doc.setFillColor(254, 243, 199) // Amarillo claro
@@ -657,4 +794,81 @@ async function generateUltraProfessionalPDF(user, bookingNumber, paymentData) {
     // Descargar PDF
     const fileName = `RentCar-Comprobante-${bookingNumber}-${new Date().toISOString().split("T")[0]}.pdf`
     doc.save(fileName)
+}
+
+// Función para añadir imagen de vehículo al PDF
+async function addVehicleImageToPDF(doc, imageUrl, x, y, width, height) {
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.crossOrigin = "anonymous"
+
+        img.onload = function () {
+            try {
+                doc.addImage(this, "JPEG", x, y, width, height)
+                resolve()
+            } catch (error) {
+                console.warn("Error al añadir imagen:", error)
+                resolve() // Continuar sin imagen
+            }
+        }
+
+        img.onerror = () => {
+            console.warn("No se pudo cargar la imagen del vehículo")
+            resolve() // Continuar sin imagen
+        }
+
+        img.src = imageUrl
+    })
+}
+
+// Función para añadir código QR al PDF
+async function addQRCodeToPDF(doc, qrData, x, y, width, height) {
+    return new Promise((resolve, reject) => {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`
+
+        const img = new Image()
+        img.crossOrigin = "anonymous"
+
+        img.onload = function () {
+            try {
+                doc.addImage(this, "PNG", x, y, width, height)
+                resolve()
+            } catch (error) {
+                console.warn("Error al añadir QR:", error)
+                resolve()
+            }
+        }
+
+        img.onerror = () => {
+            console.warn("No se pudo cargar el código QR")
+            resolve()
+        }
+
+        img.src = qrUrl
+    })
+}
+
+// Función para cargar jsPDF si no está disponible
+async function loadJsPDF() {
+    return new Promise((resolve, reject) => {
+        // Si ya está cargado, resolver inmediatamente
+        if (window.jspdf) {
+            return resolve()
+        }
+
+        // Cargar jsPDF
+        const script = document.createElement("script")
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+        script.onload = () => {
+            // Cargar el complemento para autoTabla
+            const autoTableScript = document.createElement("script")
+            autoTableScript.src =
+                "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"
+            autoTableScript.onload = resolve
+            autoTableScript.onerror = () => reject(new Error("No se pudo cargar jspdf-autotable"))
+            document.head.appendChild(autoTableScript)
+        }
+        script.onerror = () => reject(new Error("No se pudo cargar jsPDF"))
+        document.head.appendChild(script)
+    })
 }

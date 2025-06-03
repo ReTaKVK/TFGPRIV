@@ -15,15 +15,16 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "alquileres")
 public class Alquiler {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "usuarios_id")
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "vehiculos_id")
     private Vehiculo vehiculo;
 

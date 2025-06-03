@@ -145,7 +145,7 @@ function displayVehicleDetails(vehicle) {
     document.getElementById("vehiculo-titulo").textContent = `${vehicle.marca} ${vehicle.modelo}`
     document.getElementById("breadcrumb-titulo").textContent = `${vehicle.marca} ${vehicle.modelo}`
     document.getElementById("vehiculo-nombre").textContent = `${vehicle.marca} ${vehicle.modelo}`
-    document.getElementById("vehiculo-matricula").textContent = vehicle.matricula
+    document.getElementById("vehiculo-matricula").textContent = `${vehicle.matricula}`
     document.getElementById("vehiculo-disponibilidad").textContent = vehicle.disponible ? "Disponible" : "No disponible"
     document.getElementById("vehiculo-precio").textContent = vehicle.precio
 

@@ -82,7 +82,7 @@ function setupNavButtons() {
     if (user) {
         // Usuario autenticado
         html += `
-            <a href="carrito.html" class="btn btn-outline-light position-relative me-2">
+            <a href="../carrito.html" class="btn btn-outline-light position-relative me-2">
                 <i class="bi bi-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     <span id="cart-count">0</span>
@@ -102,7 +102,7 @@ function setupNavButtons() {
         `;
 
         if (user.rol === "ADMIN") {
-            html += `<li><a class="dropdown-item text-danger" href="admin-premium.html"><i class="bi bi-shield-lock-fill me-2"></i>Panel Admin</a></li>`;
+            html += `<li><a class="dropdown-item text-danger" href="../admin-premium.html"><i class="bi bi-shield-lock-fill me-2"></i>Panel Admin</a></li>`;
 
             // Añadir enlace de administración en la barra de navegación
             if (adminNavItem) {
@@ -114,7 +114,7 @@ function setupNavButtons() {
                     const adminNavItem = document.createElement("li");
                     adminNavItem.className = "nav-item admin-nav-item";
                     adminNavItem.innerHTML = `
-                        <a class="nav-link admin-link" href="admin-premium.html">
+                        <a class="nav-link admin-link" href="../admin-premium.html">
                             <i class="bi bi-shield-lock-fill me-1"></i>Administración
                         </a>
                     `;

@@ -26,7 +26,7 @@ window.updateNavbarButtons = () => {
             ${
             isAdmin
                 ? `
-                <a href="admin-premium.html" class="btn admin-link me-2">
+                <a href="../admin-premium.html" class="btn admin-link me-2">
                     <i class="bi bi-shield-check"></i>
                     <span class="d-none d-lg-inline ms-1">Panel Admin</span>
                 </a>

@@ -21,11 +21,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
+
     private final UsuarioService service;
 
     @PostMapping("/registrar")
     public UsuarioDTO registrar(@RequestBody UsuarioDTO dto) {
-        System.out.println("el usuario fue añadido");
         return service.registrar(dto);
     }
 

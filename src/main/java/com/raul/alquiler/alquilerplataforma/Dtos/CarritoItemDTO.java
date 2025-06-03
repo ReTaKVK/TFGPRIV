@@ -14,6 +14,8 @@ public class CarritoItemDTO {
     private Long vehiculoId;
     private String vehiculoMarca;
     private String vehiculoModelo;
+    private String vehiculoMatricula;
+    private String vehiculoImagen;
     private double precioPorDia;
     private int dias;
     private double subtotal;
