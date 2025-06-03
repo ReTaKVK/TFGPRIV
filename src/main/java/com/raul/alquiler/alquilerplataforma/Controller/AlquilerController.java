@@ -40,7 +40,7 @@ public class AlquilerController {
         return service.actualizar(id, dto);
     }
 
-    @DeleteMapping("/{id    }")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         try {
             service.eliminar(id);

@@ -1,5 +1,6 @@
 package com.raul.alquiler.alquilerplataforma.Dtos;
 
+import com.raul.alquiler.alquilerplataforma.Entidades.NivelUsuario;
 import com.raul.alquiler.alquilerplataforma.Entidades.Rol;
 import lombok.*;
 
@@ -14,4 +15,6 @@ public class UsuarioDTO {
     private String password; // Solo se usa para alta; el mapper la ignora al devolver DTO
     private Rol rol;
     private Integer totalAlquileres;
+    private NivelUsuario nivelUsuario;
+
 }

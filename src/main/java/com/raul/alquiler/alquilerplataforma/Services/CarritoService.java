@@ -1,10 +1,7 @@
 package com.raul.alquiler.alquilerplataforma.Services;
 
 import com.raul.alquiler.alquilerplataforma.Dtos.CarritoItemDTO;
-import com.raul.alquiler.alquilerplataforma.Entidades.Alquiler;
-import com.raul.alquiler.alquilerplataforma.Entidades.CarritoItem;
-import com.raul.alquiler.alquilerplataforma.Entidades.Usuario;
-import com.raul.alquiler.alquilerplataforma.Entidades.Vehiculo;
+import com.raul.alquiler.alquilerplataforma.Entidades.*;
 import com.raul.alquiler.alquilerplataforma.Mappers.CarritoItemMapper;
 import com.raul.alquiler.alquilerplataforma.Repository.AlquilerRepository;
 import com.raul.alquiler.alquilerplataforma.Repository.CarritoItemRepository;
@@ -73,6 +70,18 @@ public class CarritoService {
                 .collect(Collectors.toList());
     }
 
+
+    public NivelUsuario determinarNivelUsuario(int totalAlquileres) {
+        if (totalAlquileres >= NivelUsuario.DIAMANTE.getDescuento()) {
+            return NivelUsuario.DIAMANTE;
+        } else if (totalAlquileres >= NivelUsuario.ORO.getDescuento()) {
+            return NivelUsuario.ORO;
+        } else if (totalAlquileres >= NivelUsuario.PLATA.getDescuento()) {
+            return NivelUsuario.PLATA;
+        } else {
+            return NivelUsuario.BRONCE;
+        }
+    }
     // Calcular total del carrito
     public double calcularTotalCarrito(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
@@ -80,10 +89,17 @@ public class CarritoService {
 
         List<CarritoItem> items = carritoRepo.findByUsuario(usuario);
 
-        return items.stream()
+        double totalSinDescuento = items.stream()
                 .mapToDouble(item -> item.getVehiculo().getPrecio() * item.getDias())
                 .sum();
+
+        NivelUsuario nivel = determinarNivelUsuario(usuario.getTotalAlquileres());
+        double descuento = nivel.getDescuento(); // Ej: 10%
+
+        double totalConDescuento = totalSinDescuento * (1 - (descuento / 100.0));
+        return totalConDescuento;
     }
+
 
     // Confirmar alquiler (crear alquileres y vaciar carrito)
     @Transactional
@@ -125,7 +141,10 @@ public class CarritoService {
         }
 
         carritoRepo.deleteAll(items); // Vaciar el carrito
+        usuario.setTotalAlquileres(usuario.getTotalAlquileres() + items.size());
+        usuarioRepo.save(usuario);
     }
+
 
     // Nuevo método: Eliminar un item del carrito
     public void eliminarItem(Long itemId) {
