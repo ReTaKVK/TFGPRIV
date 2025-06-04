@@ -1,25 +1,28 @@
-# Etapa 1: Construcción del proyecto
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# Etapa 1: Construcción
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar todos los archivos del proyecto
+# Copiar todos los archivos del proyecto al contenedor
 COPY . .
 
-# Usar el wrapper para compilar el proyecto (sin tests para acelerar)
+# Dar permisos de ejecución al wrapper de Maven (mvnw)
+RUN chmod +x mvnw
+
+# Ejecutar la compilación sin tests para acelerar
 RUN ./mvnw clean package -DskipTests
 
 # Etapa 2: Imagen final para ejecutar la app
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:17-jre-alpine
 
-# Directorio de trabajo dentro del contenedor
+# Crear directorio para la app
 WORKDIR /app
 
-# Copiar el jar construido desde la etapa anterior
+# Copiar el JAR compilado de la etapa de build
 COPY --from=build /app/target/*.jar app.jar
 
-# Exponer el puerto por el que correrá la app (ajústalo si cambias el server.port)
+# Exponer el puerto donde corre la app (modifica según la app)
 EXPOSE 8080
 
 # Comando para ejecutar la app
