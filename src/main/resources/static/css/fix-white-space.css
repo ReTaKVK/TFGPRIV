@@ -1,0 +1,177 @@
+/* SOLUCIÓN AGRESIVA PARA ELIMINAR ESPACIO BLANCO SUPERIOR */
+
+/* Reset completo */
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Solo aplicar margin/padding donde sea necesario */
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    font-family: "Poppins", sans-serif !important;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+}
+
+/* Eliminar cualquier elemento que pueda causar espacio */
+body::before,
+body::after,
+html::before,
+html::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Navbar pegado al borde superior */
+.navbar {
+    margin: 0 !important;
+    padding: 0.5rem 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
+}
+
+.professional-navbar {
+    margin: 0 !important;
+    border-top: none !important;
+}
+
+/* Container del navbar */
+.navbar .container {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Header pegado al navbar */
+.professional-header {
+    margin: 0 !important;
+    padding: 1.5rem 0 1rem !important;
+}
+
+/* Contenido con padding necesario */
+.container,
+.container-fluid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Secciones con padding vertical */
+.hero-section,
+.features-section,
+.vehicles-section,
+.how-it-works-section,
+.professional-content-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* Mantener padding vertical */
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+/* Cards y elementos internos con padding */
+.card-body,
+.card-content,
+.feature-card,
+.vehicle-card .card-body {
+    padding: 1.5rem !important;
+}
+
+/* Botones con padding */
+.btn {
+    padding: 0.5rem 1rem !important;
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem !important;
+}
+
+/* Footer con padding */
+.professional-footer {
+    padding: 3rem 0 1rem !important;
+    margin-top: 3rem !important;
+}
+
+/* Elementos de texto con margin */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+}
+
+p {
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+}
+
+/* Listas con margin */
+ul,
+ol {
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+    padding-left: 1.5rem !important;
+}
+
+li {
+    margin-bottom: 0.5rem !important;
+    margin-top: 0 !important;
+}
+
+/* Formularios con margin */
+.form-control,
+.form-select {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* Modales con padding */
+.modal-body {
+    padding: 1.5rem !important;
+}
+
+.modal-header {
+    padding: 1rem 1.5rem !important;
+}
+
+/* Toast con padding */
+.toast-body {
+    padding: 1rem !important;
+}
+
+.toast-header {
+    padding: 0.5rem 1rem !important;
+}
+
+/* Breadcrumb con padding */
+.breadcrumb {
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Forzar que no haya espacio antes del primer elemento */
+body > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* Asegurar que el navbar es el primer elemento visible */
+.navbar:first-child {
+    margin-top: 0 !important;
+}

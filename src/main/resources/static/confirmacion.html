@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmación de Alquiler - RentCar</title>
+  <link rel="icon" href="img/icon.png" type="image/png">
+
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,55 +14,65 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
   <!-- Google Fonts: Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/confirmacion-styles.css">
+  <link rel="stylesheet" href="css/user-levels.css">
+  <!-- Añade esto justo después del último <link> en el <head> de confirmacion.html -->
+  <link rel="stylesheet" href="css/confirmacion-fixes.css">
 
   <!-- jsPDF para generación de PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
+
+<!-- Navbar Profesional -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top professional-navbar">
   <div class="container">
-    <a class="navbar-brand" href="index.html">
+    <a class="navbar-brand professional-brand" href="index.html">
       <i class="bi bi-car-front-fill brand-icon"></i>
       <span class="brand-text">RentCar</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">Inicio</a>
+          <a class="nav-link professional-nav-link" href="index.html">
+            <i class="bi bi-house-door me-1"></i>Inicio
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="vehiculos-unificado.html">Vehículos</a>
+          <a class="nav-link professional-nav-link" href="vehiculos-unificado.html">
+            <i class="bi bi-car-front me-1"></i>Vehículos
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contacto.html">Contacto</a>
+          <a class="nav-link professional-nav-link" href="contacto.html">
+            <i class="bi bi-envelope me-1"></i>Contacto
+          </a>
         </li>
       </ul>
-      <div id="navbarButtons">
-        <!-- Se llenará dinámicamente con JavaScript -->
+      <div class="d-flex align-items-center" id="navbarButtons">
+        <!-- Los botones se cargarán dinámicamente -->
       </div>
     </div>
   </div>
 </nav>
 
 <!-- Header de confirmación -->
-<header class="professional-header">
-  <div class="container text-center header-content">
-    <h1 class="professional-title">
-      <i class="bi bi-check-circle-fill success-animation"></i>
+<header class="page-header bg-light py-5">
+  <div class="container text-center">
+    <h1 class="fw-bold">
+      <i class="bi bi-check-circle-fill text-success"></i>
       Reserva Confirmada
     </h1>
-    <p class="professional-subtitle">¡Gracias por confiar en RentCar! Tu reserva ha sido procesada con éxito.</p>
-    <div class="booking-number-display">
+    <p class="lead">¡Gracias por confiar en RentCar! Tu reserva ha sido procesada con éxito.</p>
+    <div class="mt-4">
       <h3>Número de Reserva: <span class="text-primary" id="booking-number">ALQ-000000</span></h3>
       <p class="mb-0">Fecha: <span id="booking-date">00/00/0000</span></p>
     </div>
@@ -68,20 +80,20 @@
 </header>
 
 <!-- Contenido principal -->
-<section class="cart-section">
+<section class="py-5">
   <div class="container">
     <div class="row">
       <!-- Columna principal -->
       <div class="col-lg-8">
         <!-- Información del cliente -->
-        <div class="cart-items-container fade-in">
-          <div class="cart-header">
-            <h5 class="cart-title">
-              <i class="bi bi-person-circle"></i>
+        <div class="card shadow-sm mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="bi bi-person-circle me-2"></i>
               Información del Cliente
             </h5>
           </div>
-          <div class="cart-items-list">
+          <div class="card-body">
             <div class="row">
               <div class="col-md-6">
                 <p><strong>Nombre:</strong> <span id="customer-name">Cargando...</span></p>
@@ -95,14 +107,14 @@
         </div>
 
         <!-- Detalles de vehículos -->
-        <div class="cart-items-container fade-in" style="animation-delay: 0.2s;">
-          <div class="cart-header">
-            <h5 class="cart-title">
-              <i class="bi bi-car-front"></i>
+        <div class="card shadow-sm mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="bi bi-car-front me-2"></i>
               Detalles de Vehículos
             </h5>
           </div>
-          <div class="cart-items-list" id="vehicles-details">
+          <div class="card-body" id="vehicles-details">
             <div class="text-center">
               <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
@@ -113,14 +125,14 @@
         </div>
 
         <!-- Detalles del pago -->
-        <div class="cart-items-container fade-in" style="animation-delay: 0.4s;">
-          <div class="cart-header">
-            <h5 class="cart-title">
-              <i class="bi bi-credit-card"></i>
+        <div class="card shadow-sm mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="bi bi-credit-card me-2"></i>
               Detalles del Pago
             </h5>
           </div>
-          <div class="cart-items-list" id="payment-details">
+          <div class="card-body" id="payment-details">
             <div class="text-center">
               <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
@@ -134,37 +146,35 @@
       <!-- Columna lateral -->
       <div class="col-lg-4">
         <!-- Resumen de la reserva -->
-        <div class="cart-summary-card slide-in-up">
-          <div class="summary-header">
-            <h5 class="summary-title">
-              <i class="bi bi-receipt"></i>
+        <div class="card shadow-sm sticky-top" style="top: 80px;">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="bi bi-receipt me-2"></i>
               Resumen de la Reserva
             </h5>
           </div>
-          <div class="summary-content">
-            <div class="summary-row">
-              <span class="summary-label">Número de Reserva:</span>
-              <span class="summary-value" id="confirmation-booking-number">ALQ-000000</span>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Número de Reserva:</span>
+              <span id="confirmation-booking-number">ALQ-000000</span>
             </div>
-            <div class="summary-row">
-              <span class="summary-label">Estado:</span>
-              <span class="summary-value">
-                                    <span class="badge bg-success">
-                                        <i class="bi bi-check-circle-fill"></i> Confirmado
-                                    </span>
-                                </span>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Estado:</span>
+              <span class="badge bg-success">
+                <i class="bi bi-check-circle-fill"></i> Confirmado
+              </span>
             </div>
             <div class="text-center mt-4">
               <img id="booking-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=loading" alt="QR Code" class="img-fluid mb-3">
               <p class="text-muted small">Escanea este código para verificar tu reserva</p>
             </div>
             <div class="d-grid gap-2 mt-4">
-              <button id="download-btn" class="btn btn-primary btn-lg">
-                <i class="bi bi-file-earmark-pdf"></i>
+              <button id="download-btn" class="btn btn-primary">
+                <i class="bi bi-file-earmark-pdf me-2"></i>
                 Descargar Comprobante
               </button>
               <a href="perfil-mejorado.html#my-rentals" class="btn btn-outline-primary">
-                <i class="bi bi-list-check"></i>
+                <i class="bi bi-list-check me-2"></i>
                 Ver Mis Alquileres
               </a>
             </div>
@@ -176,34 +186,34 @@
 </section>
 
 <!-- Footer -->
-<footer class="professional-footer">
+<footer class="bg-dark text-white py-4">
   <div class="container">
     <div class="row">
       <div class="col-md-4 mb-4 mb-md-0">
         <h5>RentCar</h5>
-        <p>Tu mejor opción para alquilar vehículos de calidad al mejor precio. Servicio premium y atención personalizada.</p>
+        <p>La mejor plataforma de alquiler de vehículos.</p>
         <p>
-          <a href="index.html" class="me-3"><i class="bi bi-facebook"></i></a>
-          <a href="index.html" class="me-3"><i class="bi bi-twitter"></i></a>
-          <a href="index.html" class="me-3"><i class="bi bi-instagram"></i></a>
-          <a href="index.html"><i class="bi bi-linkedin"></i></a>
+          <a href="index.html" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+          <a href="index.html" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+          <a href="index.html" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+          <a href="index.html" class="text-white"><i class="bi bi-linkedin"></i></a>
         </p>
       </div>
       <div class="col-md-4 mb-4 mb-md-0">
         <h5>Enlaces Rápidos</h5>
         <ul class="list-unstyled">
-          <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
-          <li><a href="vehiculos-unificado.html"><i class="bi bi-car-front"></i> Vehículos</a></li>
-          <li><a href="perfil-mejorado.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
-          <li><a href="contacto-unificado.html"><i class="bi bi-envelope"></i> Contacto</a></li>
+          <li><a href="index.html" class="text-white"><i class="bi bi-house"></i> Inicio</a></li>
+          <li><a href="vehiculos-unificado.html" class="text-white"><i class="bi bi-car-front"></i> Vehículos</a></li>
+          <li><a href="perfil-mejorado.html" class="text-white"><i class="bi bi-person"></i> Mi Perfil</a></li>
+          <li><a href="contacto.html" class="text-white"><i class="bi bi-envelope"></i> Contacto</a></li>
         </ul>
       </div>
       <div class="col-md-4">
         <h5>Contacto</h5>
         <address>
-          <p><i class="bi bi-geo-alt"></i> Calle Principal 123, Madrid</p>
-          <p><i class="bi bi-telephone"></i> (+34) 123 456 789</p>
-          <p><i class="bi bi-envelope"></i> info@rentcar.com</p>
+          <p><i class="bi bi-geo-alt text-white"></i> Calle Principal 123, Madrid</p>
+          <p><i class="bi bi-telephone text-white"></i> (+34) 123 456 789</p>
+          <p><i class="bi bi-envelope text-white"></i> info@rentcar.com</p>
         </address>
       </div>
     </div>
@@ -214,8 +224,8 @@
       </div>
       <div class="col-md-6 text-center text-md-end">
         <p>
-          <a href="#">Términos y Condiciones</a> |
-          <a href="#">Política de Privacidad</a>
+          <a href="#" class="text-white">Términos y Condiciones</a> |
+          <a href="#" class="text-white">Política de Privacidad</a>
         </p>
       </div>
     </div>

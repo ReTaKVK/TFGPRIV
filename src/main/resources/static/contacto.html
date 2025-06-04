@@ -15,6 +15,10 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/user-levels.css" />
+    <link rel="stylesheet" href="css/fix-white-space-aggressive.css" />
+    <link rel="stylesheet" href="css/confirmacion-fixes.css" />
+    <link rel="icon" href="img/icon.png" type="image/png">
+
     <style>
         /* Estilos adicionales para spinner y mapa */
         .spin {
@@ -44,15 +48,148 @@
                 height: 300px;
             }
         }
+
+        /* Estilos profesionales mejorados */
+        .contact-info-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info-header {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .contact-info-header h5 {
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info-body {
+            padding: 1.5rem;
+        }
+
+        .contact-info-body a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info-body a:hover {
+            color: #1e40af;
+        }
+
+        .contact-form-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: none;
+            overflow: hidden;
+        }
+
+        .contact-form-header {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .contact-form-header h3 {
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-form-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-send:hover {
+            background: linear-gradient(135deg, #1e40af, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            color: white;
+        }
+
+        .services-list {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .services-list h5 {
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .services-list ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .services-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+        }
+
+        .services-list li i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
-<body class="professional-body">
-<!-- Fondo Profesional -->
-<div class="professional-background">
-    <div class="subtle-pattern"></div>
-    <div class="gradient-overlay"></div>
-</div>
-<!-- Navbar Unificada -->
+<body>
+
+<!-- Navbar Profesional -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top professional-navbar">
     <div class="container">
         <a class="navbar-brand professional-brand" href="index.html">
@@ -66,15 +203,18 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link professional-nav-link" href="index.html">
-                        <i class="bi bi-house-door me-1"></i>Inicio </a>
+                        <i class="bi bi-house-door me-1"></i>Inicio
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link professional-nav-link" href="vehiculos-unificado.html">
-                        <i class="bi bi-car-front me-1"></i>Vehículos </a>
+                        <i class="bi bi-car-front me-1"></i>Vehículos
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link professional-nav-link active" href="contacto.html">
-                        <i class="bi bi-envelope me-1"></i>Contacto </a>
+                        <i class="bi bi-envelope me-1"></i>Contacto
+                    </a>
                 </li>
             </ul>
             <div class="d-flex align-items-center" id="navbarButtons">
@@ -83,6 +223,7 @@
         </div>
     </div>
 </nav>
+
 <!-- Header Profesional -->
 <header class="professional-header">
     <div class="container">
@@ -95,131 +236,160 @@
                     <li class="breadcrumb-item active">Contacto</li>
                 </ol>
             </nav>
-            <h1 class="professional-title">Contacta con Nosotros</h1>
+            <h1 class="professional-title">
+                <i class="bi bi-envelope-fill me-3"></i>
+                Contacta con Nosotros
+            </h1>
             <p class="professional-subtitle">Estamos aquí para ayudarte. Encuentra nuestras oficinas o envíanos un mensaje.</p>
         </div>
     </div>
 </header>
+
 <!-- Sección de Contacto -->
 <section class="professional-content-section">
     <div class="container">
         <div class="row">
             <!-- Información de Contacto -->
             <div class="col-lg-4">
-                <div class="professional-card mb-4">
-                    <div class="card-header-professional">
-                        <h3>
+                <div class="contact-info-card mb-4">
+                    <div class="contact-info-header">
+                        <h5>
                             <i class="bi bi-geo-alt-fill me-2"></i>Oficina Principal
-                        </h3>
+                        </h5>
                     </div>
-                    <div class="card-content">
-                        <p>Calle Principal 123 <br />28001 Madrid, España </p>
-                        <p>
-                            <strong>Horario:</strong> 24/7
+                    <div class="contact-info-body">
+                        <p class="mb-2">
+                            <strong>Dirección:</strong><br>
+                            Calle Principal 123<br>
+                            28001 Madrid, España
+                        </p>
+                        <p class="mb-0">
+                            <strong>Horario:</strong> 24/7<br>
+                            <small class="text-muted">Servicio disponible todos los días</small>
                         </p>
                     </div>
                 </div>
-                <div class="professional-card mb-4">
-                    <div class="card-header-professional">
-                        <h3>
+
+                <div class="contact-info-card mb-4">
+                    <div class="contact-info-header">
+                        <h5>
                             <i class="bi bi-telephone-fill me-2"></i>Teléfono
-                        </h3>
+                        </h5>
                     </div>
-                    <div class="card-content">
-                        <p>
-                            <a href="tel:+34123456789" class="text-decoration-none">(+34) 123 456 789</a>
+                    <div class="contact-info-body">
+                        <p class="mb-2">
+                            <strong>Principal:</strong><br>
+                            <a href="tel:+34123456789">(+34) 123 456 789</a>
                         </p>
-                        <p>
-                            <strong>Emergencias:</strong> (+34) 900 123 456
+                        <p class="mb-0">
+                            <strong>Emergencias:</strong><br>
+                            <a href="tel:+34900123456">(+34) 900 123 456</a><br>
+                            <small class="text-muted">Disponible 24/7</small>
                         </p>
                     </div>
                 </div>
-                <div class="professional-card mb-4">
-                    <div class="card-header-professional">
-                        <h3>
+
+                <div class="contact-info-card mb-4">
+                    <div class="contact-info-header">
+                        <h5>
                             <i class="bi bi-envelope-fill me-2"></i>Email
-                        </h3>
+                        </h5>
                     </div>
-                    <div class="card-content">
-                        <p>
-                            <a href="mailto:info@rentcar.com" class="text-decoration-none">info@rentcar.com</a>
+                    <div class="contact-info-body">
+                        <p class="mb-2">
+                            <strong>General:</strong><br>
+                            <a href="mailto:info@rentcar.com">info@rentcar.com</a>
                         </p>
-                        <p>
-                            <strong>Soporte:</strong> soporte@rentcar.com
+                        <p class="mb-0">
+                            <strong>Soporte:</strong><br>
+                            <a href="mailto:soporte@rentcar.com">soporte@rentcar.com</a><br>
+                            <small class="text-muted">Respuesta en 24h</small>
                         </p>
                     </div>
                 </div>
             </div>
+
             <!-- Formulario y Mapa -->
             <div class="col-lg-8">
                 <!-- Mapa -->
-                <div class="professional-card mb-4">
-                    <div class="card-header-professional">
+                <div class="contact-form-card mb-4">
+                    <div class="contact-form-header">
                         <h3>
                             <i class="bi bi-map me-2"></i>Nuestra Ubicación
                         </h3>
                     </div>
-                    <div class="card-content">
+                    <div class="contact-form-body">
                         <div id="contactMap" class="map-container"></div>
                         <div class="row mt-3">
                             <div class="col-md-6">
-                                <h5>Cómo llegar:</h5>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <i class="bi bi-train-front text-primary me-2"></i>Metro: Línea 1, 2, 3
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-bus-front text-success me-2"></i>Autobús: Líneas 5, 15, 20
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-car-front text-warning me-2"></i>Parking disponible
-                                    </li>
-                                </ul>
+                                <div class="services-list">
+                                    <h5>Cómo llegar:</h5>
+                                    <ul>
+                                        <li>
+                                            <i class="bi bi-train-front text-primary"></i>
+                                            Metro: Línea 1, 2, 3
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-bus-front text-success"></i>
+                                            Autobús: Líneas 5, 15, 20
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-car-front text-warning"></i>
+                                            Parking disponible
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <h5>Servicios:</h5>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <i class="bi bi-check-circle text-success me-2"></i>Recogida 24/7
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-check-circle text-success me-2"></i>Inspección gratuita
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-check-circle text-success me-2"></i>Asistencia en carretera
-                                    </li>
-                                </ul>
+                                <div class="services-list">
+                                    <h5>Servicios:</h5>
+                                    <ul>
+                                        <li>
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            Recogida 24/7
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            Inspección gratuita
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            Asistencia en carretera
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- Formulario de Contacto -->
-                <div class="professional-card">
-                    <div class="card-header-professional">
+                <div class="contact-form-card">
+                    <div class="contact-form-header">
                         <h3>
                             <i class="bi bi-chat-dots me-2"></i>Envíanos un Mensaje
                         </h3>
                     </div>
-                    <div class="card-content">
+                    <div class="contact-form-body">
                         <form id="contactForm">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="professional-label">Nombre *</label>
-                                    <input type="text" class="professional-input" id="nombre" required>
+                                    <label for="nombre" class="form-label">Nombre *</label>
+                                    <input type="text" class="form-control" id="nombre" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="email" class="professional-label">Email *</label>
-                                    <input type="email" class="professional-input" id="email" required>
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="telefono" class="professional-label">Teléfono</label>
-                                    <input type="tel" class="professional-input" id="telefono">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="asunto" class="professional-label">Asunto *</label>
-                                    <select class="professional-input" id="asunto" required>
+                                    <label for="asunto" class="form-label">Asunto *</label>
+                                    <select class="form-select" id="asunto" required>
                                         <option value="">Selecciona un asunto</option>
                                         <option value="consulta">Consulta general</option>
                                         <option value="reserva">Problema con reserva</option>
@@ -231,15 +401,18 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="mensaje" class="professional-label">Mensaje *</label>
-                                <textarea class="professional-input" id="mensaje" rows="5" required placeholder="Describe tu consulta o problema..."></textarea>
+                                <label for="mensaje" class="form-label">Mensaje *</label>
+                                <textarea class="form-control" id="mensaje" rows="5" required placeholder="Describe tu consulta o problema..."></textarea>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="privacidad" required>
-                                <label class="form-check-label" for="privacidad"> Acepto la <a href="#" class="text-primary">política de privacidad</a> * </label>
+                                <label class="form-check-label" for="privacidad">
+                                    Acepto la <a href="#" class="text-primary">política de privacidad</a> *
+                                </label>
                             </div>
-                            <button type="submit" class="btn-professional btn-primary-professional">
-                                <i class="bi bi-send me-2"></i>Enviar Mensaje </button>
+                            <button type="submit" class="btn-send">
+                                <i class="bi bi-send me-2"></i>Enviar Mensaje
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -247,49 +420,138 @@
         </div>
     </div>
 </section>
-<!-- Footer -->
-<footer class="professional-footer bg-dark text-white py-4">
+
+<!-- Footer Profesional -->
+<footer class="professional-footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h5>RentCar</h5>
-                <p>Soluciones profesionales de alquiler de vehículos.</p>
+            <div class="col-md-4 mb-4">
+                <h5>
+                    <i class="bi bi-car-front-fill me-2"></i>
+                    RentCar
+                </h5>
+                <p class="mb-3">Tu plataforma de confianza para el alquiler de vehículos premium. Calidad, seguridad y servicio excepcional.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-facebook fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-twitter fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-instagram fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-linkedin fs-5"></i>
+                    </a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h5>Enlaces</h5>
+            <div class="col-md-4 mb-4">
+                <h5>Enlaces Rápidos</h5>
                 <ul class="list-unstyled">
-                    <li>
-                        <a href="index.html" class="text-white">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="vehiculos-unificado.html" class="text-white">Vehículos</a>
-                    </li>
-                    <li>
-                        <a href="contacto.html" class="text-white">Contacto</a>
-                    </li>
+                    <li class="mb-2"><a href="index.html"><i class="bi bi-house me-2"></i>Inicio</a></li>
+                    <li class="mb-2"><a href="vehiculos-unificado.html"><i class="bi bi-car-front me-2"></i>Vehículos</a></li>
+                    <li class="mb-2"><a href="perfil-mejorado.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                    <li class="mb-2"><a href="contacto.html"><i class="bi bi-envelope me-2"></i>Contacto</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <h5>Contacto</h5>
-                <address>
-                    <p>
-                        <i class="bi bi-geo-alt me-2"></i>Calle Principal 123, Ciudad
+                <address class="mb-0">
+                    <p class="mb-2">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        Calle Principal 123, Madrid
                     </p>
-                    <p>
-                        <i class="bi bi-telephone me-2"></i>(+34) 123 456 789
+                    <p class="mb-2">
+                        <i class="bi bi-telephone me-2"></i>
+                        (+34) 123 456 789
                     </p>
-                    <p>
-                        <i class="bi bi-envelope me-2"></i>info@rentcar.com
+                    <p class="mb-2">
+                        <i class="bi bi-envelope me-2"></i>
+                        info@rentcar.com
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-clock me-2"></i>
+                        Lun - Dom: 24/7
                     </p>
                 </address>
             </div>
         </div>
-        <hr />
-        <div class="text-center">
-            <p>&copy; 2025 RentCar. Todos los derechos reservados.</p>
+        <hr class="my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2025 RentCar. Todos los derechos reservados.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="me-3">Términos y Condiciones</a>
+                <a href="#" class="me-3">Política de Privacidad</a>
+                <a href="#">Cookies</a>
+            </div>
         </div>
     </div>
 </footer>
+
+<!-- Modales de autenticación -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Iniciar sesión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <div class="alert alert-danger d-none" id="loginError"></div>
+                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                </form>
+                <div class="mt-3 text-center">
+                    <p>¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="registerNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="registerNombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+                    <div class="alert alert-danger d-none" id="registerError"></div>
+                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                </form>
+                <div class="mt-3 text-center">
+                    <p>¿Ya tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Toast Notificaciones -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -300,9 +562,11 @@
         <div class="toast-body" id="toastMessage"></div>
     </div>
 </div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/navbar-mejorado.js"></script>
 <script>
     // Inicializar mapa de contacto
     document.addEventListener('DOMContentLoaded', () => {
@@ -310,31 +574,33 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
+
         // Marcador oficina principal
         const marker = L.marker([40.4168, -3.7038]).addTo(map);
         marker.bindPopup(`
-
-							<div class="text-center">
-								<h6>
-									<i class="bi bi-building"></i> RentCar - Oficina Principal
-								</h6>
-								<p>
-									<strong>Calle Principal 123</strong>
-								</p>
-								<p>28001 Madrid, España</p>
-								<p>📞 (+34) 123 456 789</p>
-								<p>🕒 Abierto 24/7</p>
-								<hr />
-								<small>Servicios completos disponibles</small>
-							</div>
+            <div class="text-center">
+                <h6>
+                    <i class="bi bi-building"></i> RentCar - Oficina Principal
+                </h6>
+                <p>
+                    <strong>Calle Principal 123</strong>
+                </p>
+                <p>28001 Madrid, España</p>
+                <p>📞 (+34) 123 456 789</p>
+                <p>🕒 Abierto 24/7</p>
+                <hr />
+                <small>Servicios completos disponibles</small>
+            </div>
         `).openPopup();
+
         // Envío de formulario
         document.getElementById('contactForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = ' < i class = "bi bi-arrow-clockwise spin me-2" > < /i>Enviando...';
+            btn.innerHTML = '<i class="bi bi-arrow-clockwise spin me-2"></i>Enviando...';
             btn.disabled = true;
+
             setTimeout(() => {
                 showToast('Mensaje Enviado', 'Tu mensaje ha sido enviado correctamente. Te responderemos pronto.', 'success');
                 e.target.reset();
@@ -348,14 +614,17 @@
         const toastEl = document.getElementById('toast');
         const toastTitle = document.getElementById('toastTitle');
         const toastBody = document.getElementById('toastMessage');
+
         toastTitle.textContent = title;
         toastBody.textContent = message;
+
         toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'text-white');
         if (type === 'success') {
             toastEl.classList.add('bg-success', 'text-white');
         } else if (type === 'error') {
             toastEl.classList.add('bg-danger', 'text-white');
         }
+
         const toast = new bootstrap.Toast(toastEl);
         toast.show();
     }

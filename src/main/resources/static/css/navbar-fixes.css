@@ -1,0 +1,146 @@
+/* Estilos para arreglar la navbar y evitar solapamientos */
+
+/* Contenedor de botones de la navbar */
+#navbarButtons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+}
+
+/* Botón de administración rojo */
+.admin-panel-btn {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.admin-panel-btn:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Botón del carrito */
+.cart-btn {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Badge del carrito */
+#cart-badge {
+    font-size: 0.7rem !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+    text-align: center !important;
+}
+
+/* Dropdown del usuario */
+.user-dropdown-btn {
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.user-dropdown-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Avatar mini */
+.avatar-mini {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Menú dropdown */
+.user-dropdown-menu {
+    min-width: 250px !important;
+    border: none !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 0 !important;
+}
+
+.user-dropdown-menu .dropdown-header {
+    padding: 1rem !important;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+    border-radius: 0.5rem 0.5rem 0 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.user-dropdown-menu .dropdown-item {
+    padding: 0.75rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.user-dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa !important;
+    transform: translateX(5px) !important;
+}
+
+/* Indicador de nivel */
+.level-indicator {
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+.level-badge {
+    font-size: 0.7rem !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    #navbarButtons {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.25rem !important;
+        margin-top: 1rem !important;
+    }
+
+    .admin-panel-btn,
+    .cart-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .user-dropdown-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* Prevenir solapamientos */
+.navbar-nav {
+    z-index: 1000 !important;
+}
+
+.dropdown-menu {
+    z-index: 1050 !important;
+}
+
+/* Ocultar cualquier botón duplicado que no tenga la clase correcta */
+.btn:not(.admin-panel-btn):not(.cart-btn):not(.user-dropdown-btn):not(.auth-btn) {
+    display: none !important;
+}
+
+/* Mostrar solo el botón correcto de admin */
+.btn.admin-panel-btn {
+    display: inline-flex !important;
+}

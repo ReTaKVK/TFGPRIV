@@ -1,0 +1,163 @@
+/* Solución agresiva para problemas de solapamiento en confirmacion.html */
+
+/* Resetear posiciones y z-index para la navbar */
+.navbar {
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+.navbar-collapse {
+    z-index: 9999 !important;
+}
+
+/* Contenedor principal con espacio adecuado */
+.container {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Arreglar el header de la página */
+.page-header {
+    position: relative !important;
+    z-index: 1 !important;
+    margin-top: 20px !important;
+    padding-top: 30px !important;
+    clear: both !important;
+}
+
+/* Forzar que los botones de la navbar estén bien posicionados */
+#navbarButtons {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    position: relative !important;
+    z-index: 9999 !important;
+    margin-left: auto !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+}
+
+/* Botón de administración rojo con posición fija */
+.admin-panel-btn {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    z-index: 9999 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+/* Botón del carrito */
+.cart-btn {
+    position: relative !important;
+    z-index: 9999 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+/* Dropdown del usuario */
+.dropdown {
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+/* Eliminar cualquier botón duplicado */
+.navbar a.btn:not(.admin-panel-btn):not(.cart-btn) {
+    display: none !important;
+}
+
+/* Mostrar solo el botón correcto de admin */
+.navbar a.btn.admin-panel-btn {
+    display: inline-flex !important;
+}
+
+/* Eliminar botones de administración duplicados */
+.navbar a[href*="admin"]:not(.admin-panel-btn) {
+    display: none !important;
+}
+
+/* Arreglar el contenido principal */
+.py-5 {
+    position: relative !important;
+    z-index: 1 !important;
+    clear: both !important;
+}
+
+/* Arreglar el footer */
+footer {
+    position: relative !important;
+    z-index: 1 !important;
+    clear: both !important;
+    margin-top: 30px !important;
+}
+
+/* Arreglar el QR y elementos de confirmación */
+#booking-qr {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Arreglar los botones de acción */
+.btn-primary,
+.btn-outline-primary {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Arreglar el toast */
+.toast {
+    z-index: 99999 !important;
+}
+
+/* Arreglar modales */
+.modal {
+    z-index: 99999 !important;
+}
+
+/* Eliminar cualquier elemento flotante no deseado */
+body::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Asegurar que el navbar no se solape con otros elementos */
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto !important;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row !important;
+    }
+
+    #navbarButtons {
+        margin-left: auto !important;
+    }
+}
+
+/* Arreglar problemas en móvil */
+@media (max-width: 991.98px) {
+    #navbarButtons {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+    }
+
+    .admin-panel-btn,
+    .cart-btn {
+        width: 100% !important;
+        margin-bottom: 5px !important;
+    }
+
+    .dropdown {
+        width: 100% !important;
+    }
+
+    .user-dropdown-btn {
+        width: 100% !important;
+    }
+}
