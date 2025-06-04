@@ -202,7 +202,7 @@ window.forceUserUpdate = async () => {
 
         console.log("Forzando actualización del usuario desde el servidor...")
 
-        const response = await fetch(`http://localhost:8080/api/usuarios/${user.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/usuarios/${user.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -282,7 +282,7 @@ async function updateCartBadge() {
         const token = localStorage.getItem("token")
         if (!token) return
 
-        const response = await fetch(`http://localhost:8080/api/carrito/${user.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/${user.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

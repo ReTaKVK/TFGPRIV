@@ -20,7 +20,7 @@ async function loadVehicleDetails() {
             return
         }
 
-        const response = await fetch(`http://localhost:8080/api/vehiculos/${id}`)
+        const response = await fetch(`https://tfgpriv.onrender.com/api/vehiculos/${id}`)
 
         if (!response.ok) {
             throw new Error("Error al cargar los detalles del vehículo")
@@ -281,7 +281,7 @@ async function verificarDisponibilidad(vehiculoId, fechaInicio, fechaFin) {
         }
 
         const response = await fetch(
-            `http://localhost:8080/api/vehiculos/${vehiculoId}/disponibilidad?fechaInicio=${fechaInicio.toISOString()}&fechaFin=${fechaFin.toISOString()}`,
+            `https://tfgpriv.onrender.com/api/vehiculos/${vehiculoId}/disponibilidad?fechaInicio=${fechaInicio.toISOString()}&fechaFin=${fechaFin.toISOString()}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -353,7 +353,7 @@ async function addToCart() {
             return
         }
 
-        const response = await fetch("http://localhost:8080/api/carrito/agregar", {
+        const response = await fetch("https://tfgpriv.onrender.com/api/carrito/agregar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

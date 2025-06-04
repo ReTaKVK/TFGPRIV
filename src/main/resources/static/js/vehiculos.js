@@ -10,7 +10,7 @@ async function loadVehicles() {
         const vehiculosContainer = document.getElementById("vehiculos-container");
         if (!vehiculosContainer) return;
 
-        const response = await fetch(`http://localhost:8080/api/vehiculos/disponibles`);
+        const response = await fetch(`https://tfgpriv.onrender.com/api/vehiculos/disponibles`);
         if (!response.ok) {
             throw new Error("Error al cargar los vehículos");
         }

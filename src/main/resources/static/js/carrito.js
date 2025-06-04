@@ -14,7 +14,7 @@ async function cargarCarrito() {
         }
 
         const token = getToken()
-        const response = await fetch(`http://localhost:8080/api/carrito/${user.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/${user.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -199,7 +199,7 @@ function mostrarCarritoVacio() {
 async function eliminarDelCarrito(itemId) {
     try {
         const token = getToken()
-        const response = await fetch(`http://localhost:8080/api/carrito/item/${itemId}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/item/${itemId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -230,7 +230,7 @@ async function procederAlPago() {
         const token = getToken()
 
         // Confirmar el alquiler
-        const response = await fetch(`http://localhost:8080/api/carrito/${user.id}/confirmar`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/${user.id}/confirmar`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -463,7 +463,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return []
             }
 
-            const response = await fetch(`http://localhost:8080/api/carrito/${usuarioId}`, {
+            const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/${usuarioId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return false
             }
 
-            const response = await fetch(`http://localhost:8080/api/carrito/item/${itemId}`, {
+            const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/item/${itemId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -792,7 +792,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const user = JSON.parse(localStorage.getItem("user"))
                 const token = localStorage.getItem("token")
 
-                const response = await fetch(`http://localhost:8080/api/carrito/confirmar/${user.id}`, {
+                const response = await fetch(`https://tfgpriv.onrender.com/api/carrito/confirmar/${user.id}`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,

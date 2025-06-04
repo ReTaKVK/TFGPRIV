@@ -1,5 +1,5 @@
 // Define API_URL (replace with your actual API URL)
-const API_URL = "http://localhost:8080/api/vehiculos/disponibles"
+const API_URL = "https://tfgpriv.onrender.com/api/vehiculos/disponibles"
 
 // Función para cargar los vehículos destacados en la página de inicio
 async function loadFeaturedVehicles() {

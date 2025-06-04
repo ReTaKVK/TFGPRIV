@@ -1,5 +1,6 @@
 // Variables globales
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://tfgpriv.onrender.com/api";
+
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 const loginError = document.getElementById("loginError");

@@ -99,7 +99,7 @@ async function loadUserStats() {
         if (!token) return
 
         // Cargar alquileres para calcular estadísticas
-        const response = await fetch(`http://localhost:8080/api/alquileres/usuario/${userProfile.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/alquileres/usuario/${userProfile.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -226,7 +226,7 @@ async function loadUserRentals() {
         const token = getToken()
         if (!token) return
 
-        const response = await fetch(`http://localhost:8080/api/alquileres/usuario/${userProfile.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/alquileres/usuario/${userProfile.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -256,7 +256,7 @@ async function loadUserRentals() {
 // Función para cargar información de vehículos
 async function loadVehiclesInfo() {
     try {
-        const response = await fetch("http://localhost:8080/api/vehiculos")
+        const response = await fetch("https://tfgpriv.onrender.com/api/vehiculos")
         if (!response.ok) return
 
         const vehicles = await response.json()
@@ -412,7 +412,7 @@ async function cancelRental(rentalId) {
         const token = getToken()
         if (!token) return
 
-        const response = await fetch(`http://localhost:8080/api/alquileres/${rentalId}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/alquileres/${rentalId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -440,7 +440,7 @@ async function updateProfile(formData) {
         const token = getToken()
         if (!token) return
 
-        const response = await fetch(`http://localhost:8080/api/usuarios/${userProfile.id}`, {
+        const response = await fetch(`https://tfgpriv.onrender.com/api/usuarios/${userProfile.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

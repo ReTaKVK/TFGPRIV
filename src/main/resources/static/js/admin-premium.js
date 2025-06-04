@@ -326,7 +326,7 @@ class AdminPremium {
 
     async loadVehiculos() {
         try {
-            const response = await fetch("http://localhost:8080/api/vehiculos", {
+            const response = await fetch("https://tfgpriv.onrender.com/api/vehiculos", {
                 headers: { Authorization: `Bearer ${this.getToken()}` },
             })
 
@@ -342,7 +342,7 @@ class AdminPremium {
 
     async loadUsuarios() {
         try {
-            const response = await fetch("http://localhost:8080/api/usuarios", {
+            const response = await fetch("https://tfgpriv.onrender.com/api/usuarios", {
                 headers: { Authorization: `Bearer ${this.getToken()}` },
             })
 
@@ -358,7 +358,7 @@ class AdminPremium {
 
     async loadAlquileres() {
         try {
-            const response = await fetch("http://localhost:8080/api/alquileres", {
+            const response = await fetch("https://tfgpriv.onrender.com/api/alquileres", {
                 headers: { Authorization: `Bearer ${this.getToken()}` },
             })
 
