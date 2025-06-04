@@ -7,7 +7,6 @@ WORKDIR /app
 # Copiar todos los archivos del proyecto al contenedor
 COPY . .
 
-# Dar permisos de ejecución al wrapper de Maven (mvnw)
 RUN chmod +x mvnw
 
 # Ejecutar la compilación sin tests para acelerar
