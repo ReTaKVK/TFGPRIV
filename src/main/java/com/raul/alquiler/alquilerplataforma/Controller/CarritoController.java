@@ -46,12 +46,13 @@ public class CarritoController {
     @PostMapping("/confirmar/{usuarioId}")
     public ResponseEntity<String> confirmarAlquiler(@PathVariable Long usuarioId) {
         try {
-            carritoService.confirmarAlquiler(usuarioId);
-            return ResponseEntity.ok("Alquiler confirmado correctamente");
+            double totalConDescuento = carritoService.confirmarAlquiler(usuarioId);
+            return ResponseEntity.ok("Alquiler confirmado correctamente. Total con descuento aplicado: " + totalConDescuento + " €");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/item/{itemId}")
     public ResponseEntity<String> eliminarItem(@PathVariable Long itemId) {

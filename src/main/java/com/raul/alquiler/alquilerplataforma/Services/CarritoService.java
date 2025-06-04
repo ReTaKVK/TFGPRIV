@@ -65,8 +65,20 @@ public class CarritoService {
 
         List<CarritoItem> items = carritoRepo.findByUsuario(usuario);
 
+        NivelUsuario nivel = determinarNivelUsuario(usuario.getTotalAlquileres());
+        double descuento = nivel.getDescuento(); // porcentaje: 0, 5, 10, etc.
+
         return items.stream()
-                .map(carritoItemMapper::toDTO)
+                .map(item -> {
+                    CarritoItemDTO dto = carritoItemMapper.toDTO(item);
+
+                    double subtotalSinDescuento = item.getVehiculo().getPrecio() * item.getDias();
+                    double subtotalConDescuento = subtotalSinDescuento * (1 - descuento / 100.0);
+
+                    dto.setSubtotal(subtotalConDescuento);
+
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -103,16 +115,19 @@ public class CarritoService {
 
     // Confirmar alquiler (crear alquileres y vaciar carrito)
     @Transactional
-    public void confirmarAlquiler(Long usuarioId) {
+    public double confirmarAlquiler(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         List<CarritoItem> items = carritoRepo.findByUsuario(usuario);
 
+        if (items.isEmpty()) {
+            throw new RuntimeException("El carrito está vacío");
+        }
+
         for (CarritoItem item : items) {
             Vehiculo vehiculo = item.getVehiculo();
 
-            // Usar las fechas almacenadas en el carrito
             LocalDateTime fechaInicio = item.getFechaInicio() != null ?
                     item.getFechaInicio() :
                     LocalDateTime.now();
@@ -121,7 +136,6 @@ public class CarritoService {
                     item.getFechaFin() :
                     LocalDateTime.now().plusDays(item.getDias());
 
-            // Verificar disponibilidad nuevamente antes de confirmar
             if (!vehiculoService.isDisponibleEnFechas(vehiculo.getId(), fechaInicio, fechaFin)) {
                 throw new RuntimeException("El vehículo " + vehiculo.getMarca() + " " +
                         vehiculo.getModelo() + " ya no está disponible en las fechas seleccionadas");
@@ -135,15 +149,24 @@ public class CarritoService {
                     .build();
 
             alquilerRepo.save(alquiler);
-
-            // Ya no marcamos el vehículo como no disponible globalmente
-            // Solo estará no disponible durante las fechas del alquiler
         }
 
-        carritoRepo.deleteAll(items); // Vaciar el carrito
+        // Calcular total con descuento
+        double totalSinDescuento = items.stream()
+                .mapToDouble(item -> item.getVehiculo().getPrecio() * item.getDias())
+                .sum();
+
+        NivelUsuario nivel = determinarNivelUsuario(usuario.getTotalAlquileres());
+        double descuento = nivel.getDescuento();
+        double totalConDescuento = totalSinDescuento * (1 - (descuento / 100.0));
+
+        carritoRepo.deleteAll(items);
         usuario.setTotalAlquileres(usuario.getTotalAlquileres() + items.size());
         usuarioRepo.save(usuario);
+
+        return totalConDescuento;
     }
+
 
 
     // Nuevo método: Eliminar un item del carrito
