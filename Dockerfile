@@ -1,42 +1,26 @@
-FROM maven:3.9-eclipse-temurin-21-alpine AS build
+# Etapa 1: Construcción del proyecto
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-COPY pom.xml ./
-COPY mvnw ./
-COPY .mvn/ .mvn/
+# Copiar todos los archivos del proyecto
+COPY . .
 
-# Convertir saltos de línea a formato Unix (opcional pero recomendable si usas Windows)
-RUN apk add --no-cache dos2unix && dos2unix mvnw
+# Usar el wrapper para compilar el proyecto (sin tests para acelerar)
+RUN ./mvnw clean package -DskipTests
 
-# Asegura que mvnw sea ejecutable
-RUN chmod 755 mvnw
+# Etapa 2: Imagen final para ejecutar la app
+FROM eclipse-temurin:21-jdk
 
-# Descargar dependencias sin compilar el proyecto
-RUN sh mvnw dependency:go-offline -B
-
-# Copiar el resto del código fuente
-COPY src ./src
-
-# Compilar el proyecto sin ejecutar tests
-RUN ./mvnw package -DskipTests
-
-# Etapa de ejecución
-FROM eclipse-temurin:21-jre-alpine
-
-# Crear un usuario no root por seguridad
-RUN addgroup -S javauser && adduser -S javauser -G javauser
-
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el JAR generado desde la etapa de construcción
+# Copiar el jar construido desde la etapa anterior
 COPY --from=build /app/target/*.jar app.jar
 
-# Usar el usuario seguro
-USER javauser
-
-# Exponer el puerto estándar de Spring Boot
+# Exponer el puerto por el que correrá la app (ajústalo si cambias el server.port)
 EXPOSE 8080
 
-# Ejecutar la aplicación (permite definir el puerto con variable de entorno PORT)
-CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
+# Comando para ejecutar la app
+ENTRYPOINT ["java", "-jar", "app.jar"]
