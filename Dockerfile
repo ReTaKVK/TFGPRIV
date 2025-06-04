@@ -1,16 +1,16 @@
-# Etapa de construcción
 FROM maven:3.9-eclipse-temurin-21-alpine AS build
 
 WORKDIR /app
 
-# Copiar primero solo los archivos necesarios para cachear las dependencias
 COPY pom.xml ./
 COPY mvnw ./
 COPY .mvn/ .mvn/
 
+# Convertir saltos de línea a formato Unix (opcional pero recomendable si usas Windows)
+RUN apk add --no-cache dos2unix && dos2unix mvnw
+
 # Asegura que mvnw sea ejecutable
 RUN chmod 755 mvnw
-
 
 # Descargar dependencias sin compilar el proyecto
 RUN sh mvnw dependency:go-offline -B
@@ -32,10 +32,11 @@ WORKDIR /app
 # Copiar el JAR generado desde la etapa de construcción
 COPY --from=build /app/target/*.jar app.jar
 
+# Usar el usuario seguro
 USER javauser
 
-# Exponer el puerto en el que se ejecutará Spring Boot
+# Exponer el puerto estándar de Spring Boot
 EXPOSE 8080
 
-# Ejecutar la aplicación (permite que el puerto se configure por variable de entorno PORT si se desea)
+# Ejecutar la aplicación (permite definir el puerto con variable de entorno PORT)
 CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
