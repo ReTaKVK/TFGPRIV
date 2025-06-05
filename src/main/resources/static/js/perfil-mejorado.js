@@ -223,33 +223,45 @@ function updateLevelProgress(progress, remaining) {
 // Función para cargar alquileres del usuario
 async function loadUserRentals() {
     try {
-        const token = getToken()
-        if (!token) return
+        const token = getToken();
+        if (!token) {
+            // Si no tienes token, no puedes cargar
+            showToast("Error", "No estás autenticado", "error");
+            return;
+        }
 
         const response = await fetch(`https://tfgpriv.onrender.com/api/alquileres/usuario/${userProfile.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        })
+        });
 
         if (response.ok) {
-            userRentals = await response.json()
+            userRentals = await response.json();
 
             if (userRentals.length === 0) {
-                document.getElementById("no-rentals").classList.remove("d-none")
-                return
+                document.getElementById("no-rentals").classList.remove("d-none");
+                document.getElementById("rentals-container").classList.add("d-none");
+                return;
             }
 
-            // Cargar información de vehículos
-            await loadVehiclesInfo()
+            // Cargar info de vehículos para mostrar detalles
+            await loadVehiclesInfo();
 
-            // Mostrar alquileres
-            displayUserRentals()
-            document.getElementById("rentals-container").classList.remove("d-none")
+            // Mostrar alquileres en la tabla
+            displayUserRentals();
+
+            // Mostrar la sección
+            document.getElementById("rentals-container").classList.remove("d-none");
+            document.getElementById("no-rentals").classList.add("d-none");
+        } else {
+            // Si hubo error
+            throw new Error("No se pudieron cargar los alquileres");
         }
     } catch (error) {
-        console.error("Error al cargar alquileres:", error)
-        document.getElementById("no-rentals").classList.remove("d-none")
+        console.error("Error al cargar alquileres:", error);
+        document.getElementById("no-rentals").classList.remove("d-none");
+        document.getElementById("rentals-container").classList.add("d-none");
     }
 }
 
@@ -581,6 +593,20 @@ function showToast(title, message, type = "success") {
 document.addEventListener("DOMContentLoaded", () => {
     // Cargar perfil
     loadProfile()
+
+    const btnHistorial = document.getElementById("show-rentals-btn");
+    if (btnHistorial) {
+        btnHistorial.addEventListener("click", async (e) => {
+            e.preventDefault();
+            // Cargar alquileres y mostrar en la pestaña correspondiente
+            await loadUserRentals();
+            // Mostrar la pestaña de alquileres
+            const tabTrigger = document.querySelector('[data-bs-target="#my-rentals"]');
+            if (tabTrigger) {
+                tabTrigger.click();
+            }
+        });
+    }
 
     // Evento para formulario de perfil
     const profileForm = document.getElementById("profile-form")
