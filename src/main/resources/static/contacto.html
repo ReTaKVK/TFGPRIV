@@ -363,62 +363,60 @@
                     </div>
                 </div>
 
-                <!-- Formulario de Contacto -->
-                <div class="contact-form-card">
-                    <div class="contact-form-header">
-                        <h3>
-                            <i class="bi bi-chat-dots me-2"></i>Envíanos un Mensaje
-                        </h3>
-                    </div>
-                    <div class="contact-form-body">
-                        <form id="contactForm"
-                              action="https://formspree.io/f/mqabanlb"
-                              method="POST"
-                        >
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="form-label">Nombre *</label>
-                                    <input type="text" class="form-control" id="nombre" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" id="email" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="telefono" class="form-label">Teléfono</label>
-                                    <input type="tel" class="form-control" id="telefono">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="asunto" class="form-label">Asunto *</label>
-                                    <select class="form-select" id="asunto" required>
-                                        <option value="">Selecciona un asunto</option>
-                                        <option value="consulta">Consulta general</option>
-                                        <option value="reserva">Problema con reserva</option>
-                                        <option value="vehiculo">Problema con vehículo</option>
-                                        <option value="facturacion">Facturación</option>
-                                        <option value="sugerencia">Sugerencia</option>
-                                        <option value="otro">Otro</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="mensaje" class="form-label">Mensaje *</label>
-                                <textarea class="form-control" id="mensaje" rows="5" required placeholder="Describe tu consulta o problema..."></textarea>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="privacidad" required>
-                                <label class="form-check-label" for="privacidad">
-                                    Acepto la <a href="#" class="text-primary">política de privacidad</a> *
-                                </label>
-                            </div>
-                            <button type="submit" class="btn-send">
-                                <i class="bi bi-send me-2"></i>Enviar Mensaje
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                <!-- Formulario de Contacto adaptado -->
+                <form
+                        id="contactForm"
+                        action="https://formspree.io/f/mqabanlb"
+                        method="POST"
+                >
+                    <label for="nombre">
+                        Nombre *:
+                        <input type="text" id="nombre" name="nombre" required>
+                    </label>
+                    <br>
+
+                    <label for="email">
+                        Email *:
+                        <input type="email" id="email" name="email" required>
+                    </label>
+                    <br>
+
+                    <label for="telefono">
+                        Teléfono:
+                        <input type="tel" id="telefono" name="telefono">
+                    </label>
+                    <br>
+
+                    <label for="asunto">
+                        Asunto *:
+                        <select id="asunto" name="asunto" required>
+                            <option value="">Selecciona un asunto</option>
+                            <option value="consulta">Consulta general</option>
+                            <option value="reserva">Problema con reserva</option>
+                            <option value="vehiculo">Problema con vehículo</option>
+                            <option value="facturacion">Facturación</option>
+                            <option value="sugerencia">Sugerencia</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </label>
+                    <br>
+
+                    <label for="mensaje">
+                        Mensaje *:
+                        <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describe tu consulta o problema..." required></textarea>
+                    </label>
+                    <br>
+
+                    <label>
+                        <input type="checkbox" id="privacidad" name="privacidad" required>
+                        Acepto la <a href="#" class="text-primary">política de privacidad</a> *
+                    </label>
+                    <br>
+
+                    <button type="submit">
+                        <i class="bi bi-send me-2"></i>Enviar Mensaje
+                    </button>
+                </form>
             </div>
         </div>
     </div>
