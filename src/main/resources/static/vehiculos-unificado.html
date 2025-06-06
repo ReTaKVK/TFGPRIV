@@ -10,6 +10,81 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/user-levels.css">
     <link rel="icon" href="img/icon.png" type="image/png">
+    <style>
+        /* Estilos mejorados para filtros */
+        .filter-card {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .filter-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .professional-input, .form-select {
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            padding: 10px 15px;
+            transition: all 0.2s;
+        }
+
+        .professional-input:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-right: none;
+        }
+
+        .price-slider-container {
+            padding: 5px 10px;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: #3b82f6;
+        }
+
+        .form-range::-moz-range-thumb {
+            background: #3b82f6;
+        }
+
+        .vehicle-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .vehicle-img {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        /* Animaciones de revelación */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Estilos para el contador de resultados */
+        #resultsCount {
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+    </style>
 
 </head>
 <body class="professional-body">
@@ -79,38 +154,81 @@
         <!-- Filtros -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="professional-card">
-                    <div class="card-header-professional">
+                <div class="professional-card filter-card">
+                    <div class="card-header-professional d-flex justify-content-between align-items-center">
                         <h3>
                             <i class="bi bi-funnel me-2"></i>
                             Filtros de Búsqueda
                         </h3>
+                        <span class="badge bg-primary" id="resultsCount">Cargando...</span>
                     </div>
                     <div class="card-content">
                         <div class="row g-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="marcaFilter" class="professional-label">
-                                    <i class="bi bi-car-front"></i>
+                                    <i class="bi bi-car-front me-1"></i>
                                     Marca
                                 </label>
-                                <select class="professional-input" id="marcaFilter">
-                                    <option value="">Todas las marcas</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="precioFilter" class="professional-label">
-                                    <i class="bi bi-currency-euro"></i>
-                                    Precio máximo por día
-                                </label>
-                                <input type="range" class="form-range" id="precioFilter" min="0" max="500" step="10" value="500">
-                                <div class="d-flex justify-content-between mt-2">
-                                    <span class="text-muted">0€</span>
-                                    <span id="precioValue" class="fw-bold text-primary">500€</span>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <select class="professional-input form-select" id="marcaFilter">
+                                        <option value="">Todas las marcas</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-4 d-flex align-items-end">
-                                <button id="applyFilters" class="btn-professional btn-primary-professional w-100">
-                                    <i class="bi bi-search me-2"></i>
+                            <div class="col-md-3">
+                                <label for="tipoFilter" class="professional-label">
+                                    <i class="bi bi-tag me-1"></i>
+                                    Tipo de vehículo
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-car-front-fill"></i></span>
+                                    <select class="professional-input form-select" id="tipoFilter">
+                                        <option value="">Todos los tipos</option>
+                                        <option value="Compacto">Compacto</option>
+                                        <option value="Sedan">Sedán</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Deportivo">Deportivo</option>
+                                        <option value="Familiar">Familiar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="transmisionFilter" class="professional-label">
+                                    <i class="bi bi-gear me-1"></i>
+                                    Transmisión
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-gear-wide"></i></span>
+                                    <select class="professional-input form-select" id="transmisionFilter">
+                                        <option value="">Todas</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="Automático">Automático</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="precioFilter" class="professional-label">
+                                    <i class="bi bi-currency-euro me-1"></i>
+                                    Precio máximo por día
+                                </label>
+                                <div class="price-slider-container">
+                                    <input type="range" class="form-range" id="precioFilter" min="0" max="500" step="10" value="500">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <span class="text-muted small">0€</span>
+                                        <span id="precioValue" class="fw-bold text-primary">500€</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button id="resetFilters" class="btn btn-outline-secondary me-2">
+                                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                    Restablecer
+                                </button>
+                                <button id="applyFilters" class="btn-professional btn-primary-professional">
+                                    <i class="bi bi-search me-1"></i>
                                     Aplicar Filtros
                                 </button>
                             </div>
