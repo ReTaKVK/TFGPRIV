@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Cookies - RentCar</title>
+    <link rel="icon" href="img/icon.png" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .legal-document {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .legal-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+
+        .legal-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .section-title {
+            color: #f59e0b;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .cookie-type {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: #fefefe;
+        }
+
+        .cookie-essential {
+            border-left: 4px solid #10b981;
+            background: #f0fdf4;
+        }
+
+        .cookie-functional {
+            border-left: 4px solid #3b82f6;
+            background: #eff6ff;
+        }
+
+        .cookie-analytics {
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+        }
+
+        .cookie-marketing {
+            border-left: 4px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .cookie-settings {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .last-updated {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .highlight-box {
+            background: #fff7ed;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top professional-navbar">
+    <div class="container">
+        <a class="navbar-brand professional-brand" href="index.html">
+            <i class="bi bi-car-front-fill brand-icon"></i>
+            <span class="brand-text">RentCar</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="index.html">
+                        <i class="bi bi-house-door me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="vehiculos-unificado.html">
+                        <i class="bi bi-car-front me-1"></i>Vehículos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link professional-nav-link" href="contacto.html">
+                        <i class="bi bi-envelope me-1"></i>Contacto
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center" id="navbarButtons">
+                <!-- Los botones se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Header -->
+<header class="legal-header">
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-cookie me-3"></i>
+            Política de Cookies
+        </h1>
+        <p class="lead">Información sobre el uso de cookies y tecnologías similares en RentCar</p>
+    </div>
+</header>
+
+<!-- Contenido Principal -->
+<div class="legal-document">
+    <div class="container">
+        <div class="legal-content">
+
+            <div class="last-updated">
+                <strong><i class="bi bi-calendar-event me-2"></i>Última actualización:</strong> 15 de enero de 2025
+            </div>
+
+            <!-- Introducción -->
+            <section>
+                <h2 class="section-title">1. ¿Qué son las Cookies?</h2>
+
+                <div class="highlight-box">
+                    <p><strong>Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita un sitio web.</strong> Estas tecnologías nos permiten reconocer su navegador y capturar y recordar cierta información para mejorar su experiencia de usuario.</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>1.1. Definición Técnica</h4>
+                    <p>Una cookie es un archivo de datos que un sitio web envía al navegador del usuario y que se almacena en el dispositivo del usuario (ordenador, tablet, smartphone, etc.). Las cookies permiten al sitio web recordar información sobre la visita del usuario, como sus preferencias y otra información que puede hacer que la siguiente visita sea más fácil y útil.</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>1.2. Tecnologías Similares</h4>
+                    <p>Además de las cookies tradicionales, RentCar también utiliza tecnologías similares como:</p>
+                    <ul>
+                        <li><strong>Local Storage:</strong> Almacenamiento local en el navegador</li>
+                        <li><strong>Session Storage:</strong> Almacenamiento temporal de sesión</li>
+                        <li><strong>Web Beacons:</strong> Pequeñas imágenes transparentes</li>
+                        <li><strong>Pixels de seguimiento:</strong> Para análisis y marketing</li>
+                        <li><strong>Fingerprinting:</strong> Identificación basada en características del dispositivo</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Tipos de cookies -->
+            <section>
+                <h2 class="section-title">2. Tipos de Cookies que Utilizamos</h2>
+
+                <div class="cookie-type cookie-essential">
+                    <h4><i class="bi bi-shield-check text-success me-2"></i>2.1. Cookies Estrictamente Necesarias</h4>
+                    <p><strong>Estas cookies son esenciales para el funcionamiento del sitio web y no pueden desactivarse.</strong></p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Propósito</th>
+                                <th>Duración</th>
+                                <th>Tipo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>PHPSESSID</td>
+                                <td>Identificación de sesión del usuario</td>
+                                <td>Sesión</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>csrf_token</td>
+                                <td>Protección contra ataques CSRF</td>
+                                <td>Sesión</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>auth_token</td>
+                                <td>Autenticación del usuario</td>
+                                <td>30 días</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>cookie_consent</td>
+                                <td>Registro del consentimiento de cookies</td>
+                                <td>1 año</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>load_balancer</td>
+                                <td>Distribución de carga del servidor</td>
+                                <td>Sesión</td>
+                                <td>HTTP</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="cookie-type cookie-functional">
+                    <h4><i class="bi bi-gear text-primary me-2"></i>2.2. Cookies Funcionales</h4>
+                    <p><strong>Estas cookies permiten que el sitio web proporcione funcionalidades mejoradas y personalización.</strong></p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Propósito</th>
+                                <th>Duración</th>
+                                <th>Tipo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>user_preferences</td>
+                                <td>Preferencias de idioma y región</td>
+                                <td>1 año</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>theme_mode</td>
+                                <td>Modo oscuro/claro seleccionado</td>
+                                <td>6 meses</td>
+                                <td>Local Storage</td>
+                            </tr>
+                            <tr>
+                                <td>font_size</td>
+                                <td>Tamaño de fuente para accesibilidad</td>
+                                <td>6 meses</td>
+                                <td>Local Storage</td>
+                            </tr>
+                            <tr>
+                                <td>search_filters</td>
+                                <td>Filtros de búsqueda guardados</td>
+                                <td>30 días</td>
+                                <td>HTTP</td>
+                            </tr>
+                            <tr>
+                                <td>recently_viewed</td>
+                                <td>Vehículos vistos recientemente</td>
+                                <td>7 días</td>
+                                <td>Local Storage</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="cookie-type cookie-analytics">
+                    <h4><i class="bi bi-graph-up text-warning me-2"></i>2.3. Cookies de Análisis y Rendimiento</h4>
+                    <p><strong>Estas cookies nos ayudan a entender cómo los visitantes interactúan con el sitio web.</strong></p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Cookies</th>
+                                <th>Propósito</th>
+                                <th>Duración</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Google Analytics</td>
+                                <td>_ga, _ga_*, _gid</td>
+                                <td>Análisis de tráfico y comportamiento</td>
+                                <td>2 años / 24 horas</td>
+                            </tr>
+                            <tr>
+                                <td>Google Analytics</td>
+                                <td>_gat_gtag_*</td>
+                                <td>Control de velocidad de solicitudes</td>
+                                <td>1 minuto</td>
+                            </tr>
+                            <tr>
+                                <td>Hotjar</td>
+                                <td>_hjid, _hjFirstSeen</td>
+                                <td>Mapas de calor y grabaciones de sesión</td>
+                                <td>1 año</td>
+                            </tr>
+                            <tr>
+                                <td>Hotjar</td>
+                                <td>_hjIncludedInPageviewSample</td>
+                                <td>Muestreo de páginas vistas</td>
+                                <td>30 minutos</td>
+                            </tr>
+                            <tr>
+                                <td>RentCar Analytics</td>
+                                <td>rc_analytics</td>
+                                <td>Análisis interno de uso</td>
+                                <td>1 año</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="cookie-type cookie-marketing">
+                    <h4><i class="bi bi-megaphone text-danger me-2"></i>2.4. Cookies de Marketing y Publicidad</h4>
+                    <p><strong>Estas cookies se utilizan para mostrar anuncios relevantes y medir la efectividad de las campañas.</strong></p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Cookies</th>
+                                <th>Propósito</th>
+                                <th>Duración</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Google Ads</td>
+                                <td>_gcl_au, _gcl_aw</td>
+                                <td>Conversiones y remarketing</td>
+                                <td>90 días</td>
+                            </tr>
+                            <tr>
+                                <td>Facebook Pixel</td>
+                                <td>_fbp, _fbc</td>
+                                <td>Seguimiento de conversiones</td>
+                                <td>90 días</td>
+                            </tr>
+                            <tr>
+                                <td>LinkedIn Insight</td>
+                                <td>li_sugr, lidc</td>
+                                <td>Análisis de audiencia B2B</td>
+                                <td>90 días / 24 horas</td>
+                            </tr>
+                            <tr>
+                                <td>Twitter</td>
+                                <td>muc_ads</td>
+                                <td>Medición de anuncios</td>
+                                <td>2 años</td>
+                            </tr>
+                            <tr>
+                                <td>Criteo</td>
+                                <td>cto_bundle</td>
+                                <td>Publicidad personalizada</td>
+                                <td>1 año</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configuración de cookies -->
+            <section>
+                <h2 class="section-title">3. Configuración de Cookies</h2>
+
+                <div class="cookie-settings">
+                    <h4><i class="bi bi-sliders me-2"></i>Gestione sus Preferencias de Cookies</h4>
+                    <p>Puede controlar qué tipos de cookies acepta utilizando los controles a continuación:</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 border rounded">
+                                <div>
+                                    <strong>Cookies Estrictamente Necesarias</strong>
+                                    <br><small class="text-muted">Requeridas para el funcionamiento básico</small>
+                                </div>
+                                <div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked disabled>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 border rounded">
+                                <div>
+                                    <strong>Cookies Funcionales</strong>
+                                    <br><small class="text-muted">Mejoran la funcionalidad del sitio</small>
+                                </div>
+                                <div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="functional-cookies" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 border rounded">
+                                <div>
+                                    <strong>Cookies de Análisis</strong>
+                                    <br><small class="text-muted">Nos ayudan a mejorar el sitio</small>
+                                </div>
+                                <div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="analytics-cookies">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 border rounded">
+                                <div>
+                                    <strong>Cookies de Marketing</strong>
+                                    <br><small class="text-muted">Para publicidad personalizada</small>
+                                </div>
+                                <div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="marketing-cookies">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary me-3" onclick="saveCookiePreferences()">
+                            <i class="bi bi-check-circle me-2"></i>Guardar Preferencias
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="acceptAllCookies()">
+                            <i class="bi bi-check-all me-2"></i>Aceptar Todas
+                        </button>
+                        <button class="btn btn-outline-danger ms-3" onclick="rejectAllCookies()">
+                            <i class="bi bi-x-circle me-2"></i>Rechazar Opcionales
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finalidades específicas -->
+            <section>
+                <h2 class="section-title">4. Finalidades Específicas del Uso de Cookies</h2>
+
+                <div class="subsection">
+                    <h4>4.1. Autenticación y Seguridad</h4>
+                    <ul>
+                        <li>Mantener la sesión del usuario iniciada</li>
+                        <li>Proteger contra ataques de falsificación de solicitudes</li>
+                        <li>Detectar actividad sospechosa o fraudulenta</li>
+                        <li>Implementar medidas de seguridad adicionales</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>4.2. Personalización de la Experiencia</h4>
+                    <ul>
+                        <li>Recordar preferencias de idioma y región</li>
+                        <li>Mantener configuraciones de accesibilidad</li>
+                        <li>Guardar filtros de búsqueda preferidos</li>
+                        <li>Mostrar vehículos vistos recientemente</li>
+                        <li>Adaptar la interfaz según el dispositivo utilizado</li>
+                        <li>Personalizar recomendaciones de vehículos</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>4.3. Análisis y Mejora del Servicio</h4>
+                    <ul>
+                        <li>Medir el rendimiento y velocidad del sitio web</li>
+                        <li>Analizar patrones de navegación de los usuarios</li>
+                        <li>Identificar páginas más populares y menos utilizadas</li>
+                        <li>Detectar errores técnicos y problemas de usabilidad</li>
+                        <li>Optimizar el proceso de reserva de vehículos</li>
+                        <li>Evaluar la efectividad de nuevas funcionalidades</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>4.4. Marketing y Publicidad</h4>
+                    <ul>
+                        <li>Mostrar anuncios relevantes basados en intereses</li>
+                        <li>Medir la efectividad de campañas publicitarias</li>
+                        <li>Realizar remarketing a usuarios que visitaron el sitio</li>
+                        <li>Segmentar audiencias para campañas específicas</li>
+                        <li>Evitar mostrar anuncios repetitivos</li>
+                        <li>Analizar el retorno de inversión publicitaria</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Base legal -->
+            <section>
+                <h2 class="section-title">5. Base Legal para el Uso de Cookies</h2>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-warning">
+                        <tr>
+                            <th>Tipo de Cookie</th>
+                            <th>Base Legal</th>
+                            <th>Normativa Aplicable</th>
+                            <th>Consentimiento Requerido</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Estrictamente Necesarias</td>
+                            <td>Interés legítimo / Ejecución de contrato</td>
+                            <td>Art. 22.2 LSSI-CE</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Funcionales</td>
+                            <td>Consentimiento del usuario</td>
+                            <td>Art. 22.2 LSSI-CE</td>
+                            <td>Sí</td>
+                        </tr>
+                        <tr>
+                            <td>Análisis</td>
+                            <td>Consentimiento del usuario</td>
+                            <td>Art. 22.2 LSSI-CE / RGPD</td>
+                            <td>Sí</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing</td>
+                            <td>Consentimiento del usuario</td>
+                            <td>Art. 22.2 LSSI-CE / RGPD</td>
+                            <td>Sí</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box">
+                    <p><strong>Importante:</strong> El consentimiento para cookies no esenciales debe ser libre, específico, informado e inequívoco. Puede retirar su consentimiento en cualquier momento a través de la configuración de cookies o contactando con nosotros.</p>
+                </div>
+            </section>
+
+            <!-- Terceros -->
+            <section>
+                <h2 class="section-title">6. Cookies de Terceros</h2>
+
+                <div class="subsection">
+                    <h4>6.1. Proveedores de Servicios Externos</h4>
+                    <p>RentCar utiliza servicios de terceros que pueden establecer sus propias cookies. Estos proveedores tienen sus propias políticas de privacidad:</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Servicio</th>
+                                <th>Política de Privacidad</th>
+                                <th>Opt-out</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Google LLC</td>
+                                <td>Analytics, Ads, Maps</td>
+                                <td><a href="https://policies.google.com/privacy" target="_blank">Ver política</a></td>
+                                <td><a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Opt-out</a></td>
+                            </tr>
+                            <tr>
+                                <td>Meta Platforms</td>
+                                <td>Facebook Pixel</td>
+                                <td><a href="https://www.facebook.com/privacy/policy" target="_blank">Ver política</a></td>
+                                <td><a href="https://www.facebook.com/settings?tab=ads" target="_blank">Configuración</a></td>
+                            </tr>
+                            <tr>
+                                <td>Hotjar Ltd.</td>
+                                <td>Análisis de comportamiento</td>
+                                <td><a href="https://www.hotjar.com/legal/policies/privacy/" target="_blank">Ver política</a></td>
+                                <td><a href="https://www.hotjar.com/legal/compliance/opt-out" target="_blank">Opt-out</a></td>
+                            </tr>
+                            <tr>
+                                <td>LinkedIn Corporation</td>
+                                <td>LinkedIn Insight Tag</td>
+                                <td><a href="https://www.linkedin.com/legal/privacy-policy" target="_blank">Ver política</a></td>
+                                <td><a href="https://www.linkedin.com/psettings/guest-controls" target="_blank">Configuración</a></td>
+                            </tr>
+                            <tr>
+                                <td>Stripe Inc.</td>
+                                <td>Procesamiento de pagos</td>
+                                <td><a href="https://stripe.com/privacy" target="_blank">Ver política</a></td>
+                                <td>N/A (Esencial)</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>6.2. Transferencias Internacionales</h4>
+                    <p>Algunos de nuestros proveedores de cookies están ubicados fuera del Espacio Económico Europeo. Garantizamos la protección adecuada mediante:</p>
+                    <ul>
+                        <li>Decisiones de adecuación de la Comisión Europea</li>
+                        <li>Cláusulas contractuales tipo aprobadas</li>
+                        <li>Certificaciones de privacidad reconocidas</li>
+                        <li>Normas corporativas vinculantes</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Control del usuario -->
+            <section>
+                <h2 class="section-title">7. Control y Gestión de Cookies</h2>
+
+                <div class="subsection">
+                    <h4>7.1. Configuración en RentCar</h4>
+                    <p>Puede gestionar sus preferencias de cookies de las siguientes maneras:</p>
+                    <ul>
+                        <li><strong>Banner de cookies:</strong> Al visitar por primera vez nuestro sitio</li>
+                        <li><strong>Centro de preferencias:</strong> Accesible desde el pie de página</li>
+                        <li><strong>Configuración de cuenta:</strong> En su perfil de usuario</li>
+                        <li><strong>Esta página:</strong> Utilizando los controles superiores</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>7.2. Configuración del Navegador</h4>
+                    <p>También puede controlar las cookies directamente desde su navegador:</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-browser-chrome text-warning me-2"></i>Google Chrome</h6>
+                            <ol>
+                                <li>Haga clic en el menú Chrome (⋮)</li>
+                                <li>Seleccione "Configuración"</li>
+                                <li>Vaya a "Privacidad y seguridad"</li>
+                                <li>Haga clic en "Cookies y otros datos de sitios"</li>
+                                <li>Configure según sus preferencias</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-browser-firefox text-primary me-2"></i>Mozilla Firefox</h6>
+                            <ol>
+                                <li>Haga clic en el menú (☰)</li>
+                                <li>Seleccione "Configuración"</li>
+                                <li>Vaya a "Privacidad y seguridad"</li>
+                                <li>En "Cookies y datos del sitio"</li>
+                                <li>Configure las opciones deseadas</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-browser-safari text-info me-2"></i>Safari</h6>
+                            <ol>
+                                <li>Vaya a "Safari" > "Preferencias"</li>
+                                <li>Haga clic en la pestaña "Privacidad"</li>
+                                <li>Configure "Cookies y datos de sitios web"</li>
+                                <li>Seleccione sus preferencias</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-browser-edge text-success me-2"></i>Microsoft Edge</h6>
+                            <ol>
+                                <li>Haga clic en el menú (⋯)</li>
+                                <li>Seleccione "Configuración"</li>
+                                <li>Vaya a "Cookies y permisos de sitio"</li>
+                                <li>Haga clic en "Cookies y datos de sitios"</li>
+                                <li>Configure según necesite</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>7.3. Herramientas de Opt-out</h4>
+                    <p>Para cookies de publicidad y análisis, puede utilizar estas herramientas:</p>
+                    <ul>
+                        <li><a href="http://www.youronlinechoices.eu/" target="_blank">Your Online Choices</a> - Opt-out de publicidad comportamental</li>
+                        <li><a href="https://www.networkadvertising.org/choices/" target="_blank">NAI Opt-out</a> - Network Advertising Initiative</li>
+                        <li><a href="https://optout.aboutads.info/" target="_blank">DAA Opt-out</a> - Digital Advertising Alliance</li>
+                        <li><a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out</a> - Complemento del navegador</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Consecuencias -->
+            <section>
+                <h2 class="section-title">8. Consecuencias de Desactivar Cookies</h2>
+
+                <div class="subsection">
+                    <h4>8.1. Cookies Estrictamente Necesarias</h4>
+                    <div class="alert alert-warning">
+                        <p><strong>No se pueden desactivar.</strong> Sin estas cookies, el sitio web no puede funcionar correctamente y algunos servicios no estarán disponibles.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>8.2. Cookies Funcionales</h4>
+                    <p>Si desactiva estas cookies, puede experimentar:</p>
+                    <ul>
+                        <li>Pérdida de preferencias personalizadas</li>
+                        <li>Necesidad de reconfigurar ajustes en cada visita</li>
+                        <li>Funcionalidades limitadas de personalización</li>
+                        <li>Experiencia de usuario menos optimizada</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>8.3. Cookies de Análisis</h4>
+                    <p>Desactivar estas cookies significa:</p>
+                    <ul>
+                        <li>No contribuirá a las estadísticas de uso</li>
+                        <li>Menor capacidad para mejorar el sitio</li>
+                        <li>Posibles problemas técnicos no detectados</li>
+                        <li>Experiencia menos optimizada para futuros usuarios</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>8.4. Cookies de Marketing</h4>
+                    <p>Sin estas cookies:</p>
+                    <ul>
+                        <li>Verá anuncios menos relevantes</li>
+                        <li>Puede recibir anuncios repetitivos</li>
+                        <li>No se medirá la efectividad publicitaria</li>
+                        <li>Menos ofertas personalizadas</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Actualizaciones -->
+            <section>
+                <h2 class="section-title">9. Actualizaciones de la Política de Cookies</h2>
+
+                <div class="subsection">
+                    <h4>9.1. Modificaciones</h4>
+                    <p>RentCar se reserva el derecho a modificar esta Política de Cookies para:</p>
+                    <ul>
+                        <li>Adaptarse a cambios en la legislación</li>
+                        <li>Incorporar nuevas tecnologías</li>
+                        <li>Mejorar nuestros servicios</li>
+                        <li>Añadir nuevos proveedores de servicios</li>
+                        <li>Responder a recomendaciones regulatorias</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>9.2. Notificación de Cambios</h4>
+                    <p>Los cambios significativos se comunicarán mediante:</p>
+                    <ul>
+                        <li>Notificación prominente en el sitio web</li>
+                        <li>Email a usuarios registrados</li>
+                        <li>Actualización del banner de cookies</li>
+                        <li>Notificación en la aplicación móvil</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>9.3. Historial de Versiones</h4>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Versión</th>
+                                <th>Fecha</th>
+                                <th>Cambios Principales</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>2.1</td>
+                                <td>15/01/2025</td>
+                                <td>Actualización completa, nuevos proveedores</td>
+                            </tr>
+                            <tr>
+                                <td>2.0</td>
+                                <td>01/12/2024</td>
+                                <td>Adaptación a nueva normativa europea</td>
+                            </tr>
+                            <tr>
+                                <td>1.5</td>
+                                <td>15/09/2024</td>
+                                <td>Añadidas cookies de análisis avanzado</td>
+                            </tr>
+                            <tr>
+                                <td>1.0</td>
+                                <td>01/06/2024</td>
+                                <td>Primera versión de la política</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contacto -->
+            <section>
+                <h2 class="section-title">10. Contacto y Más Información</h2>
+
+                <div class="subsection">
+                    <h4>10.1. Delegado de Protección de Datos</h4>
+                    <div class="contact-info">
+                        <p><strong>Para consultas sobre cookies y privacidad:</strong></p>
+                        <p><strong>Email:</strong> dpo@rentcar.com</p>
+                        <p><strong>Teléfono:</strong> (+34) 123 456 790</p>
+                        <p><strong>Dirección:</strong> RentCar S.L., Att: DPO, Calle Principal 123, 28001 Madrid</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>10.2. Soporte Técnico</h4>
+                    <div class="contact-info">
+                        <p><strong>Para problemas técnicos con cookies:</strong></p>
+                        <p><strong>Email:</strong> soporte@rentcar.com</p>
+                        <p><strong>Chat en vivo:</strong> Disponible 24/7 en el sitio web</p>
+                        <p><strong>Teléfono:</strong> (+34) 123 456 789</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>10.3. Recursos Adicionales</h4>
+                    <ul>
+                        <li><a href="politicas-privacidad.html">Política de Privacidad completa</a></li>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="#" onclick="showCookieSettings()">Centro de Preferencias de Cookies</a></li>
+                        <li><a href="contacto.html">Formulario de Contacto</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Pie del documento -->
+            <div class="text-center mt-5 pt-4 border-top">
+                <p class="text-muted">
+                    <strong>RentCar S.L.</strong> - Transparencia en el uso de cookies<br>
+                    Documento actualizado el 15 de enero de 2025<br>
+                    Versión 2.1
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="professional-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5>
+                    <i class="bi bi-car-front-fill me-2"></i> RentCar
+                </h5>
+                <p class="mb-3">Tu plataforma de confianza para el alquiler de vehículos premium. Calidad, seguridad y servicio excepcional.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-facebook fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-twitter fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-instagram fs-5"></i>
+                    </a>
+                    <a href="#" class="text-white-50">
+                        <i class="bi bi-linkedin fs-5"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="index.html">
+                            <i class="bi bi-house me-2"></i>Inicio </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="vehiculos-unificado.html">
+                            <i class="bi bi-car-front me-2"></i>Vehículos </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="perfil-mejorado.html">
+                            <i class="bi bi-person me-2"></i>Mi Perfil </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="contacto.html">
+                            <i class="bi bi-envelope me-2"></i>Contacto </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Contacto</h5>
+                <address class="mb-0">
+                    <p class="mb-2">
+                        <i class="bi bi-geo-alt me-2"></i> Calle Principal 123, Madrid
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-telephone me-2"></i> (+34) 123 456 789
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-envelope me-2"></i> info@rentcar.com
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-clock me-2"></i> Lun - Dom: 24/7
+                    </p>
+                </address>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2025 RentCar. Todos los derechos reservados.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="terminos-condiciones.html" class="me-3">Términos y Condiciones</a>
+                <a href="politicas-privacidad.html" class="me-3">Política de Privacidad</a>
+                <a href="politica-cookies.html">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/navbar-mejorado.js"></script>
+
+<script>
+    // Funciones para gestión de cookies
+    function saveCookiePreferences() {
+        const functional = document.getElementById('functional-cookies').checked;
+        const analytics = document.getElementById('analytics-cookies').checked;
+        const marketing = document.getElementById('marketing-cookies').checked;
+
+        // Guardar preferencias
+        localStorage.setItem('cookie_preferences', JSON.stringify({
+            functional: functional,
+            analytics: analytics,
+            marketing: marketing,
+            timestamp: Date.now()
+        }));
+
+        // Aplicar configuración
+        applyCookieSettings(functional, analytics, marketing);
+
+        alert('Preferencias de cookies guardadas correctamente');
+    }
+
+    function acceptAllCookies() {
+        document.getElementById('functional-cookies').checked = true;
+        document.getElementById('analytics-cookies').checked = true;
+        document.getElementById('marketing-cookies').checked = true;
+        saveCookiePreferences();
+    }
+
+    function rejectAllCookies() {
+        document.getElementById('functional-cookies').checked = false;
+        document.getElementById('analytics-cookies').checked = false;
+        document.getElementById('marketing-cookies').checked = false;
+        saveCookiePreferences();
+    }
+
+    function applyCookieSettings(functional, analytics, marketing) {
+        // Aplicar configuración de cookies según las preferencias
+        if (!analytics) {
+            // Desactivar Google Analytics
+            window['ga-disable-GA_MEASUREMENT_ID'] = true;
+        }
+
+        if (!marketing) {
+            // Desactivar cookies de marketing
+            // Implementar lógica específica según proveedores
+        }
+
+        // Guardar consentimiento
+        localStorage.setItem('cookie_consent', 'given');
+        localStorage.setItem('cookie_consent_date', new Date().toISOString());
+    }
+
+    function showCookieSettings() {
+        // Scroll a la sección de configuración
+        document.querySelector('.cookie-settings').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+
+    // Cargar preferencias existentes al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        const preferences = localStorage.getItem('cookie_preferences');
+        if (preferences) {
+            const prefs = JSON.parse(preferences);
+            document.getElementById('functional-cookies').checked = prefs.functional;
+            document.getElementById('analytics-cookies').checked = prefs.analytics;
+            document.getElementById('marketing-cookies').checked = prefs.marketing;
+        }
+    });
+</script>
+
+</body>
+</html>
