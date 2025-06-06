@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,6 +16,73 @@
     <link rel="stylesheet" href="css/user-levels.css" />
     <link rel="icon" href="img/icon.png" type="image/png">
 
+    <!-- Estilos adicionales para accesibilidad -->
+    <style>
+        /* Estilos para accesibilidad */
+        body.dark-mode {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .professional-card {
+            background-color: #1e1e1e !important;
+            border-color: #333 !important;
+        }
+
+        body.dark-mode .setting-item {
+            background-color: #2a2a2a !important;
+        }
+
+        body.dark-mode .professional-input {
+            background-color: #2a2a2a !important;
+            color: #e0e0e0 !important;
+            border-color: #444 !important;
+        }
+
+        body.high-contrast {
+            filter: contrast(150%);
+        }
+
+        body.font-size-large {
+            font-size: 1.2rem !important;
+        }
+
+        body.font-size-extra-large {
+            font-size: 1.4rem !important;
+        }
+
+        /* Estilos para nivel actual */
+        .level-card.current-level {
+            border: 2px solid #2563eb !important;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.2) !important;
+            transform: translateY(-5px);
+        }
+
+        .current-level-indicator {
+            background-color: #2563eb;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Asegurar que los botones de navegación funcionen */
+        .nav-link-professional {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .nav-link-professional:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+    </style>
 </head>
 <body class="professional-body">
 <!-- Fondo Profesional -->
@@ -156,31 +223,31 @@
                             </div>
                             <!-- Navegación -->
                             <div class="profile-navigation">
-                                <a href="#" class="nav-link-professional active" data-bs-toggle="list" data-bs-target="#profile-info">
+                                <button type="button" class="nav-link-professional active" id="profile-info-btn" onclick="showTab('profile-info')">
                                     <i class="bi bi-person-gear"></i>
                                     <span>Información Personal</span>
                                     <i class="bi bi-chevron-right"></i>
-                                </a>
-                                <a href="#my-rentals" class="nav-link-professional" id="show-rentals-btn" data-bs-toggle="list" data-bs-target="#my-rentals">
+                                </button>
+                                <button type="button" class="nav-link-professional" id="my-rentals-btn" onclick="showTab('my-rentals'); loadUserRentals();">
                                     <i class="bi bi-car-front"></i>
                                     <span>Historial de Alquileres</span>
                                     <i class="bi bi-chevron-right"></i>
-                                </a>
-                                <a href="#" class="nav-link-professional" data-bs-toggle="list" data-bs-target="#level-benefits">
+                                </button>
+                                <button type="button" class="nav-link-professional" id="level-benefits-btn" onclick="showTab('level-benefits')">
                                     <i class="bi bi-star-fill"></i>
                                     <span>Beneficios de Nivel</span>
                                     <i class="bi bi-chevron-right"></i>
-                                </a>
-                                <a href="#" class="nav-link-professional" data-bs-toggle="list" data-bs-target="#account-settings">
+                                </button>
+                                <button type="button" class="nav-link-professional" id="account-settings-btn" onclick="showTab('account-settings')">
                                     <i class="bi bi-gear"></i>
                                     <span>Configuración</span>
                                     <i class="bi bi-chevron-right"></i>
-                                </a>
-                                <a href="#" class="nav-link-professional logout-link" id="logout-btn">
+                                </button>
+                                <button type="button" class="nav-link-professional logout-link" id="logout-btn" onclick="logout()">
                                     <i class="bi bi-box-arrow-right"></i>
                                     <span>Cerrar Sesión</span>
                                     <i class="bi bi-chevron-right"></i>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -228,7 +295,7 @@
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            <button type="button" class="btn-professional btn-secondary-professional me-2" onclick="window.refreshUserProfile()">
+                                            <button type="button" class="btn-professional btn-secondary-professional me-2" onclick="refreshUserProfile()">
                                                 <i class="bi bi-arrow-clockwise me-2"></i> Refrescar Datos </button>
                                             <button type="submit" class="btn-professional btn-primary-professional">
                                                 <i class="bi bi-check-circle me-2"></i> Actualizar Información </button>
@@ -290,9 +357,15 @@
                                     <p>Descubre las ventajas de tu nivel actual y cómo subir al siguiente</p>
                                 </div>
                                 <div class="card-content">
+                                    <!-- Información del nivel actual -->
+                                    <div id="current-level-info" class="mb-4 p-3 rounded" style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2);">
+                                        <h5 class="mb-2">Tu nivel actual: <span id="current-level-display" style="color: #2563eb;">Cargando...</span></h5>
+                                        <p class="mb-0">Tienes un descuento del <span id="current-discount">0</span>% en tus alquileres.</p>
+                                    </div>
+
                                     <div class="levels-comparison">
                                         <!-- Nivel Bronce -->
-                                        <div class="level-card bronce">
+                                        <div class="level-card bronce" id="level-bronce">
                                             <div class="level-header">
                                                 <i class="bi bi-award"></i>
                                                 <h4>Bronce</h4>
@@ -311,7 +384,7 @@
                                             </ul>
                                         </div>
                                         <!-- Nivel Plata -->
-                                        <div class="level-card plata">
+                                        <div class="level-card plata" id="level-plata">
                                             <div class="level-header">
                                                 <i class="bi bi-award"></i>
                                                 <h4>Plata</h4>
@@ -330,7 +403,7 @@
                                             </ul>
                                         </div>
                                         <!-- Nivel Oro -->
-                                        <div class="level-card oro">
+                                        <div class="level-card oro" id="level-oro">
                                             <div class="level-header">
                                                 <i class="bi bi-award"></i>
                                                 <h4>Oro</h4>
@@ -349,7 +422,7 @@
                                             </ul>
                                         </div>
                                         <!-- Nivel Diamante -->
-                                        <div class="level-card diamante">
+                                        <div class="level-card diamante" id="level-diamante">
                                             <div class="level-header">
                                                 <i class="bi bi-gem"></i>
                                                 <h4>Diamante</h4>
@@ -384,6 +457,49 @@
                                     <p>Gestiona la seguridad y preferencias de tu cuenta</p>
                                 </div>
                                 <div class="card-content">
+                                    <!-- Sección de Accesibilidad -->
+                                    <div class="settings-section">
+                                        <h5><i class="bi bi-universal-access me-2"></i>Accesibilidad</h5>
+
+                                        <!-- Modo oscuro -->
+                                        <div class="setting-item">
+                                            <div class="setting-info">
+                                                <h6>Modo Oscuro</h6>
+                                                <p>Cambia entre modo claro y oscuro para reducir la fatiga visual</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                                                <label class="form-check-label" for="darkModeToggle"></label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tamaño de texto -->
+                                        <div class="setting-item">
+                                            <div class="setting-info">
+                                                <h6>Tamaño de Texto</h6>
+                                                <p>Ajusta el tamaño del texto para mejor legibilidad</p>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-primary active" data-size="normal" onclick="changeFontSize('normal')">Normal</button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-size="large" onclick="changeFontSize('large')">Grande</button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-size="extra-large" onclick="changeFontSize('extra-large')">Extra Grande</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Alto contraste -->
+                                        <div class="setting-item">
+                                            <div class="setting-info">
+                                                <h6>Alto Contraste</h6>
+                                                <p>Mejora la visibilidad con mayor contraste</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="highContrastToggle">
+                                                <label class="form-check-label" for="highContrastToggle"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Resto de las secciones existentes -->
                                     <div class="settings-section">
                                         <h5>Seguridad</h5>
                                         <div class="setting-item">
@@ -395,6 +511,8 @@
                                                 <i class="bi bi-key me-2"></i> Cambiar </button>
                                         </div>
                                     </div>
+
+                                    <!-- Sección de Notificaciones -->
                                     <div class="settings-section">
                                         <h5>Notificaciones</h5>
                                         <div class="setting-item">
@@ -408,6 +526,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Zona Peligrosa -->
                                     <div class="settings-section">
                                         <h5>Zona Peligrosa</h5>
                                         <div class="setting-item danger">
@@ -532,6 +652,37 @@
         </div>
     </div>
 </div>
+<!-- Modal Eliminar Cuenta -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content professional-modal">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i> Eliminar Cuenta
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <h6 class="mb-3">¿Estás seguro de que quieres eliminar tu cuenta?</h6>
+                    <p class="text-muted">Esta acción es permanente y no se puede deshacer. Se eliminarán todos tus datos, alquileres y configuraciones.</p>
+                    <div class="mt-3">
+                        <input type="text" class="form-control" id="delete-confirmation" placeholder="Escribe 'ELIMINAR' para confirmar">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-account" disabled>
+                    <i class="bi bi-trash me-2"></i>Eliminar Cuenta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Toasts de Notificación -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     <div id="toast" class="toast professional-toast" role="alert">
@@ -546,7 +697,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/navbar-mejorado.js"></script>
 <script src="js/perfil-mejorado.js"></script>
-<script> window.chtlConfig = { chatbotId: "1451485925" } </script>
-<script async data-id="1451485925" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+<script src="js/pdf-generator.js"></script>
+<script>
+    // Inicialización cuando el DOM esté listo
+    document.addEventListener("DOMContentLoaded", () => {
+        // Cargar perfil automáticamente
+        if (typeof loadProfile === 'function') {
+            loadProfile();
+        } else {
+            console.error('loadProfile function not found');
+        }
+    });
+
+    // Hacer funciones globalmente disponibles
+    window.showTab = showTab;
+    window.changeFontSize = changeFontSize;
+    window.viewRentalDetails = viewRentalDetails;
+    window.downloadRentalPDF = downloadRentalPDF;
+    window.showCancelRentalModal = showCancelRentalModal;
+    window.refreshUserProfile = refreshUserProfile;
+    window.logout = logout;
+    window.loadUserRentals = loadUserRentals;
+</script>
 </body>
 </html>

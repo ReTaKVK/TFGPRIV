@@ -1,5 +1,5 @@
 /**
- * Generador de tickets PDF para RentCar
+ * Generador de tickets PDF para RentCar - Versión con espaciado corregido
  * Este script utiliza jsPDF para crear un comprobante de alquiler descargable
  */
 
@@ -30,7 +30,6 @@ function generateTicketPDF(alquilerData, vehiculoData, usuarioData) {
 
 // Función para crear el PDF con los datos proporcionados
 async function createPDF(alquilerData, vehiculoData, usuarioData) {
-    // Crear un nuevo documento PDF
     const { jsPDF } = window.jspdf
     const doc = new jsPDF({
         orientation: "portrait",
@@ -38,276 +37,278 @@ async function createPDF(alquilerData, vehiculoData, usuarioData) {
         format: "a4",
     })
 
-    // Configurar fuentes
+    // Configuración de colores profesionales
+    const colors = {
+        primary: [37, 99, 235],
+        secondary: [16, 185, 129],
+        accent: [245, 158, 11],
+        dark: [15, 23, 42],
+        light: [248, 250, 252],
+        white: [255, 255, 255],
+    }
+
+    let yPosition = 10
+
+    // === HEADER CORPORATIVO ===
+    doc.setFillColor(...colors.primary)
+    doc.rect(0, 0, 210, 45, "F")
+
+    // Líneas decorativas
+    doc.setFillColor(...colors.accent)
+    doc.rect(0, 42, 210, 2, "F")
+    doc.setFillColor(...colors.secondary)
+    doc.rect(0, 44, 210, 1, "F")
+
+    // Logo y marca principal
+    doc.setTextColor(...colors.white)
+    doc.setFontSize(20)
+    doc.setFont("helvetica", "bold")
+    doc.text("RENTCAR", 20, 18)
+
+    // Subtítulo corporativo
+    doc.setFontSize(10)
+    doc.setFont("helvetica", "normal")
+    doc.text("COMPROBANTE OFICIAL DE ALQUILER", 20, 26)
+
+    // Número de comprobante
+    doc.setFontSize(12)
+    doc.setFont("helvetica", "bold")
+    doc.text(`Comprobante N° ALQ-${alquilerData.id}`, 20, 35)
+
+    // Información de fecha y estado en la esquina
+    const fechaEmision = new Date().toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    })
+    doc.setFontSize(8)
+    doc.setFont("helvetica", "normal")
+    doc.text(`Emitido: ${fechaEmision}`, 140, 16)
+    doc.text("Estado: CONFIRMADO", 140, 22)
+    doc.text("Documento Oficial", 140, 28)
+
+    yPosition = 55
+
+    // === INFORMACIÓN DE LA EMPRESA ===
+    doc.setFillColor(...colors.light)
+    doc.rect(15, yPosition, 180, 18, "F")
+    doc.setDrawColor(...colors.primary)
+    doc.setLineWidth(0.5)
+    doc.rect(15, yPosition, 180, 18, "S")
+
+    doc.setTextColor(...colors.dark)
+    doc.setFontSize(7)
+    doc.setFont("helvetica", "normal")
+    doc.text("RentCar S.L. | CIF: B12345678 | Registro Mercantil: Madrid, Tomo 1234, Folio 567", 20, yPosition + 5)
+    doc.text("Dirección: Calle Principal 123, 28001 Madrid, España", 20, yPosition + 9)
+    doc.text("Tel: (+34) 123 456 789 | Email: info@rentcar.com | Web: www.rentcar.com", 20, yPosition + 13)
+
+    yPosition += 28
+
+    // === INFORMACIÓN DEL CLIENTE Y VEHÍCULO ===
+    // Cliente
+    doc.setFillColor(...colors.primary)
+    doc.rect(15, yPosition, 85, 8, "F")
+    doc.setTextColor(...colors.white)
+    doc.setFontSize(9)
+    doc.setFont("helvetica", "bold")
+    doc.text("DATOS DEL CLIENTE", 20, yPosition + 6)
+
+    yPosition += 12
+    doc.setTextColor(...colors.dark)
+    doc.setFontSize(8)
     doc.setFont("helvetica", "normal")
 
-    // Añadir logo y encabezado
-    addHeader(doc)
+    if (usuarioData) {
+        doc.text(`Nombre: ${usuarioData.nombre || "No disponible"}`, 20, yPosition)
+        doc.text(`Email: ${usuarioData.email || "No disponible"}`, 20, yPosition + 4)
+        doc.text(`ID Cliente: #${usuarioData.id}`, 20, yPosition + 8)
 
-    // Añadir información del ticket
-    addTicketInfo(doc, alquilerData)
+        // Nivel del usuario
+        const nivelUsuario = usuarioData.nivelUsuario || "BRONCE"
+        doc.setTextColor(...colors.accent)
+        doc.setFont("helvetica", "bold")
+        doc.text(`Nivel: ${nivelUsuario}`, 20, yPosition + 12)
+    }
 
-    // Añadir información del cliente
-    addClientInfo(doc, usuarioData)
+    // Vehículo
+    doc.setFillColor(...colors.secondary)
+    doc.rect(110, yPosition - 12, 85, 8, "F")
+    doc.setTextColor(...colors.white)
+    doc.setFontSize(9)
+    doc.setFont("helvetica", "bold")
+    doc.text("VEHÍCULO ALQUILADO", 115, yPosition - 6)
 
-    // Añadir detalles del vehículo
-    addVehicleDetails(doc, vehiculoData)
+    doc.setTextColor(...colors.dark)
+    doc.setFontSize(8)
+    doc.setFont("helvetica", "normal")
+    doc.text(`${vehiculoData.marca} ${vehiculoData.modelo}`, 115, yPosition)
+    doc.text(`Matrícula: ${vehiculoData.matricula || "No disponible"}`, 115, yPosition + 4)
+    doc.text(`Precio/día: €${vehiculoData.precio.toFixed(2)}`, 115, yPosition + 8)
+    doc.text(`Estado: Confirmado`, 115, yPosition + 12)
 
-    // Añadir detalles del alquiler
-    addRentalDetails(doc, alquilerData, vehiculoData)
+    yPosition += 25
 
-    // Añadir términos y condiciones
-    addTermsAndConditions(doc)
+    // === DETALLES DEL ALQUILER ===
+    doc.setFillColor(...colors.accent)
+    doc.rect(15, yPosition, 180, 8, "F")
+    doc.setTextColor(...colors.white)
+    doc.setFontSize(9)
+    doc.setFont("helvetica", "bold")
+    doc.text("DETALLES DEL PERÍODO DE ALQUILER", 20, yPosition + 6)
 
-    // Añadir pie de página
-    addFooter(doc)
+    yPosition += 15
 
-    // Añadir código QR
-    await addQRCode(doc, alquilerData, vehiculoData)
+    // Calcular duración y precios
+    const fechaInicio = parseDate(alquilerData.fechaInicio)
+    const fechaFin = parseDate(alquilerData.fechaFin)
+    const duracionMs = fechaFin - fechaInicio
+    const duracionDias = Math.ceil(duracionMs / (1000 * 60 * 60 * 24))
+    const subtotal = duracionDias * vehiculoData.precio
 
-    // Guardar el PDF con un nombre específico
-    const fileName = `RentCar_Reserva_${alquilerData.id}_${formatDateForFileName(new Date())}.pdf`
+    // Calcular descuento según nivel
+    const nivelUsuario = usuarioData?.nivelUsuario || "BRONCE"
+    const descuentos = { BRONCE: 0, PLATA: 5, ORO: 10, DIAMANTE: 15 }
+    const descuentoPorcentaje = descuentos[nivelUsuario] || 0
+    const descuento = (subtotal * descuentoPorcentaje) / 100
+    const total = subtotal - descuento
+
+    // Tabla de detalles
+    const tableData = [
+        ["Fecha de inicio", formatDateTime(fechaInicio)],
+        ["Fecha de finalización", formatDateTime(fechaFin)],
+        ["Duración total", `${duracionDias} día${duracionDias !== 1 ? "s" : ""}`],
+        ["Precio por día", `€${vehiculoData.precio.toFixed(2)}`],
+        ["Subtotal", `€${subtotal.toFixed(2)}`],
+    ]
+
+    if (descuento > 0) {
+        tableData.push([`Descuento ${nivelUsuario} (${descuentoPorcentaje}%)`, `-€${descuento.toFixed(2)}`])
+    }
+
+    tableData.push(["TOTAL FINAL", `€${total.toFixed(2)}`])
+
+    doc.autoTable({
+        startY: yPosition,
+        body: tableData,
+        theme: "grid",
+        styles: {
+            fontSize: 8,
+            cellPadding: 2,
+        },
+        columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 55, fillColor: [248, 250, 252] },
+            1: { cellWidth: 125 },
+        },
+        bodyStyles: (row, column, data) => {
+            if (row === tableData.length - 1) {
+                return {
+                    fontStyle: "bold",
+                    fillColor: colors.secondary,
+                    textColor: colors.white,
+                    fontSize: 9,
+                }
+            }
+            if (tableData[row] && tableData[row][0].includes("Descuento")) {
+                return {
+                    textColor: colors.secondary,
+                    fontStyle: "bold",
+                }
+            }
+            return {}
+        },
+        margin: { left: 15, right: 15 },
+    })
+
+    yPosition = doc.lastAutoTable.finalY + 20
+
+    // === INFORMACIÓN IMPORTANTE ===
+    doc.setFillColor(254, 243, 199)
+    doc.rect(15, yPosition, 180, 25, "F")
+    doc.setDrawColor(...colors.accent)
+    doc.setLineWidth(0.5)
+    doc.rect(15, yPosition, 180, 25, "S")
+
+    doc.setTextColor(...colors.accent)
+    doc.setFontSize(9)
+    doc.setFont("helvetica", "bold")
+    doc.text("INFORMACIÓN IMPORTANTE", 105, yPosition + 6, { align: "center" })
+
+    yPosition += 10
+    doc.setTextColor(...colors.dark)
+    doc.setFontSize(7)
+    doc.setFont("helvetica", "normal")
+
+    const infoTexts = [
+        "• Presente este comprobante y documento de identidad válido al recoger el vehículo",
+        "• El vehículo debe devolverse con el mismo nivel de combustible",
+        "• Inspección obligatoria antes y después del alquiler",
+        "• Cualquier daño será evaluado según nuestras políticas de empresa",
+    ]
+
+    infoTexts.forEach((text, index) => {
+        doc.text(text, 20, yPosition + index * 3.5)
+    })
+
+    yPosition += 20
+
+    // === CÓDIGO QR ===
+    try {
+        await addQRCode(doc, { id: alquilerData.id }, vehiculoData, 165, yPosition - 15)
+    } catch (error) {
+        console.warn("No se pudo generar el código QR:", error)
+    }
+
+    // === FOOTER PROFESIONAL ===
+    yPosition = 240
+
+    doc.setDrawColor(...colors.primary)
+    doc.setLineWidth(0.5)
+    doc.line(15, yPosition, 195, yPosition)
+
+    yPosition += 5
+    doc.setTextColor(...colors.primary)
+    doc.setFontSize(8)
+    doc.setFont("helvetica", "bold")
+    doc.text("RENTCAR - Soluciones Premium de Alquiler de Vehículos", 105, yPosition, { align: "center" })
+
+    yPosition += 4
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(6)
+    doc.text("Licencia de actividad: 2024/MAD/001 | Seguros: Mapfre Póliza 123456789", 105, yPosition, {
+        align: "center",
+    })
+
+    yPosition += 3
+    doc.text("© 2025 RentCar S.L. Todos los derechos reservados.", 105, yPosition, { align: "center" })
+
+    // Mensaje de ahorro si aplica
+    if (descuento > 0) {
+        yPosition += 5
+        doc.setTextColor(...colors.secondary)
+        doc.setFontSize(7)
+        doc.setFont("helvetica", "bold")
+        doc.text(`¡ENHORABUENA! Has ahorrado €${descuento.toFixed(2)} gracias a tu nivel ${nivelUsuario}`, 105, yPosition, {
+            align: "center",
+        })
+    }
+
+    // Número de página y validación
+    doc.setTextColor(...colors.dark)
+    doc.setFontSize(6)
+    doc.setFont("helvetica", "normal")
+    doc.text("Documento válido y verificable", 195, 275, { align: "right" })
+    doc.text(`ID: ALQ-${alquilerData.id}`, 15, 275)
+
+    // Guardar el PDF
+    const fileName = `RentCar-Comprobante-ALQ${alquilerData.id}-${new Date().toISOString().split("T")[0]}.pdf`
     doc.save(fileName)
 
     return fileName
 }
 
-// Función para añadir el encabezado con logo
-function addHeader(doc) {
-    // Título principal
-    doc.setFontSize(22)
-    doc.setTextColor(10, 77, 163) // Color azul corporativo
-    doc.text("RentCar", 105, 20, { align: "center" })
-
-    // Subtítulo
-    doc.setFontSize(12)
-    doc.setTextColor(100)
-    doc.text("Comprobante de Alquiler", 105, 27, { align: "center" })
-
-    // Línea separadora
-    doc.setDrawColor(10, 77, 163)
-    doc.setLineWidth(0.5)
-    doc.line(20, 32, 190, 32)
-
-    // Información de la empresa
-    doc.setFontSize(9)
-    doc.setTextColor(80)
-    doc.text("RentCar S.L. - CIF: B12345678", 20, 38)
-    doc.text("Calle Principal 123, 28001 Madrid", 20, 43)
-    doc.text("Tel: (+34) 123 456 789 - Email: info@rentcar.com", 20, 48)
-    doc.text("www.rentcar.com", 20, 53)
-}
-
-// Función para añadir información del ticket
-function addTicketInfo(doc, alquilerData) {
-    // Recuadro para información del ticket
-    doc.setDrawColor(200)
-    doc.setFillColor(245, 245, 245)
-    doc.rect(130, 38, 60, 25, "F")
-    doc.setDrawColor(10, 77, 163)
-    doc.rect(130, 38, 60, 25, "S")
-
-    // Información del ticket
-    doc.setFontSize(10)
-    doc.setTextColor(10, 77, 163)
-    doc.text("COMPROBANTE Nº:", 133, 45)
-    doc.setFontSize(11)
-    doc.setTextColor(0)
-    doc.text(`ALQ-${alquilerData.id}`, 175, 45, { align: "right" })
-
-    doc.setFontSize(10)
-    doc.setTextColor(10, 77, 163)
-    doc.text("FECHA:", 133, 52)
-    doc.setFontSize(11)
-    doc.setTextColor(0)
-    doc.text(formatDate(new Date()), 175, 52, { align: "right" })
-
-    doc.setFontSize(10)
-    doc.setTextColor(10, 77, 163)
-    doc.text("ESTADO:", 133, 59)
-    doc.setFontSize(11)
-    doc.setTextColor(0, 150, 0)
-    doc.text("CONFIRMADO", 175, 59, { align: "right" })
-}
-
-// Función para añadir información del cliente
-function addClientInfo(doc, usuarioData) {
-    doc.setFontSize(12)
-    doc.setTextColor(10, 77, 163)
-    doc.text("DATOS DEL CLIENTE", 20, 70)
-
-    doc.setDrawColor(10, 77, 163)
-    doc.setLineWidth(0.2)
-    doc.line(20, 72, 80, 72)
-
-    doc.setFontSize(10)
-    doc.setTextColor(0)
-
-    // Si tenemos datos del usuario, los mostramos
-    if (usuarioData) {
-        doc.text(`Nombre: ${usuarioData.nombre || "No disponible"}`, 20, 80)
-        doc.text(`Email: ${usuarioData.email || "No disponible"}`, 20, 86)
-        doc.text(`ID Cliente: ${usuarioData.id}`, 20, 92)
-    } else {
-        // Si no tenemos datos del usuario, intentamos obtenerlos del localStorage
-        const userName = localStorage.getItem("userName") || "No disponible"
-        const userEmail = localStorage.getItem("userEmail") || "No disponible"
-        const userId = obtenerUsuarioId() || "No disponible"
-
-        doc.text(`Nombre: ${userName}`, 20, 80)
-        doc.text(`Email: ${userEmail}`, 20, 86)
-        doc.text(`ID Cliente: ${userId}`, 20, 92)
-    }
-}
-
-// Función para añadir detalles del vehículo
-function addVehicleDetails(doc, vehiculoData) {
-    doc.setFontSize(12)
-    doc.setTextColor(10, 77, 163)
-    doc.text("DETALLES DEL VEHÍCULO", 20, 110)
-
-    doc.setDrawColor(10, 77, 163)
-    doc.setLineWidth(0.2)
-    doc.line(20, 112, 100, 112)
-
-    // Crear tabla con detalles del vehículo
-    const vehicleData = [
-        ["Marca", vehiculoData.marca],
-        ["Modelo", vehiculoData.modelo],
-        ["Matrícula", vehiculoData.matricula || "No disponible"],
-        ["Precio por día", `€${vehiculoData.precio.toFixed(2)}`],
-    ]
-
-    doc.autoTable({
-        startY: 118,
-        head: [["Característica", "Valor"]],
-        body: vehicleData,
-        theme: "grid",
-        headStyles: {
-            fillColor: [10, 77, 163],
-            textColor: [255, 255, 255],
-            fontStyle: "bold",
-        },
-        styles: {
-            fontSize: 10,
-            cellPadding: 3,
-        },
-        columnStyles: {
-            0: { fontStyle: "bold", cellWidth: 40 },
-            1: { cellWidth: 60 },
-        },
-        margin: { left: 20 },
-    })
-}
-
-// Función para añadir detalles del alquiler
-function addRentalDetails(doc, alquilerData, vehiculoData) {
-    const finalY = doc.lastAutoTable.finalY + 15
-
-    doc.setFontSize(12)
-    doc.setTextColor(10, 77, 163)
-    doc.text("DETALLES DEL ALQUILER", 20, finalY)
-
-    doc.setDrawColor(10, 77, 163)
-    doc.setLineWidth(0.2)
-    doc.line(20, finalY + 2, 100, finalY + 2)
-
-    // Calcular duración y precio total
-    const fechaInicio = new Date(alquilerData.fechaInicio)
-    const fechaFin = new Date(alquilerData.fechaFin)
-    const duracionMs = fechaFin - fechaInicio
-    const duracionDias = Math.ceil(duracionMs / (1000 * 60 * 60 * 24))
-    const precioTotal = duracionDias * vehiculoData.precio
-
-    // Crear tabla con detalles del alquiler
-    const rentalData = [
-        ["Fecha de inicio", formatDateTime(fechaInicio)],
-        ["Fecha de fin", formatDateTime(fechaFin)],
-        ["Duración", `${duracionDias} día${duracionDias !== 1 ? "s" : ""}`],
-        ["Precio por día", `€${vehiculoData.precio.toFixed(2)}`],
-        ["PRECIO TOTAL", `€${precioTotal.toFixed(2)}`],
-    ]
-
-    doc.autoTable({
-        startY: finalY + 8,
-        body: rentalData,
-        theme: "grid",
-        styles: {
-            fontSize: 10,
-            cellPadding: 3,
-        },
-        columnStyles: {
-            0: { fontStyle: "bold", cellWidth: 40 },
-            1: { cellWidth: 60 },
-        },
-        margin: { left: 20 },
-        bodyStyles: (row, column, data) => {
-            if (row === rentalData.length - 1) {
-                return {
-                    fontStyle: "bold",
-                    fillColor: [240, 240, 240],
-                    textColor: [10, 77, 163],
-                }
-            }
-            return {}
-        },
-    })
-}
-
-// Función para añadir términos y condiciones
-function addTermsAndConditions(doc) {
-    const finalY = doc.lastAutoTable.finalY + 15
-
-    doc.setFontSize(10)
-    doc.setTextColor(10, 77, 163)
-    doc.text("TÉRMINOS Y CONDICIONES", 105, finalY, { align: "center" })
-
-    doc.setDrawColor(10, 77, 163)
-    doc.setLineWidth(0.2)
-    doc.line(65, finalY + 2, 145, finalY + 2)
-
-    doc.setFontSize(8)
-    doc.setTextColor(80)
-
-    const terms = [
-        "1. Es necesario presentar este comprobante junto con una identificación válida para recoger el vehículo.",
-        "2. El vehículo debe ser devuelto con el tanque de combustible lleno.",
-        "3. Se aplicarán cargos adicionales por devolución tardía.",
-        "4. El cliente es responsable de cualquier daño causado al vehículo durante el período de alquiler.",
-        "5. Para más información, consulte nuestros términos y condiciones completos en www.rentcar.com/terminos.",
-    ]
-
-    let y = finalY + 8
-    terms.forEach((term) => {
-        doc.text(term, 20, y)
-        y += 5
-    })
-}
-
-// Función para añadir pie de página
-function addFooter(doc) {
-    const pageCount = doc.internal.getNumberOfPages()
-
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i)
-
-        // Línea separadora
-        doc.setDrawColor(10, 77, 163)
-        doc.setLineWidth(0.5)
-        doc.line(20, 280, 190, 280)
-
-        // Texto del pie de página
-        doc.setFontSize(8)
-        doc.setTextColor(100)
-        doc.text("© 2025 RentCar. Todos los derechos reservados.", 105, 287, { align: "center" })
-
-        // Número de página
-        doc.text(`Página ${i} de ${pageCount}`, 190, 287, { align: "right" })
-    }
-}
-
 // Función para añadir código QR
-async function addQRCode(doc, alquilerData, vehiculoData) {
+async function addQRCode(doc, alquilerData, vehiculoData, x = 150, y = 110) {
     return new Promise((resolve, reject) => {
         try {
             // Crear URL para el código QR
@@ -319,14 +320,14 @@ async function addQRCode(doc, alquilerData, vehiculoData) {
             img.crossOrigin = "Anonymous"
             img.onload = function () {
                 // Añadir la imagen al PDF
-                const imgWidth = 40
-                const imgHeight = 40
-                doc.addImage(this, "PNG", 150, 110, imgWidth, imgHeight)
+                const imgWidth = 25
+                const imgHeight = 25
+                doc.addImage(this, "PNG", x, y, imgWidth, imgHeight)
 
                 // Añadir texto debajo del QR
-                doc.setFontSize(8)
+                doc.setFontSize(6)
                 doc.setTextColor(80)
-                doc.text("Muestra este código en nuestra oficina", 150 + imgWidth / 2, 110 + imgHeight + 5, { align: "center" })
+                doc.text("Código de verificación", x + imgWidth / 2, y + imgHeight + 3, { align: "center" })
 
                 resolve()
             }
@@ -341,6 +342,36 @@ async function addQRCode(doc, alquilerData, vehiculoData) {
             resolve() // Resolvemos de todos modos para no bloquear la generación del PDF
         }
     })
+}
+
+// Función para parsear fechas mejorada
+function parseDate(dateString) {
+    if (!dateString) return new Date()
+
+    try {
+        // Si es un array de números [año, mes, día, hora, minuto, segundo]
+        if (Array.isArray(dateString)) {
+            const [year, month, day, hour = 0, minute = 0, second = 0] = dateString
+            return new Date(year, month - 1, day, hour, minute, second)
+        }
+
+        // Si es string
+        if (typeof dateString === "string") {
+            // Si contiene 'T', es formato ISO
+            if (dateString.includes("T")) {
+                return new Date(dateString)
+            } else {
+                // Si es formato YYYY-MM-DD, añadir tiempo para evitar problemas de zona horaria
+                return new Date(dateString + "T00:00:00")
+            }
+        }
+
+        // Si ya es Date
+        return new Date(dateString)
+    } catch (error) {
+        console.error("Error al parsear fecha:", error)
+        return new Date()
+    }
 }
 
 // Función para formatear fecha y hora

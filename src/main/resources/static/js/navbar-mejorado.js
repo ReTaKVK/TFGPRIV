@@ -404,3 +404,75 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(navbar, { childList: true, subtree: true })
     }
 })
+
+// Funciones auxiliares que pueden ser necesarias
+function requireAuth() {
+    if (!isAuthenticated()) {
+        sessionStorage.setItem("redirectAfterLogin", window.location.href)
+        window.location.href = "index.html"
+        return false
+    }
+    return true
+}
+
+function getToken() {
+    return localStorage.getItem("token")
+}
+
+function showToast(title, message, type = "success") {
+    // Función de toast simple
+    console.log(`[${type.toUpperCase()}] ${title}: ${message}`)
+
+    // Crear toast si no existe
+    let toastContainer = document.getElementById("toast-container")
+
+    if (!toastContainer) {
+        toastContainer = document.createElement("div")
+        toastContainer.id = "toast-container"
+        toastContainer.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    `
+        document.body.appendChild(toastContainer)
+    }
+
+    const toast = document.createElement("div")
+    toast.style.cssText = `
+    background-color: ${type === "success" ? "#10b981" : type === "error" ? "#ef4444" : type === "warning" ? "#f59e0b" : "#3b82f6"};
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  `
+
+    toast.innerHTML = `
+    <div style="font-weight: bold; margin-bottom: 5px;">${title}</div>
+    <div>${message}</div>
+  `
+
+    toastContainer.appendChild(toast)
+
+    setTimeout(() => {
+        toast.style.opacity = "1"
+    }, 10)
+
+    setTimeout(() => {
+        toast.style.opacity = "0"
+        setTimeout(() => {
+            if (toastContainer.contains(toast)) {
+                toastContainer.removeChild(toast)
+            }
+        }, 300)
+    }, 3000)
+}
+
+// Hacer funciones globalmente disponibles
+window.requireAuth = requireAuth
+window.getToken = getToken
+window.showToast = showToast
+
