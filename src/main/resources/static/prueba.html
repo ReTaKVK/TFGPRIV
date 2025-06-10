@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="es">
+        <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Generador de Documentación - Proyecto RentCar</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* Animación de fade-in para secciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans text-gray-700 min-h-screen flex flex-col">
+
+<header class="bg-white shadow-lg p-4 flex justify-between items-center sticky top-0 z-50">
+    <h1 class="text-2xl font-bold text-blue-600 flex items-center">
+        <i class="fas fa-file-alt mr-3"></i> Generador Documentación Proyecto
+    </h1>
+    <button id="downloadFull" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center transition-transform transform hover:scale-105">
+        <i class="fas fa-download mr-2"></i> Descargar Todo
+    </button>
+</header>
+
+<main class="flex-1 p-4 container mx-auto flex flex-col md:flex-row gap-4">
+
+    <!-- Panel lateral -->
+    <aside class="w-full md:w-64 bg-white rounded-lg shadow-lg p-4 overflow-y-auto max-h-96 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Secciones</h2>
+        <div id="sections" class="flex flex-col gap-2">
+            <!-- Botones generados por JS -->
+        </div>
+    </aside>
+
+    <!-- Área de contenido -->
+    <section class="flex-1 bg-white rounded-lg shadow-lg p-4 flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="sectionTitle" class="text-xl font-semibold text-gray-800">Selecciona una sección</h3>
+            <button id="downloadSection" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-transform transform hover:scale-105">
+                <i class="fas fa-download mr-2"></i> Descargar Sección
+            </button>
+        </div>
+        <div class="overflow-y-auto flex-1 border border-gray-200 rounded-lg p-4 bg-gray-50">
+            <pre id="sectionContent" class="whitespace-pre-wrap font-mono text-sm"></pre>
+        </div>
+    </section>
+</main>
+
+<!-- Pie de página -->
+<footer class="bg-white shadow-inner p-4 mt-4">
+    <div class="max-w-3xl mx-auto text-center text-gray-600 text-sm">
+        <h3 class="font-semibold mb-2">Instrucciones de uso</h3>
+        <ul class="space-y-2 list-inside list-disc text-left mx-auto max-w-2xl">
+            <li><strong>Personaliza:</strong> Completa tus datos en el formulario lateral superior</li>
+            <li><strong>Revisa:</strong> Navega por las secciones y revisa el contenido</li>
+            <li><strong>Descarga:</strong> Obtén secciones individuales o el documento completo</li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+    // Datos iniciales
+    const sectionsData = [
+        { id: 'introduccion', title: '1. Introducción', icon: 'fas fa-book-open' },
+        { id: 'justificacion', title: '2. Justificación y Objetivos', icon: 'fas fa-file-alt' },
+        { id: 'planificacion', title: '3. Planificación', icon: 'fas fa-chart-bar' },
+        { id: 'analisis', title: '4. Análisis', icon: 'fas fa-database' },
+        { id: 'diseno', title: '5. Diseño', icon: 'fas fa-code' },
+        { id: 'implementacion', title: '6. Implementación', icon: 'fas fa-cogs' },
+        { id: 'implantacion', title: '7. Implantación', icon: 'fas fa-cloud-upload-alt' },
+        { id: 'resultados', title: '8. Resultados', icon: 'fas fa-chart-line' },
+        { id: 'conclusiones', title: '9. Conclusiones', icon: 'fas fa-comment-dots' },
+    ];
+
+    const sectionsContainer = document.getElementById('sections');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const sectionContent = document.getElementById('sectionContent');
+    const downloadSectionBtn = document.getElementById('downloadSection');
+    const downloadFullBtn = document.getElementById('downloadFull');
+
+    let currentSectionId = null;
+
+    // Datos de personalización
+    const projectData = {
+        autor: '',
+        ciclo: '',
+        centro: '',
+        curso: '',
+        tutor: ''
+    };
+
+    // Crear botones de sección
+    sectionsData.forEach(sec => {
+        const btn = document.createElement('button');
+        btn.className = 'flex items-center px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors';
+        btn.innerHTML = `<i class="${sec.icon} mr-2"></i> ${sec.title}`;
+        btn.onclick = () => {
+            setActiveSection(sec.id);
+        };
+        sectionsContainer.appendChild(btn);
+    });
+
+    // Función para establecer sección activa
+    function setActiveSection(id) {
+        currentSectionId = id;
+        // Resaltar botón
+        Array.from(sectionsContainer.children).forEach((btn, index) => {
+            if (sectionsData[index].id === id) {
+                btn.classList.add('bg-blue-100', 'text-blue-700', 'border-l-4', 'border-blue-500');
+            } else {
+                btn.classList.remove('bg-blue-100', 'text-blue-700', 'border-l-4', 'border-blue-500');
+            }
+        });
+        // Actualizar título y contenido
+        const sec = sectionsData.find(s => s.id === id);
+        sectionTitle.innerText = sec ? sec.title : '';
+        sectionContent.innerText = generateSectionContent(id);
+    }
+
+    // Función para generar contenido de sección
+    function generateSectionContent(id) {
+        switch (id) {
+            case 'introduccion':
+                return generateIntroduccion();
+            case 'justificacion':
+                return generateJustificacion();
+            case 'planificacion':
+                return generatePlanificacion();
+            case 'analisis':
+                return generateAnalisis();
+            case 'diseno':
+                return generateDiseno();
+            case 'implementacion':
+                return generateImplementacion();
+            case 'implantacion':
+                return generateImplantacion();
+            case 'resultados':
+                return generateResultados();
+            case 'conclusiones':
+                return generateConclusiones();
+            default:
+                return 'Selecciona una sección para ver el contenido.';
+        }
+    }
+
+    // Funciones de contenido (resumidas, adaptadas a tu ejemplo)
+    function generateIntroduccion() {
+        return `
+# 1. INTRODUCCIÓN
+
+**RentCar** es una aplicación web completa para la gestión de alquiler de vehículos que permite a los usuarios registrarse, explorar una flota de vehículos disponibles, realizar reservas y gestionar sus alquileres de manera eficiente y segura.
+
+### Características principales:
+- **Sistema de autenticación** con JWT para seguridad
+- **Catálogo de vehículos** con filtros avanzados y disponibilidad en tiempo real
+- **Sistema de carrito** para gestionar múltiples reservas
+- **Gestión de perfiles** con sistema de niveles de usuario (Bronce, Plata, Oro, Diamante)
+- **Panel administrativo** para gestión completa del sistema
+- **Interfaz responsive** adaptada a dispositivos móviles y desktop
+
+### Tecnologías utilizadas:
+- **Backend**: Spring Boot, Spring Security, JWT, JPA/Hibernate
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Base de datos**: PostgreSQL
+- **Herramientas**: Maven, MapStruct, Lombok
+
+`;
+
+    }
+
+    function generateJustificacion() {
+        return `
+# 2. JUSTIFICACIÓN DEL PROYECTO Y OBJETIVOS
+
+## 2.1. Por qué has elegido este proyecto
+
+He elegido desarrollar **RentCar** porque representa un caso de uso real y completo que permite demostrar todos los conocimientos adquiridos durante el ciclo formativo. El sector del alquiler de vehículos está en constante crecimiento y digitalización, lo que hace que este proyecto sea relevante y actual.
+
+### Motivaciones personales:
+- Interés en el desarrollo full-stack
+- Aplicación práctica
+- Complejidad técnica adecuada
+- Escalabilidad
+
+## 2.2. Estado del arte
+
+Análisis del mercado actual...
+
+## 2.3. Objetivos
+
+Objetivo general y específicos...
+
+`;
+    }
+
+    // Añade aquí las funciones generatePlanificacion, generateAnalisis, ... iguales, adaptadas a tu contenido.
+
+    // Función para descargar la sección actual
+    downloadSectionBtn.onclick = () => {
+        if (!currentSectionId) return;
+        const text = generateSectionContent(currentSectionId);
+        const blob = new Blob([text], {type: 'text/markdown'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = currentSectionId + '.md';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Función para descargar todo en un solo archivo
+    downloadFullBtn.onclick = () => {
+        const allText = sectionsData.map(s => `# ${s.title}\n
+${generateSectionContent(s.id)}\n`).join('\n---\n');
+        const blob = new Blob([allText], {type: 'text/markdown'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'documentacion_completa.md';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Opcional: carga inicial
+    setActiveSection('introduccion');
+
+</script>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>
